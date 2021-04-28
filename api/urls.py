@@ -1,4 +1,5 @@
 from django.urls import path, include
+from knox.views import LogoutView
 from .views import CombineCardiacView,export_form,UpdateRequestRemarksView,GetPatientTable,GetPatients,PatientView,GetRequestTable,RequestView,LoginAPIView,ViewRequestTable,RegisterAPIView,ViewCardiacRequestTable, GetCardiacRequestTable,UpdateCardiacFormAView,UpdateCardiacFormBView, ViewCardiacSuppliedTable,UpdateCardiacSuppliedFormAView,UpdateCardiacSuppliedFormBView
 urlpatterns = [
     #path('',include('frontend.urls')),
@@ -14,6 +15,7 @@ urlpatterns = [
     path('patients',PatientView.as_view()),
     path('requests',RequestView.as_view()),
     path('login',LoginAPIView.as_view()),
+    path('logout', LogoutView.as_view(), name='knox_logout'),
     path('register',RegisterAPIView.as_view()),
     # path('update-cardiac/<pk>', UpdateCardiac.as_view()),
     

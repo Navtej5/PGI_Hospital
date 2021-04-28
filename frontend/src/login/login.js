@@ -74,24 +74,35 @@ export default class Login extends Component{
 
 
   validate=async()=> {
-    let USER_TABLE_API='http://127.0.0.1:8000/get-user-table'
-    const response=await fetch(USER_TABLE_API);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: this.state.username,password:this.state.password })
+  };
+    let USER_TABLE_API='http://127.0.0.1:8000/api/login'
+    const response=await fetch(USER_TABLE_API,requestOptions);
     const data=await response.json();
-
-    for(var i=0;i<data.length;i++)
-    {
-      if(data[i].username===this.state.username && data[i].password===this.state.password)
-      {
-        history.push({
-          pathname:`/user`,
-          search:data[i].username,
-        })
+    if(data.hasOwnProperty("non_field_errors")){
+      alert("Username or Password Incorrect")
+    }
+    else{
+      if(data["user"]["category"]=="Nurse"){
+        history.push("/user");
+        console.log("yoo");
       }
-      if(data[i].username===this.state.username && data[i].password!=this.state.password)
-      {
-        alert("Username or Password Incorrect")
+      else if(data["user"]["category"]=="Consultant"){
+        history.push("/consultantDash");
+      }
+      else if(data["user"]["category"]=="Unitman"){
+        history.push("/unitmanDash");
+      }
+      else{
+        alert("Category of the user invalid")
       }
     }
+    // console.log(data["non_field_errors"]);
+    // //if(data["non_field_error"]="")
+    // console.log(data["user"]["category"]);
     
   } 
     render()
