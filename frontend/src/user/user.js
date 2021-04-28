@@ -14,6 +14,8 @@ import PatientDetails from "../patient/patientDetails";
 // import { useLocation } from "react-router-dom";
 import './user.css';
 import { withRouter } from "react-router";
+import { TextField } from "@material-ui/core";
+
 
 const history = createBrowserHistory();
 // const location = useLocation(); 
@@ -152,7 +154,7 @@ export default class User extends Component{
 
       return(
         <div style={{ 
-          height:"800px",
+          height:"1000px",
           width:"100%",
           marginTop:"-20px",
           overflow:"hidden",
@@ -191,6 +193,18 @@ export default class User extends Component{
           <HorizontalLine />
           <div>
             <HorizontalLine />
+            <TextField id="filled-basic" label="Patient Name" variant="filled"
+            onChange={(event)=>(this.setState({patient_search:event.target.value}))}
+            />
+            <Button
+            style={{marginLeft:"400px",marginTop:"-43px"}}
+            onClick={()=>{
+              var list = this.state.patients;
+              list.sort((a, b) => a.name.localeCompare(b.name))
+              console.log("List:",list)
+              this.setState({patients:list})
+            }}
+            >Sort</Button>
           </div>
           <div style={{maxHeight:"270px",height:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"hidden"}}>
           {
@@ -279,6 +293,19 @@ export default class User extends Component{
           <HorizontalLine style={{width:"650px"}}/>
           <div>
             <HorizontalLine />
+            <TextField id="filled-basic" label="Request CR Number" variant="filled"
+            onChange={(event)=>(this.setState({request_search:event.target.value}))}
+            />
+            <Button
+            style={{marginLeft:"400px",marginTop:"-43px"}}
+            onClick={()=>{
+              var list = this.state.requests;
+              list.sort((a, b) => a.crnumber.localeCompare(b.crnumber))
+              console.log("List:",list)
+              this.setState({requests:list})
+            }}
+            >Sort</Button>
+            {/* <HorizontalLine /> */}
           </div>
           <div style={{height:"270px",maxHeight:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"hidden"}}>
           {
