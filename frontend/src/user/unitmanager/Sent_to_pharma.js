@@ -15,7 +15,7 @@ import { createBrowserHistory } from 'history';
 import { Link} from "react-router-dom";
 const history = createBrowserHistory({forceRefresh:true});
 
-var myvar;
+// var myvar;
 
 function createData(doc,wardadhaar,name , ViewRequest, Toggle) {
   return {doc,wardadhaar,name ,ViewRequest, Toggle};
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Approved() {
+export default function ReceivedFromPharma() {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
@@ -58,7 +58,7 @@ export default function Approved() {
         <label>
           <button onClick={()=>{ setChecked(checked^1) }} >
             Move to Pending
-            </button>
+          </button>
         </label>
       );
   }
@@ -89,7 +89,7 @@ export default function Approved() {
 
       var temp = [];
       for(i=0;i<books.length;i++){
-        if(books[i].state != "Approved")continue;
+        if(books[i].state != "SentToPharma")continue;
         var naam = books[i].patientname;
         var ward = books[i].wardadhaar;
         var link = "click here";
@@ -146,10 +146,10 @@ export default function Approved() {
               </TableCell>   
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
-              <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
+              <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
       axios.patch(updateURL+row.doc,row.tog); 
       }} >
-      Send to Pharmacy
+      Received
       </Button>
           
                 </TableCell>

@@ -6,12 +6,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import Title from './Title';
 import Switch from "react-switch";
 import axios from 'axios';
-import { Button, TextField } from '@material-ui/core';
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory({forceRefresh:true});
+import Button from '@material-ui/core/Button';
 
 // Generate Order Data
 
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Pending() {
   const classes = useStyles();
   const [checked,setChecked]=React.useState(false);
-  const [searchText,setSearchText] = React.useState("")
+  const [searchText,setSearchText] = React.useState("");
   function dobutton(){
     // Boolean x = !checked;
     setChecked(checked? false : true);
@@ -71,7 +70,7 @@ export default function Pending() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
   const [books, setBooks] = React. useState(null);
   const [rows, setRows] = React. useState(createData(1231241,11,"atul","link","state"));
-  const apiURL = "http://127.0.0.1:8000/api/view-request-table/";
+  const apiURL = "http://127.0.0.1:8000/api/view-request-table";
   const updateURL = "http://127.0.0.1:8000/api/get-request-table/";
   const fetchData = async () => {
     console.log("in fetch");
@@ -89,7 +88,7 @@ export default function Pending() {
       if(books[i].state != "Pending")continue;
       var naam = books[i].patientname;
       var ward = books[i].wardadhaar;
-      var link = "Click to View";
+      var link = "insert link here";
       var doc = books[i].docnumber;
       var booktemp = books[i];
       var tog = booktemp;
@@ -121,6 +120,7 @@ export default function Pending() {
       <Table size="small">
         <TableHead>
           <TableRow>
+            <TableCell>DOCUMENT NUMBER</TableCell>
             <TableCell>NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
@@ -133,19 +133,22 @@ export default function Pending() {
           rows.map((row) => (
             row.naam.toLowerCase().includes(searchText.toLowerCase())?
             <TableRow key={row.doc}>
+              <TableCell>{row.doc}</TableCell>
               <TableCell>{row.naam}</TableCell>
               <TableCell>{row.ward}</TableCell>
-              <TableCell
+              <TableCell>{row.link}</TableCell>
+              {/* <TableCell
               style={{color:"blue",textDecoration:"underline"}}
               onClick={()=>(history.push(`/consultantView/${row.ward}/${row.doc}`))}              
-              >{row.link}</TableCell>
+              >{row.link}</TableCell> */}
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
-                <Button color='primary' variant='contained'onClick={()=>{ row.tog.state = "Approved";
-      axios.patch(updateURL+row.doc+"/",row.tog); 
+              <Button color='primary' variant='contained'onClick={()=>{ row.tog.state = "Approved";
+      axios.patch(updateURL+row.doc,row.tog); 
       }} >
       Move to Approved
-      </Button>          
+      </Button>
+          
                 </TableCell>
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>

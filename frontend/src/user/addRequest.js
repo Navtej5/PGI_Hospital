@@ -245,7 +245,8 @@ export default function AddRequest(){
                     console.log(crNumber,wardAdhaar,wardName,department,docNumber,consultantUname,height,weight),
                     fetch(REQUEST_TABLE_API,
                         {
-                        credentials: 'include',
+                        // credentials: 'include',
+                        credentials: 'omit',
                         method:'POST',
                         headers: {
                         Accept: 'application/json',

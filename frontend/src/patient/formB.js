@@ -573,7 +573,8 @@ export default function FormB(props) {
                     ,console.log("***********",myvar)
                     ,fetch(SUBMIT_FORM_API+myvar,
                         {
-                        credentials: 'include',
+                        // credentials: 'include',
+                        credentials: 'omit',
                         method:'PATCH',
                         headers: {
                         Accept: 'application/json',

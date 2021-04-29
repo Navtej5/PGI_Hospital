@@ -460,7 +460,8 @@ export default function FormA(props) {
                     ,console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
                     ,fetch(SUBMIT_FORM_API+props.docnumber,
                         {
-                        credentials: 'include',
+                        // credentials: 'include',
+                        credentials: 'omit',
                         method:'PATCH',
                         headers: {
                         Accept: 'application/json',
