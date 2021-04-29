@@ -131,8 +131,9 @@ export default class User extends Component{
 
 
   async componentDidMount() {
-    let PATIENT_TABLE_API='http://127.0.0.1:8000/api/get-patient-table'
-    let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table'
+    let PATIENT_TABLE_API='http://127.0.0.1:8000/api/get-patient-table';
+    // let PATIENT_TABLE_API='https://pgi-backend.herokuapp.com/api/get-patient-table';
+    let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table';
     const response=await fetch(PATIENT_TABLE_API);
     const data=await response.json();
     await this.setState({patients:data})

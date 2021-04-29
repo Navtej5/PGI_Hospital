@@ -244,7 +244,8 @@ export default function FormB_um(props) {
                         }))
                         ,fetch(SUBMIT_FORM_API,
                             {
-                                credentials: 'include',
+                                // credentials: 'include',
+                                credentials: 'omit',
                                 method:'PATCH',
                                 headers: {
                                 Accept: 'application/json',

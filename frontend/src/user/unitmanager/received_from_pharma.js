@@ -15,7 +15,7 @@ import { createBrowserHistory } from 'history';
 import { Link} from "react-router-dom";
 const history = createBrowserHistory({forceRefresh:true});
 
-var myvar;
+// var myvar;
 
 function createData(doc,wardadhaar,name , ViewRequest, Toggle) {
   return {doc,wardadhaar,name ,ViewRequest, Toggle};
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Approved() {
+export default function SentToPharma() {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
@@ -58,7 +58,7 @@ export default function Approved() {
         <label>
           <button onClick={()=>{ setChecked(checked^1) }} >
             Move to Pending
-            </button>
+          </button>
         </label>
       );
   }
@@ -72,10 +72,10 @@ export default function Approved() {
 
   const [books, setBooks] = React. useState(null);
   const [rows, setRows] = React. useState(createData(123323427897,11,"atul","yo","sfsdf"));
-  const dobutton = async (docnumber,i,books) => {
-    books[i].state = "Pending";
-    axios.patch(updateURL+docnumber,books[i]);
-  }
+  // const dobutton = async (docnumber,i,books) => {
+  //   books[i].state = "Pending";
+  //   axios.patch(updateURL+docnumber,books[i]);
+  // }
   const fetchData = async () => {
       console.log("in fetch");
       const response = await axios.get(apiURL)
@@ -89,7 +89,7 @@ export default function Approved() {
 
       var temp = [];
       for(i=0;i<books.length;i++){
-        if(books[i].state != "Approved")continue;
+        if(books[i].state != "ReceivedFromPharma")continue;
         var naam = books[i].patientname;
         var ward = books[i].wardadhaar;
         var link = "click here";
@@ -146,10 +146,10 @@ export default function Approved() {
               </TableCell>   
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
-              <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
+              <Button color="primary" variant = "contained"onClick={()=>{ row.tog.state = "Completed";
       axios.patch(updateURL+row.doc,row.tog); 
       }} >
-      Send to Pharmacy
+      Move to Completed
       </Button>
           
                 </TableCell>

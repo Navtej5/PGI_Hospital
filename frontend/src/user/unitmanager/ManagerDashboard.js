@@ -33,6 +33,8 @@ import Title from './Title';
 // import Deposits from './Deposits';
 import Approved from './Approved';
 import Completed from '../dashboard/Completed.js';
+import SentToPharma from "./Sent_to_pharma";
+import ReceivedFromPharma from "./received_from_pharma";
 // import Orders from './Pending';
 import Switch from "react-switch";
 
@@ -233,7 +235,22 @@ export default function ManagerDashboard() {
                         <ListItemText primary="Approved" />
                       </ListItem>
                       {/* <SwitchExample /> */}
+                      
                       <ListItem button onClick={()=>{ setChoose(1) }} selected={choose==1}>
+                        <ListItemIcon>
+                          <AssignmentIcon />
+                          {/* <PeopleIcon /> */}
+                        </ListItemIcon>
+                        <ListItemText primary="Sent to Pharmacy" />
+                      </ListItem>
+                      <ListItem button onClick={()=>{ setChoose(2) }} selected={choose==2}>
+                        <ListItemIcon>
+                          <AssignmentIcon />
+                          {/* <PeopleIcon /> */}
+                        </ListItemIcon>
+                        <ListItemText primary="Received from Pharmacy" />
+                      </ListItem>
+                      <ListItem button onClick={()=>{ setChoose(3) }} selected={choose==3}>
                         <ListItemIcon>
                           <AssignmentIcon />
                           {/* <PeopleIcon /> */}
@@ -288,13 +305,25 @@ export default function ManagerDashboard() {
                   </div>
                       
                   :""}
-                  {choose==1?
-
+                  {choose==3?
                     <div>
                     <Title>Completed Requests</Title>
                     <Completed />
                     </div>
-                      
+                  :""}
+
+                  {choose==1?
+                    <div>
+                    <Title>Requests sent to pharmacy</Title>
+                    <SentToPharma />
+                    </div>
+                  :""}
+
+                  {choose==2?
+                    <div>
+                    <Title>Received from pharmacy (Pending Audit)</Title>
+                    <ReceivedFromPharma />
+                    </div>
                   :""}
                 </Paper>
               </Grid>

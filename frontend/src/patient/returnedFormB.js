@@ -259,7 +259,8 @@ export default function ReturnedFormB(props) {
                     }))
                     ,fetch(SUBMIT_FORM_API,
                         {
-                            credentials: 'include',
+                            // credentials: 'include',
+                            credentials: 'omit',
                             method:'PATCH',
                             headers: {
                             Accept: 'application/json',

@@ -282,7 +282,8 @@ class AddPatient extends Component{
                 
                 fetch(PATIENT_TABLE_API,
                     {
-                        credentials: 'include',
+                        // credentials: 'include',
+                        credentials: 'omit',
                         method:'POST',
                         headers: {
                         Accept: 'application/json',
