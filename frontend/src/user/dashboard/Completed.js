@@ -1,6 +1,6 @@
 // import React from 'react';
 import React, { useState , useEffect} from 'react';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -129,7 +129,19 @@ export default function Approved() {
               <TableCell>{row.doc}</TableCell>
               <TableCell>{row.naam}</TableCell>
               <TableCell>{row.ward}</TableCell>
-              <TableCell>{row.link}</TableCell>   
+              <TableCell>
+              <Link 
+                  to={{
+                    pathname:"/cardiacform_um/"+row.doc,
+                    formsProps:{
+                      mode:"view_only",
+                      from:"Completed"
+                    }
+                  }}
+                >
+                {row.link}
+              </Link>
+              </TableCell>   
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant='contained'onClick={()=>{ row.tog.state = "Approved";
