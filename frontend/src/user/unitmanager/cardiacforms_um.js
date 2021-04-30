@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component,useState,useEffect} from "react";
 import {Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -40,6 +40,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import FormA_um from './formA_um';
 import FormB_um from './formB_um';
 import {myvar} from '../user.js';
+import axios from 'axios';
 // export const mainListItems = (
 //   <div>
 //     <ListItem button>
@@ -199,7 +200,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardiacForm_um(props) {
+  // const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+  // var temp;
+  //   const fetchreq = async () => {
+  //      temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber)
+  //   }
+  //   const patchreq = async () => {
+  //       temp.data.remarksfromconsultant = remarkfc;
+  //       temp.data.notificationbit = true;
+  //       console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+  //       await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+  //    }
+  //   useEffect(() => {
+  //       // console.log(myvar);
+  //       fetchreq();
+  //   });
+
   const classes = useStyles();
+  const [remarkfc,setreamarkfc]=React.useState("_")
   const [open, setOpen] = React.useState(true);
   const [form,setForm]=React.useState(0)
   const handleDrawerOpen = () => {

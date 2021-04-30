@@ -1,4 +1,4 @@
-import React, {Component,useState} from "react";
+import React, {Component,useState,useEffect} from "react";
 import {Row} from "simple-flexbox";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -15,7 +15,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import {myvar} from '../user/user.js';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-
+import axios from 'axios';
 
 
 const Input = styled.input`
@@ -34,7 +34,21 @@ const Input = styled.input`
 export default function FormB(props) {
 
     const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-formb/'+props.docnumber;
-
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    var temp;
+    const fetchreq = async () => {
+       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber)
+    }
+    const patchreq = async () => {
+        temp.data.remarksfromconsultant = remarkfc;
+        temp.data.notificationbit = true;
+        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+     }
+    useEffect(() => {
+        // console.log(myvar);
+        fetchreq();
+    });
     function testhandle(var1){
         var str_3A="";
         var otherflag = false;
@@ -63,7 +77,7 @@ export default function FormB(props) {
         }
         return str_3A;
     }
-
+    const [remarkfc,setreamarkfc]=React.useState("_")
     const [B_1_remarks,setB_1_remarks]=React.useState("_")
     const [B_1_qty,setB_1_qty]=React.useState("0")
     const [B_2A_remarks,setB_2A_remarks]=React.useState("_")
@@ -546,6 +560,7 @@ export default function FormB(props) {
                         // defaultValue="Default Value"
                         placeholder="enter comments/remarks"
                         variant="outlined"
+                        onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>
                 
@@ -556,6 +571,7 @@ export default function FormB(props) {
                 onClick={()=>(
                     // console.log('values====>\ncompany_name:',B_3A_brand,'\nQty_required:',B_3A_qty,'\nSpecification:',B_3A_descr,'\nRemarks:',B_3A_remarks)
                     console.log("yekarlopehle",testhandle(B_1_spec))
+                    ,patchreq()
                     ,finalB_1_descr=testhandle(B_1_spec)
                     ,finalB_1_brand=testhandle(B_1_brand)
                     ,finalB_2A_descr=testhandle(B_2A_descr)
@@ -573,7 +589,7 @@ export default function FormB(props) {
                     ,console.log("***********",myvar)
                     ,fetch(SUBMIT_FORM_API+myvar,
                         {
-                        credentials: 'include',
+                        credentials: 'omit',
                         method:'PATCH',
                         headers: {
                         Accept: 'application/json',
