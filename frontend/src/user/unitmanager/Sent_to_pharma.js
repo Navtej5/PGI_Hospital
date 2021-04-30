@@ -138,7 +138,15 @@ export default function ReceivedFromPharma() {
               <TableCell>{row.naam}</TableCell>
               <TableCell>{row.ward}</TableCell>
               <TableCell>
-                <Link to={"/cardiacform_um/"+row.doc}>
+              <Link 
+                  to={{
+                    pathname:"/cardiacform_um/"+row.doc,
+                    formsProps:{
+                      mode:"view_only",
+                      from:"SentToPharma"
+                    }
+                  }}
+                >
                   {/* <Button>click</Button> */}
                   here
                   {/* {row.link} */}

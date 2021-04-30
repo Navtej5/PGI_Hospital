@@ -41,9 +41,10 @@ export default function FormA_um(props) {
     const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
-    
+    const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
 
     const fetchData = async () => {
+        console.log("***************************\n",props.mode)
         console.log("in fetch");
         const response = await axios.get(GET_COMBINED_API)
         const form = await response.data;
@@ -57,17 +58,22 @@ export default function FormA_um(props) {
             var col2 = "A_"+ids[x]+"_descr";
             var col3 = "A_"+ids[x]+"_brand";
             var col4 = "A_"+ids[x]+"_qty";
+            var col5 = "A_"+ids[x]+"_qty_rcd";
             var id = ids[x];
             var name = form["**Requested**"][0][col1];
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
             var qty_supplied = form["**Supplied**"][0][col4];
+            var qty_from_pharma = form["**Supplied**"][0][col5];
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_supplied}
             ));
-            temp.push({id,name,descr,brand,qty_requested,qty_supplied});
-            console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied)
+            setQtyRcdPharma(qtyRcdPharma => (
+                {...qtyRcdPharma,[id]:qty_from_pharma}
+            ));
+            temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma});
+            // console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied)
         }
         setRows(temp);
         console.log("temp==>\n",temp);
@@ -228,10 +234,13 @@ export default function FormA_um(props) {
     // }
 
     return(
-        <div>
-                
-            <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
-        }
+
+        props.mode.mode == "view_only" ?
+        
+        <div> 
+            <Table> {
+            //style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
+            }
                 <TableHead>
                     <TableRow>
                         <TableCell style={{color:"black"}}>
@@ -249,9 +258,9 @@ export default function FormA_um(props) {
                         <TableCell style={{color:"black"}}>
                             Quantity Required
                         </TableCell>
-                        <TableCell style={{color:"black"}}>
+                        {/* <TableCell style={{color:"black"}}>
                             Quantity Supplied
-                        </TableCell>
+                        </TableCell> */}
                         {/* <TableCell style={{color:"black"}}>
                             Remarks
                         </TableCell> */}
@@ -268,22 +277,6 @@ export default function FormA_um(props) {
                         <TableCell>{row.descr}</TableCell>
                         <TableCell>{row.brand}</TableCell>
                         <TableCell>{row.qty_requested}</TableCell>   
-                        <TableCell>
-                            <input 
-                            type="number" name={row.id} min="0"
-                            value={
-                                qtySupplied[row.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtySupplied(qtySupplied => (
-                                    {...qtySupplied, [event.target.name]: event.target.value}
-                                ));
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                        {/* <TableCell></TableCell> */}
                         </TableRow>
                      ))
                 : ""}
@@ -380,6 +373,193 @@ export default function FormA_um(props) {
                     </Grid>
                 </Grid>
             </div>
+        </div>
+
+
+
+:
+//************************************************************************************************************************
+//*************************************************************************************Part for read-write mode starts now
+        <div>
+                        
+        <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
+        }
+            <TableHead>
+                <TableRow>
+                    <TableCell style={{color:"black"}}>
+                        Sr. No.
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Name
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Specification
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Company Name
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Quantity Required
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Quantity from Pharmacy
+                    </TableCell>
+                    <TableCell style={{color:"black"}}>
+                        Quantity Supplied
+                    </TableCell>
+                    {/* <TableCell style={{color:"black"}}>
+                        Remarks
+                    </TableCell> */}
+
+                </TableRow>
+            </TableHead>
+            <TableBody>
+
+            {rows.length>0 ? 
+                rows.map((row,index) => ( 
+                    <TableRow key={index}>
+                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.descr}</TableCell>
+                    <TableCell>{row.brand}</TableCell>
+                    <TableCell>{row.qty_requested}</TableCell>
+                    <TableCell>
+                        <input 
+                        type="number" name={row.id} min="0"
+                        value={
+                            qtyRcdPharma[row.id]
+                        }
+                        default={9}
+                        onChange={(event)=>{
+                            setQtyRcdPharma(qtyRcdPharma => (
+                                {...qtyRcdPharma, [event.target.name]: event.target.value}
+                            ));
+                        }}
+                        >
+                        </input>
+                    </TableCell>
+                    <TableCell>
+                        <input 
+                        type="number" name={row.id} min="0"
+                        value={
+                            qtySupplied[row.id]
+                        }
+                        default={9}
+                        onChange={(event)=>{
+                            setQtySupplied(qtySupplied => (
+                                {...qtySupplied, [event.target.name]: event.target.value}
+                            ));
+                        }}
+                        >
+                        </input>
+                    </TableCell>
+                    </TableRow>
+                ))
+            : ""}
+
+                
+            </TableBody>
+        </Table>
+        <div style={{padding:"10px"}}>
+            <Grid container >
+                <Grid item xs={10}>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Remarks"
+                        style={{width:"95%"}}
+                        multiline
+                        rows={4}
+                        // cols={12}
+                        // defaultValue="Default Value"
+                        placeholder="enter comments/remarks"
+                        variant="outlined"
+                    />
+                </Grid>
+            
+                <Grid item xs={2} style={{padding:"3.5%"}}>
+
+                <Button variant="contained" color="primary"
+                    onClick={()=>(
+                        console.log("******submitting*********")
+                        ,console.log(JSON.stringify({
+                            code         : myvar,
+                            A_1_qty      :qtySupplied['1'],
+                            // A_1_remarks  :A_1_remarks,
+                            A_2A_qty      :qtySupplied['2A'],
+                            // A_2A_remarks  :A_2A_remarks,
+                            A_2B_qty      :qtySupplied['2B'],
+                            // A_2B_remarks  :A_2B_remarks,
+                            A_3A_qty      :qtySupplied['3A'],
+                            // A_3A_remarks  :A_3A_remarks,
+                            A_3B_qty      :qtySupplied['3B'],
+                            // A_3B_remarks  :A_3B_remarks, 
+                            A_1_qty_rcd      :qtyRcdPharma['1'],
+                            A_2A_qty_rcd      :qtyRcdPharma['2A'],
+                            A_2B_qty_rcd      :qtyRcdPharma['2B'],
+                            A_3A_qty_rcd      :qtyRcdPharma['3A'],
+                            A_3B_qty_rcd      :qtyRcdPharma['3B'],
+
+                        }))
+                        ,fetch(SUBMIT_FORM_API,
+                            {
+                                // credentials: 'include',
+                                credentials: 'omit',
+                                method:'PATCH',
+                                headers: {
+                                Accept: 'application/json',
+                                "Content-Type": 'application/json',
+                            },
+                                body: JSON.stringify({
+                                    code         : myvar,
+                                    A_1_qty      :qtySupplied['1'],
+                                    // A_1_remarks  :A_1_remarks,
+                                    A_2A_qty      :qtySupplied['2A'],
+                                    // A_2A_remarks  :A_2A_remarks,
+                                    A_2B_qty      :qtySupplied['2B'],
+                                    // A_2B_remarks  :A_2B_remarks,
+                                    A_3A_qty      :qtySupplied['3A'],
+                                    // A_3A_remarks  :A_3A_remarks,
+                                    A_3B_qty      :qtySupplied['3B'],
+                                    // A_3B_remarks  :A_3B_remarks,
+                                    A_1_qty_rcd      :qtyRcdPharma['1'],
+                                    A_2A_qty_rcd      :qtyRcdPharma['2A'],
+                                    A_2B_qty_rcd      :qtyRcdPharma['2B'],
+                                    A_3A_qty_rcd      :qtyRcdPharma['3A'],
+                                    A_3B_qty_rcd      :qtyRcdPharma['3B'],
+                                }),
+                            })
+                        )}
+
+                        // .then((result)=>{store.addNotification({
+                        //     title: "Success",
+                        //     message: "Request added successfully",
+                        //     type: "success",
+                        //     insert: "top",
+                        //     container: "bottom-right",
+                        //     animationIn: ["animate_animated", "animate_fadeIn"],
+                        //     animationOut: ["animate_animated", "animate_fadeOut"],
+                        //     dismiss: {
+                        //       duration: 5000,
+                        //       onScreen: true
+                        //     }
+                        //   });console.log("Success===:",result)})
+                        // .catch((error)=>{store.addNotification({
+                        //     title: "Failed",
+                        //     message: "Request could not be added",
+                        //     type: "danger",
+                        //     insert: "top",
+                        //     container: "bottom-right",
+                        //     animationIn: ["animate_animated", "animate_fadeIn"],
+                        //     animationOut: ["animate_animated", "animate_fadeOut"],
+                        //     dismiss: {
+                        //       duration: 5000,
+                        //       onScreen: true
+                        //     }
+                        //   });console.log("Error===:",error)})
+                >Submit</Button>
+                </Grid>
+            </Grid>
+        </div>
         </div>
         )
     }
