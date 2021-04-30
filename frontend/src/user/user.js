@@ -11,7 +11,7 @@ import PatientDetails from "../patient/patientDetails";
 import './user.css';
 import { withRouter } from "react-router";
 import {Button,Table,TableBody,TableCell,Grid,TextField,Typography} from '@material-ui/core';
-
+import { token } from '../login/login.js';
 const history = createBrowserHistory();
 // const location = useLocation(); 
 // string myvar;
@@ -123,7 +123,10 @@ const HotPOContainer = styled.div`
 `;
 
 export default class User extends Component{
-
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
   state = {
       patients:[],
       selected_patient:"",
@@ -147,6 +150,18 @@ export default class User extends Component{
     console.log("data",req_data)
     console.log("Patients",this.state.patients)
     // this.timer = setInterval(() => this.fetchUsers(), 5000);
+}
+logout(){
+  console.log({token});
+  console.log(this.props.location.state.detail);
+  var x="Authorization: Token "+this.props.location.state.detail;
+  const requestOptions = {
+    method: 'POST',
+    body: x,
+};
+  let LOGOUT_API='http://127.0.0.1:8000/api/logout';
+  console.log(x);
+  const response=fetch(LOGOUT_API,requestOptions);
 }
 
     render()
@@ -176,8 +191,10 @@ export default class User extends Component{
                     <button className="fs-16" style={{background:'none',border:'none',boxShadow:'none', textDecoration: "none", color: "white" }}>
                     Welcome!
                     </button>
+                    <Button onClick={this.logout} >Logout</Button>
                  </span>                
                 <span style={help}>
+                  
               </span>
             </Row>
     {

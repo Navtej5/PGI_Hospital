@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import logo from '.././logo.svg';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory({forceRefresh:true});
-
+var token;
 const Input=styled.input`
   width:100%;
   height: 35px;
@@ -86,8 +86,13 @@ export default class Login extends Component{
       alert("Username or Password Incorrect")
     }
     else{
+      token=data["token"];
+      console.log(token);
       if(data["user"]["category"]=="Nurse"){
-        history.push("/user");
+        history.push({
+          pathname: '/user',
+          state: { detail: data['token'] }
+      });
         console.log("yoo");
       }
       else if(data["user"]["category"]=="Consultant"){
@@ -148,3 +153,4 @@ export default class Login extends Component{
         )
     }
 } 
+export {token};
