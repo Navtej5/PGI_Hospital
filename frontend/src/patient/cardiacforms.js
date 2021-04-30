@@ -40,6 +40,17 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import FormA from './formA';
 import FormB from './formB';
 import {myvar} from '../user/user.js';
+
+import Title from '../user/dashboard/Title'
+
+
+const readable = {
+  "Pending":"Pending Approval",
+  "Approved":"Approved by Consultant",
+  "ReceivedFromPharma":"Requested Inventory Received",
+  "SentToPharma":"Inventory Ordered and Waiting for delivery",
+  "Completed":"Completed",
+};
 // export const mainListItems = (
 //   <div>
 //     <ListItem button>
@@ -210,6 +221,8 @@ export default function CardiacForm(props) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  console.log("$$$$$$$$$$$$$$$$$$\ndocnumber:",props.location.docnumber,"\nstage:",props.location.stage);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -302,6 +315,7 @@ export default function CardiacForm(props) {
         <Container maxWidth="lg" className={classes.container}>
             {form===0? 
           <Grid item xs={12}>
+            <Title>{readable[props.location.stage]}</Title>
           <Paper className={classes.paper}>
             <FormA docnumber={props.match.params.docnumber}/>
           </Paper>
@@ -311,6 +325,7 @@ export default function CardiacForm(props) {
 }
 {form===1?
     <Grid item xs={12}>
+      <Title>{readable[props.location.stage]}</Title>
               <Paper className={classes.paper}>
                 <FormB docnumber={props.match.params.docnumber}/>
               </Paper>

@@ -2,7 +2,7 @@ from django.urls import path, include
 from knox.views import LogoutView
 from .views import CombineCardiacView,export_form,UpdateRequestRemarksView,GetPatientTable,GetPatients,PatientView,GetRequestTable,RequestView,LoginAPIView,ViewRequestTable,RegisterAPIView,ViewCardiacRequestTable, GetCardiacRequestTable,UpdateCardiacFormAView,UpdateCardiacFormBView, ViewCardiacSuppliedTable,UpdateCardiacSuppliedFormAView,UpdateCardiacSuppliedFormBView
 urlpatterns = [
-    #path('',include('frontend.urls')),
+    # path('',include('frontend.urls')),
     # path('users',UsersView.as_view()),
     # path('get-user',GetOneUser.as_view()),
     # path('get-user-table',GetUserTable.as_view()),

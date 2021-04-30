@@ -74,7 +74,7 @@ export default function ReturnedFormB(props) {
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
             var qty_supplied = form["**Supplied**"][0][col5];
-            var difference=qty_requested-qty_supplied;
+            var difference = qty_supplied-qty_requested;
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_supplied}
             ));
@@ -200,14 +200,14 @@ export default function ReturnedFormB(props) {
                             </input>
                         </TableCell>
                         
-                        {row.difference > 0?
+                        {row.difference < 0?
                         <TableCell style={{background:"#fc6456"}}>{row.difference}</TableCell>
                         :""}
-                        {row.difference < 0?
+                        {row.difference > 0?
                         <TableCell style={{background:"yellow"}}>{row.difference}</TableCell>
                         :""}
                         {row.difference == 0?
-                        <TableCell style={{background:"#6bff89"}}>{row.difference}</TableCell>
+                        <TableCell style={{background:"#23ff4f"}}>{row.difference}</TableCell>
                         :""}
 
                         {/* <TableCell></TableCell> */}

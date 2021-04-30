@@ -1,27 +1,29 @@
 import React, {Component,useEffect} from "react";
 import {Row} from "simple-flexbox";
 import {Link} from "react-router-dom";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 import { createBrowserHistory } from 'history';
 import PatientDetails from "../patient/patientDetails";
 // import { useLocation } from "react-router-dom";
 import './user.css';
 import { withRouter } from "react-router";
-import { TextField } from "@material-ui/core";
-
+import {Button,Table,TableBody,TableCell,Grid,TextField,Typography} from '@material-ui/core';
 
 const history = createBrowserHistory();
 // const location = useLocation(); 
-
 // string myvar;
 var myvar;
+
+const readable = {
+  "Pending":"Pending Approval",
+  "Approved":"Approved by Consultant",
+  "ReceivedFromPharma":"Requested Inventory Received",
+  "SentToPharma":"Inventory Ordered and Waiting for delivery",
+  "Completed":"Completed",
+};
 
 const headerleft = {
     flexGrow: "1",
@@ -318,15 +320,15 @@ export default class User extends Component{
                   <li class='table-row'>
                 <HotPOContainer>
                   <TableRowContainer className="row"
-                  style={{marginLeft:"10px",width:"300px",height:"22px",maxWidth:"300px"}}
+                  style={{marginLeft:"10px",width:"500px",height:"22px",maxWidth:"300px"}}
                   onClick={()=>(
                     this.setState({selected_request:request})
                   )} 
                   >
-                    <div style={{width:"200px",marginTop:"0px",fontFamily: "Roboto",fontSize: "16px",fontWeight: "400",color: "#000"}}>
+                    <div style={{width:"800px",marginTop:"0px",fontFamily: "Roboto",fontSize: "16px",fontWeight: "400",color: "#000"}}>
                     &emsp;
                     {/* {request.crnumber}- */}
-                    {request.docnumber}-{request.wardadhaar}
+                    {request.docnumber} - {request.wardadhaar} - {readable[request.state]}
                     </div>
                   
                     {/* <Link to={{
@@ -360,11 +362,31 @@ export default class User extends Component{
 
       <div style={{marginLeft:"850px",marginTop:"-350px",width:"650px",height:"300px"}} class="container">
           <h2 style={{marginLeft:"-50px"}}>Request Details</h2>
-          {/* <Link to={{
-              pathname: '/form',
-              state: {dnumber : this.state.selected_request.docnumber}
-            }}> */}
-          {this.state.selected_request.state=="Pending"?(
+          
+          <Grid container spacing={1}>
+            <Grid item xs={6} style={{alignItems:"center",justifyContent:"left",display:"flex"}}>
+              {/* <Button disabled variant="text" style={{color:"black",textTranform:"none"}}>  */}
+                STATUS :  {readable[this.state.selected_request.state]}
+              {/* </Button> */}
+              
+            </Grid>
+            <Grid item xs={6}>
+              
+              <Link to={{
+                pathname:
+                (this.state.selected_request.state=="Pending"?'/form/':'/returned/')+this.state.selected_request.docnumber,
+                docnumber: this.state.selected_request.docnumber,
+                stage: this.state.selected_request.state,
+              }
+              }>
+              <Button color="primary" variant="contained">
+                View Details
+              </Button>
+              </Link>
+            </Grid>
+          </Grid>
+
+          {/* {this.state.selected_request.state=="Pending"?(
           <Link to={'/form/'+this.state.selected_request.docnumber}>
           <Button color="primary" variant="contained"
               style={{align:"center",marginLeft:"250px"}} 
@@ -387,7 +409,7 @@ export default class User extends Component{
               Returned
             </Button>  
           </Link>:""
-          }
+          } */}
 
           <Table 
           // style={{marginTop:"150px",marginLeft:"400px",width:"650px"}}
