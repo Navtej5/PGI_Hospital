@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 // import { useLocation } from "react-router";
 import { store } from 'react-notifications-component';
-
+import axios from 'axios';
 import {myvar} from '../user/user.js';
 
 const history = createBrowserHistory();
@@ -38,7 +38,21 @@ const Input = styled.input`
 export default function FormA(props) {
 
     const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-forma/'
-
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    var temp;
+    const fetchreq = async () => {
+       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber)
+    }
+    const patchreq = async () => {
+        temp.data.remarksfromconsultant = remarkfc;
+        temp.data.notificationbit = true;
+        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+     }
+    useEffect(() => {
+        // console.log(myvar);
+        fetchreq();
+    });
     // useEffect(() => {
     //     console.log(myvar);
     // });
@@ -86,6 +100,7 @@ export default function FormA(props) {
     //       }
     //     console.log("value=>",str_3A);
     // }
+    const [remarkfc,setreamarkfc]=React.useState("_")
     const [A_1_descr,setA_1_descr]=React.useState("_")
     const [A_1_brand,setA_1_brand]=React.useState("_")
     const [A_1_qty,setA_1_qty]=React.useState("0")
@@ -442,6 +457,7 @@ export default function FormA(props) {
                         // defaultValue="Default Value"
                         placeholder="enter comments/remarks"
                         variant="outlined"
+                        onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>
                 
@@ -453,6 +469,7 @@ export default function FormA(props) {
                     // console.log('values====>\ncompany_name:',A_3A_brand,'\nQty_required:',A_3A_qty,'\nSpecification:',A_3A_descr,'\nRemarks:',A_3A_remarks,"\n------------- ",props.docnumber,"\n----------------")
                     //,console.log(testhandle(checkboxSelected_1),"---",testhandle(checkboxSelected_2),"---",testhandle(checkboxSelected_3),"---",testhandle(checkboxSelected_4))
                     console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
+                    ,patchreq()
                     ,final_a1brand=testhandle(checkboxSelected_3)
                     ,final_a2a_descr=testhandle(checkboxSelected_2)
                     ,final_a3abrand=testhandle(checkboxSelected_1)
