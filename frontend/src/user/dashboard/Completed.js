@@ -86,7 +86,7 @@ export default function Approved() {
         if(books[i].state != "Completed")continue;
         var naam = books[i].patientname;
         var ward = books[i].wardadhaar;
-        var link = "insert link here";
+        var link = "see details";
         var doc = books[i].docnumber;
         var booktemp = books[i];
         var tog = booktemp;
@@ -135,7 +135,7 @@ export default function Approved() {
                     pathname:"/cardiacform_um/"+row.doc,
                     formsProps:{
                       mode:"view_only",
-                      from:"Completed"
+                      from:"Completed_cons"
                     }
                   }}
                 >

@@ -64,8 +64,14 @@ export default function FormA_um(props) {
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
-            var qty_supplied = form["**Supplied**"][0][col4];
-            var qty_from_pharma = form["**Supplied**"][0][col5];
+            if(form["**Supplied**"].length>0){
+                var qty_supplied = form["**Supplied**"][0][col4];
+                var qty_from_pharma = form["**Supplied**"][0][col5];
+            }
+            else{
+                var qty_supplied = 0;
+                var qty_from_pharma = 0;
+            }
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_supplied}
             ));
@@ -235,7 +241,7 @@ export default function FormA_um(props) {
 
     return(
 
-        props.mode.mode == "view_only" ?
+        props.formsProps.mode == "view_only" ?
         
         <div> 
             <Table> {

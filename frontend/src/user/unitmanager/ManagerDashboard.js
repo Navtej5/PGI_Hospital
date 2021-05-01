@@ -197,9 +197,9 @@ export default function ManagerDashboard() {
               <NotificationsIcon />
             </Badge>
           </IconButton> */}
-          <Link to="/unitmandash">
+          <Link to="/">
           <Button variant="contained" color="secondary">
-            Go Back
+            Logout
           </Button>
           </Link>
         </Toolbar>

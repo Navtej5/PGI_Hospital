@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button';
 import React, { useState , useEffect} from 'react';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -91,7 +91,7 @@ export default function Approved() {
         if(books[i].state != "Approved")continue;
         var naam = books[i].patientname;
         var ward = books[i].wardadhaar;
-        var link = "insert link here";
+        var link = "see details";
         var doc = books[i].docnumber;
         var booktemp = books[i];
         var remarks = books[i].remarksfromconsultant;
@@ -123,7 +123,7 @@ export default function Approved() {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-            <TableCell>REMARKS</TableCell>
+            {/* <TableCell>REMARKS</TableCell> */}
             <TableCell>ACTION</TableCell>
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
@@ -136,20 +136,32 @@ export default function Approved() {
               <TableCell>{row.doc}</TableCell>
               <TableCell>{row.naam}</TableCell>
               <TableCell>{row.ward}</TableCell>
-              <TableCell>{row.link}</TableCell>
               <TableCell>
-                <input type="text"
-                  // value={tempstring}
-                  // value = {rows[idx].remarks}
-                  // onChange={(event)=>{
-                    // setRows(...rows,[rows[idx].remarks]:event.target.value)
-                    // row.remarks = event.target.value;
-                    // console.log("newremarks => ",row.remarks);
-                    // setTempString(event.target.value);
-                    // console.log(tempstring);
-                  // }}
-                ></input>
-              </TableCell>   
+              <Link 
+                  to={{
+                    pathname:"/cardiacform_um/"+row.doc,
+                    formsProps:{
+                      mode:"view_only",
+                      from:"approved_cons"
+                    }
+                  }}
+                >
+                {row.link}
+              </Link>
+              </TableCell>
+              {/* <TableCell> */}
+                {/* <input type="text"
+                  value={tempstring}
+                  value = {rows[idx].remarks}
+                  onChange={(event)=>{
+                    setRows(...rows,[rows[idx].remarks]:event.target.value)
+                    row.remarks = event.target.value;
+                    console.log("newremarks => ",row.remarks);
+                    setTempString(event.target.value);
+                    console.log(tempstring);
+                  }}
+                ></input> */}
+              {/* </TableCell> */}
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant="contained" 

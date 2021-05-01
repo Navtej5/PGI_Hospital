@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link } from "react-router-dom";
+import {Link, useHistory } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,6 +40,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import FormA_um from './formA_um';
 import FormB_um from './formB_um';
 import {myvar} from '../user.js';
+
+
 // export const mainListItems = (
 //   <div>
 //     <ListItem button>
@@ -199,6 +201,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardiacForm_um(props) {
+  let history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [form,setForm]=React.useState(0)
@@ -233,11 +236,11 @@ export default function CardiacForm_um(props) {
               <NotificationsIcon /> 
             </Badge>
           </IconButton> */}
-          <Link to="/unitmandash">
-          <Button variant="contained" color="secondary">
+          {/* <Link to="/unitmandash"> */}
+          <Button variant="contained" color="secondary" onClick={()=>history.goBack()}>
             Go Back
         </Button>
-        </Link>
+        {/* </Link> */}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -304,7 +307,7 @@ export default function CardiacForm_um(props) {
             {form===0? 
           <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <FormA_um docnumber={props.match.params.docnumber} mode={props.location.formsProps}/>
+            <FormA_um docnumber={props.match.params.docnumber} formsProps={props.location.formsProps}/>
           </Paper>
         </Grid>
           :
@@ -313,7 +316,7 @@ export default function CardiacForm_um(props) {
 {form===1?
     <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <FormB_um docnumber={props.match.params.docnumber} mode={props.location.formsProps}/>
+                <FormB_um docnumber={props.match.params.docnumber} formsProps={props.location.formsProps}/>
               </Paper>
             </Grid>
 :""}

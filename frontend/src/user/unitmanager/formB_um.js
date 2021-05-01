@@ -58,7 +58,7 @@ export default function FormB_um(props) {
 
         var x;
         var temp = [];
-        var ids = ['1','2A','2B','3A','3B','3C','3D']
+        var ids = ['1','2A','2B','3A','3B','3C','3D'];
         for (x = 0; x < ids.length; x++){
             
             var col1 = "B_"+ids[x]+"_name";
@@ -144,7 +144,7 @@ export default function FormB_um(props) {
 
     return(
 
-        props.mode.mode == "view_only" ?
+        props.formsProps.mode == "view_only" ?
             <div>
                 
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}

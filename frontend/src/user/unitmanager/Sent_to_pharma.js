@@ -92,7 +92,7 @@ export default function ReceivedFromPharma() {
         if(books[i].state != "SentToPharma")continue;
         var naam = books[i].patientname;
         var ward = books[i].wardadhaar;
-        var link = "click here";
+        var link = "see details";
         var doc = books[i].docnumber;
         var booktemp = books[i];
         var tog = booktemp;

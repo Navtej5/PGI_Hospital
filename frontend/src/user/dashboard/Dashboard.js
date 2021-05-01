@@ -216,12 +216,10 @@ export default function Dashboard() {
               <NotificationsIcon />
             </Badge>
           </IconButton> */}
-           <Link to="/user">
-          
+           <Link to="/">
           <Button variant="contained" color="secondary">
-            Go Back
+            Logout
           </Button>
-          
           </Link>
         </Toolbar>
       </AppBar>
