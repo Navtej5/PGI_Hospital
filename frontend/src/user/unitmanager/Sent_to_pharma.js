@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ReceivedFromPharma() {
+export default function ReceivedFromPharma(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
@@ -125,7 +125,8 @@ export default function ReceivedFromPharma() {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-            <TableCell>ACTION</TableCell>
+            {props.fromUser=="unitman"?
+              <TableCell>ACTION</TableCell>:""}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
         </TableHead>
@@ -147,20 +148,17 @@ export default function ReceivedFromPharma() {
                     }
                   }}
                 >
-                  {/* <Button>click</Button> */}
-                  here
-                  {/* {row.link} */}
+                  {row.link}
                 </Link>
               </TableCell>   
-              <TableCell>
+              {props.fromUser=="unitman"?<TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
-      axios.patch(updateURL+row.doc,row.tog); 
-      }} >
-      Received
-      </Button>
-          
-                </TableCell>
+              axios.patch(updateURL+row.doc,row.tog); 
+              }} >
+              Received
+              </Button>
+              </TableCell>:""}
               {/* <TableCell>{row.doc}</TableCell>    */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>

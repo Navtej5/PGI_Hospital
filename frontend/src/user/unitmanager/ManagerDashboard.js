@@ -301,28 +301,28 @@ export default function ManagerDashboard() {
                   {choose==0?
                   <div>
                     <Title>Approved Requests</Title>
-                      <Approved />
+                      <Approved fromUser="unitman"/>
                   </div>
                       
                   :""}
                   {choose==3?
                     <div>
                     <Title>Completed Requests</Title>
-                    <Completed />
+                    <Completed fromUser="unitman"/>
                     </div>
                   :""}
 
                   {choose==1?
                     <div>
                     <Title>Requests sent to pharmacy</Title>
-                    <SentToPharma />
+                    <SentToPharma fromUser="unitman"/>
                     </div>
                   :""}
 
                   {choose==2?
                     <div>
-                    <Title>Received from pharmacy (Pending Audit)</Title>
-                    <ReceivedFromPharma />
+                    <Title>Received from Pharmacy (Audit Pending)</Title>
+                    <ReceivedFromPharma fromUser="unitman"/>
                     </div>
                   :""}
                 </Paper>

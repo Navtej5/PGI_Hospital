@@ -36,6 +36,8 @@ import Pending from './Pending';
 import Completed from './Completed';
 // import Orders from './Pending';
 import Switch from "react-switch";
+import ReceivedFromPharma from '../unitmanager/received_from_pharma';
+import SentToPharma from '../unitmanager/Sent_to_pharma';
 
 // class SwitchExample extends Component {
 //   constructor() {
@@ -254,8 +256,25 @@ export default function Dashboard() {
                         </ListItemIcon>
                         <ListItemText primary="Approved" />
                       </ListItem>
+
                       {/* <SwitchExample /> */}
                       <ListItem button onClick={()=>{ setChoose(2) }} selected= {choose==2}>
+                        <ListItemIcon>
+                        <AssignmentIcon />
+                          {/* <ShoppingCartIcon /> */}
+                        </ListItemIcon>
+                        <ListItemText primary="Sent to Pharmacy" />
+                      </ListItem>
+
+                      <ListItem button onClick={()=>{ setChoose(3) }} selected= {choose==3}>
+                        <ListItemIcon>
+                        <AssignmentIcon />
+                          {/* <ShoppingCartIcon /> */}
+                        </ListItemIcon>
+                        <ListItemText primary="Received from Pharmacy" />
+                      </ListItem>
+
+                      <ListItem button onClick={()=>{ setChoose(4) }} selected= {choose==4}>
                         <ListItemIcon>
                           <AssignmentIcon />
                           {/* <PeopleIcon /> */}
@@ -305,19 +324,31 @@ export default function Dashboard() {
                   {choose===0?
                       <div>
                         <Title>Pending Requests</Title>
-                        <Pending />
+                        <Pending fromUser="consultant"/>
                       </div>
                   :""}
                   {choose===1?
                       <div>
                         <Title>Approved Requests</Title>
-                        <Approved />
+                        <Approved fromUser="consultant"/>
                       </div>
                   :""}
                   {choose===2?
                       <div>
+                        <Title>Requests sent to pharmacy</Title>
+                        <SentToPharma fromUser="consultant"/>
+                      </div>
+                  :""}
+                  {choose===3?
+                      <div>
+                        <Title>Received from Pharmacy (Audit Pending)</Title>
+                        <ReceivedFromPharma fromUser="consultant"/>
+                      </div>
+                  :""}
+                  {choose===4?
+                      <div>
                         <Title>Completed Requests</Title>
-                        <Completed />
+                        <Completed fromUser="consultant"/>
                       </div>
                   :""}
                 </Paper>

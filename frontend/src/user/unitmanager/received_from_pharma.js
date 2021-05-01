@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SentToPharma() {
+export default function SentToPharma(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
@@ -96,7 +96,8 @@ export default function SentToPharma() {
         var doc = books[i].docnumber;
         var booktemp = books[i];
         var tog = booktemp;
-        temp.push({doc,ward,naam,link,tog});
+        var stage = books[i].state;
+        temp.push({doc,ward,naam,link,tog,stage});
       } 
       setRows(temp);
       // console.log("temp==>\n",temp);
@@ -125,7 +126,9 @@ export default function SentToPharma() {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
+            {props.fromUser == "unitman"?
             <TableCell>ACTION</TableCell>
+            :""}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
         </TableHead>
@@ -147,11 +150,11 @@ export default function SentToPharma() {
                     }
                   }}
                 >
-                  {/* <Button>click</Button> */}
-                  here
-                  {/* {row.link} */}
+                  {/* {row.stage} */}
+                  {row.link}
                 </Link>
               </TableCell>   
+              {props.fromUser=="unitman"?
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant = "contained"onClick={()=>{ row.tog.state = "Completed";
@@ -159,8 +162,8 @@ export default function SentToPharma() {
       }} >
       Move to Completed
       </Button>
-          
-                </TableCell>
+          </TableCell>
+          :""}
               {/* <TableCell>{row.doc}</TableCell>    */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
