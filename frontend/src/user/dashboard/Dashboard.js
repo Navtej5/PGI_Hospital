@@ -28,7 +28,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import Title from './Title'
-
+import { createBrowserHistory } from 'history';
 import Chart from './Chart';
 // import Deposits from './Deposits';
 import Approved from './Approved';
@@ -38,7 +38,7 @@ import Completed from './Completed';
 import Switch from "react-switch";
 import ReceivedFromPharma from '../unitmanager/received_from_pharma';
 import SentToPharma from '../unitmanager/Sent_to_pharma';
-
+const history = createBrowserHistory({forceRefresh:true});
 // class SwitchExample extends Component {
 //   constructor() {
 //     super();
@@ -177,7 +177,10 @@ export default function Dashboard() {
     setChecked(true);
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const logout=(async)=>{
+    localStorage.clear();
+    history.push("/");
+  }
   const SwitchExample = () => {
     // render() {
       return (
@@ -219,7 +222,7 @@ export default function Dashboard() {
             </Badge>
           </IconButton> */}
            <Link to="/">
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onclick={logout}>
             Logout
           </Button>
           </Link>

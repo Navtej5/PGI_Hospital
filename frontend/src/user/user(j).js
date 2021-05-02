@@ -1,4 +1,3 @@
-
 import React, {Component,useEffect} from "react";
 import {Row} from "simple-flexbox";
 import {Link} from "react-router-dom";
@@ -10,12 +9,10 @@ import { createBrowserHistory } from 'history';
 import PatientDetails from "../patient/patientDetails";
 // import { useLocation } from "react-router-dom";
 import './user.css';
-//import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router";
 import {Button,Table,TableBody,TableCell,Grid,TextField,Typography} from '@material-ui/core';
 import { token } from '../login/login.js';
-//const history = createBrowserHistory();
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory();
 // const location = useLocation(); 
 // string myvar;
 var myvar;
@@ -124,12 +121,10 @@ const HotPOContainer = styled.div`
   min-width: 49%;
   margin-left: 1%;
 `;
-//const history2 = useHistory();
+
 export default class User extends Component{
-  //let history2 = useHistory();
   constructor(props) {
     super(props);
-    //le history2 = useHistory();
     this.logout = this.logout.bind(this);
   }
   state = {
@@ -140,7 +135,7 @@ export default class User extends Component{
       patient_search:"",
       request_search:"",
     }
-  // var history2 = useHistory();
+
 
   async componentDidMount() {
     let PATIENT_TABLE_API='http://127.0.0.1:8000/api/get-patient-table';
@@ -158,20 +153,17 @@ export default class User extends Component{
     console.log("Patients",this.state.patients)
     // this.timer = setInterval(() => this.fetchUsers(), 5000);
 }
-
-logout=(async)=>{
-  localStorage.clear();
-  history.push("/");
-//   console.log({token});
-//   console.log(this.props.location.state.detail);
-//   var x="Authorization: Token "+this.props.location.state.detail;
-//   const requestOptions = {
-//     method: 'POST',
-//     body: x,
-// };
-//   let LOGOUT_API='http://127.0.0.1:8000/api/logout';
-//   console.log(x);
-//   const response=fetch(LOGOUT_API,requestOptions);
+logout(){
+  console.log({token});
+  console.log(this.props.location.state.detail);
+  var x="Authorization: Token "+this.props.location.state.detail;
+  const requestOptions = {
+    method: 'POST',
+    body: x,
+};
+  let LOGOUT_API='http://127.0.0.1:8000/api/logout';
+  console.log(x);
+  const response=fetch(LOGOUT_API,requestOptions);
 }
 
     render()
@@ -227,7 +219,7 @@ logout=(async)=>{
             onChange={(event)=>(this.setState({patient_search:event.target.value}))}
             />
             <Button
-            style={{marginLeft:"400px",marginTop:"-43px"}}
+            style={{marginLeft:"200px",marginTop:"17px"}}
             onClick={()=>{
               var list = this.state.patients;
               list.sort((a, b) => a.name.localeCompare(b.name))
@@ -330,7 +322,7 @@ logout=(async)=>{
             onChange={(event)=>(this.setState({request_search:event.target.value}))}
             />
             <Button
-            style={{marginLeft:"400px",marginTop:"-43px"}}
+            style={{marginLeft:"200px",marginTop:"17px"}}
             onClick={()=>{
               var list = this.state.requests;
               list.sort((a, b) => a.crnumber.localeCompare(b.crnumber))

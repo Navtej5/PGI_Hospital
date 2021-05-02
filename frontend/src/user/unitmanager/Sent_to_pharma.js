@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import Switch from "react-switch";
 import axios from 'axios';
+import {TextField} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { createBrowserHistory } from 'history';
 import { Link} from "react-router-dom";
@@ -72,6 +73,7 @@ export default function ReceivedFromPharma(props) {
 
   const [books, setBooks] = React. useState(null);
   const [rows, setRows] = React. useState(createData(123323427897,11,"atul","yo","sfsdf"));
+  const [patientSearch,setPatientSearch] = React.useState("");
   const dobutton = async (docnumber,i,books) => {
     books[i].state = "Pending";
     axios.patch(updateURL+docnumber,books[i]);
@@ -116,6 +118,9 @@ export default function ReceivedFromPharma(props) {
 
   return (
     <React.Fragment>
+      <TextField id="filled-basic" label="Patient Name" variant="filled"
+      onChange={(event) => (setPatientSearch(event.target.value))}
+      />
       
       {/* <Title>Requests</Title> */}
       <Table size="small">
@@ -134,6 +139,8 @@ export default function ReceivedFromPharma(props) {
 
           {rows.length>0 ? 
           rows.map((row) => (
+              row.naam.toLowerCase().includes(patientSearch.toLowerCase()) || row.doc.includes(patientSearch.toLowerCase()) || row.ward.toString().includes(patientSearch.toLowerCase())?
+
             <TableRow key={row.doc}>
               <TableCell>{row.doc}</TableCell>
               <TableCell>{row.naam}</TableCell>
@@ -162,6 +169,8 @@ export default function ReceivedFromPharma(props) {
               {/* <TableCell>{row.doc}</TableCell>    */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
+            :
+            ""
           ))
           : ""}
         </TableBody>

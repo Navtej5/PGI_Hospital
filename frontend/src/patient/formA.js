@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 // import { useLocation } from "react-router";
 import { store } from 'react-notifications-component';
+import axios from 'axios';
 
 import {myvar} from '../user/user.js';
 
@@ -38,7 +39,84 @@ const Input = styled.input`
 export default function FormA(props) {
 
     const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-forma/'
+    var form = []
+    const fetchData = async () => {
+        const PREVIOUSLY_FILLED = "http://127.0.0.1:8000/api/get-cardiac-request-table/"+props.docnumber
+        const response = await axios.get(PREVIOUSLY_FILLED)
+        form = await response.data;
+        console.log("response",form);
 
+        setA_1_qty(form.A_1_qty)
+        setA_1_descr(form.A_1_descr)
+        setA_1_brand(form.A_1_brand)
+        let brands = form.A_1_brand.split(";")
+        console.log("SPLIT:",brands)
+        if(brands.includes("helena lab"))
+        {
+            setCheckboxSelected_3({"helena Lab": true})
+            setCheckboxSelected_3({...checkboxSelected_3,["helena Lab"]: true});
+        }
+        else{
+            console.log("Not here h")
+        }
+        if(brands.includes("beaumount texas"))
+        {
+            setCheckboxSelected_3({"Beaumont Texas": true})
+            setCheckboxSelected_3({["Beaumont Texas"]: true})
+            setCheckboxSelected_3({...checkboxSelected_3,["Beaumont Texas"]: true});
+            setCheckboxSelected_3({...checkboxSelected_3,"Beaumont Texas": true});
+        }
+        else{
+            console.log("Not here B")
+        }
+        setA_1_qty(form.A_1_qty)
+        setA_1_remarks(form.A_1_remarks)
+        setA_2A_descr(form.A_2A_descr)
+        setA_2A_brand(form.A_2A_brand)
+        setA_2A_qty(form.A_2A_qty)
+        setA_2A_remarks(form.A_2A_remarks)
+        setA_2B_descr(form.A_2B_descr)
+        setA_2B_brand(form.A_2B_brand)
+        setA_2B_qty(form.A_2B_qty)
+        setA_2B_remarks(form.A_2B_remarks)
+        setA_3A_descr(form.A_3A_descr)
+        setA_3A_brand(form.A_3A_brand)
+        setA_3A_qty(form.A_3A_qty)
+        setA_3A_remarks(form.A_3A_remarks)
+        setA_3B_descr(form.A_3B_descr)
+        setA_3B_brand(form.A_3B_brand)
+        setA_3B_qty(form.A_3B_qty)
+        setA_3B_remarks(form.A_3B_remarks)
+        setA_4_descr(form.A_4_descr)
+        setA_4_brand(form.A_4_brand)
+        setA_4_qty(form.A_4_qty)
+        setA_4_remarks(form.A_4_remarks)
+        console.log("A1DESCR:",A_1_descr)
+    }
+
+    console.log("globe");
+    useEffect(()=>{
+        console.log("in use effect");  
+        fetchData();
+    },[])
+
+
+
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    var temp;
+    const fetchreq = async () => {
+       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber)
+    }
+    const patchreq = async () => {
+        temp.data.remarksfromconsultant = remarkfc;
+        temp.data.notificationbit = true;
+        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+     }
+    useEffect(() => {
+        // console.log(myvar);
+        fetchreq();
+    });
     // useEffect(() => {
     //     console.log(myvar);
     // });
@@ -86,6 +164,7 @@ export default function FormA(props) {
     //       }
     //     console.log("value=>",str_3A);
     // }
+    const [remarkfc,setreamarkfc]=React.useState("_")
     const [A_1_descr,setA_1_descr]=React.useState("_")
     const [A_1_brand,setA_1_brand]=React.useState("_")
     const [A_1_qty,setA_1_qty]=React.useState("0")
@@ -220,12 +299,18 @@ export default function FormA(props) {
                         <TableCell >1</TableCell>
                         <TableCell >ACT Tubes</TableCell>
                         <TableCell >
+                            {
+                            A_1_descr != "_"?
                             <Select 
+                            defaultValue={A_1_descr}
                             onChange={(event)=>(setA_1_descr(event.target.value))}>     
                                 <option value="volvo">Volvo</option>
                                 <option value="Compatible to our machine">Compatible to our machine</option>
                                 <option value="other">other</option>
                             </Select> 
+                            :
+                            ""
+                            }
                         </TableCell>
                         <TableCell >
                         {
@@ -238,7 +323,7 @@ export default function FormA(props) {
                             </div>
                         </TableCell>
                         <TableCell >
-                        <input type="number" val="10" onChange={(event)=>(setA_1_qty(event.target.value))}></input>
+                        <input type="number" value={A_1_qty} onChange={(event)=>(setA_1_qty(event.target.value))}></input>
                         </TableCell>
                         {/* <TableCell >
                             <input val={A_1_remarks} onChange={(event)=>(setA_1_remarks(event.target.value))}></input>
@@ -258,13 +343,20 @@ export default function FormA(props) {
                             </div>
                         </TableCell>
                         <TableCell >
-                            <Select onChange={(event)=>(setA_2A_brand(event.target.value))}> 
+                            {
+                            A_2A_brand != "_"?
+                            <Select 
+                            defaultValue = {A_2A_brand}
+                            onChange={(event)=>(setA_2A_brand(event.target.value))}> 
                                 <option value="Vygon">Vygon</option>
                                 <option value="other">other</option>
                             </Select> 
+                            :
+                            ""
+                            }
                         </TableCell>
                         <TableCell >
-                            <input type="number" val="10" onChange={(event)=>(setA_2A_qty(event.target.value))}></input>
+                            <input type="number" value={A_2A_qty} onChange={(event)=>(setA_2A_qty(event.target.value))}></input>
                         </TableCell>
                         {/* <TableCell >
                             <input val={A_2A_remarks} onChange={(event)=>(setA_2A_remarks(event.target.value))}></input>
@@ -279,11 +371,18 @@ export default function FormA(props) {
                         {checkboxSelected_1.other}</TableCell>  */}
                         
                         <TableCell >
-                            <Select onChange={(event)=>(setA_3A_descr(event.target.value))}>     
+                            {
+                            A_3A_descr != "_"?
+                            <Select 
+                            defaultValue = {A_3A_descr}
+                            onChange={(event)=>(setA_3A_descr(event.target.value))}>     
                                 <option value="volvo">Volvo</option>
                                 <option Selected value="Compatible to our machine">Compatible to our machine</option>
                                 <option value="other">other</option>
                             </Select> 
+                            :
+                            ""
+                            }
                             {/* <select value={dropdown} onChange={(e)=>{setDropdown(e.target.value)}}>
                                 <option value="apple">Apple</option>
                                 <option value="orange">Orange</option>
@@ -338,7 +437,7 @@ export default function FormA(props) {
                     </TableCell>
                         <TableCell >
                         {/* <input></input>     */}
-                        <input type="number" val="10" onChange={(event)=>(setA_3A_qty(event.target.value))}></input>
+                        <input type="number" value={A_3A_qty} onChange={(event)=>(setA_3A_qty(event.target.value))}></input>
                             {/* {
                                 qty_3A_options.map(
                                     (c,i)=><div><label key={c}><Checkbox name={c} checked={checkboxSelected_1.c} onChange={handleChange}/>{c}</label></div>
@@ -353,10 +452,17 @@ export default function FormA(props) {
                         <TableCell >3B</TableCell>
                         <TableCell >Blood transfusion set</TableCell>
                         <TableCell >
-                            <Select onChange={(event)=>(setA_3B_descr(event.target.value))}>     
+                            {
+                            A_3B_descr != "_"?
+                            <Select 
+                            defaultValue = {A_3B_descr}
+                            onChange={(event)=>(setA_3B_descr(event.target.value))}>     
                                 <option value="with leur lock">with leur lock</option>
                                 <option value="other">other</option>
                             </Select>
+                            :
+                            ""
+                            }
                         </TableCell>
                         <TableCell >
                         {
@@ -369,7 +475,7 @@ export default function FormA(props) {
                             </div>
                         </TableCell>
                         <TableCell >
-                        <input type="number" val="10" onChange={(event)=>(setA_3B_qty(event.target.value))}></input>
+                        <input type="number" value={A_3B_qty} onChange={(event)=>(setA_3B_qty(event.target.value))}></input>
                         </TableCell>
                         {/* <TableCell >
                         <input val={A_3B_remarks} onChange={(event)=>(setA_3B_remarks(event.target.value))}></input>
@@ -380,19 +486,33 @@ export default function FormA(props) {
                         <TableCell >4</TableCell>
                         <TableCell >BIS Sensor</TableCell>
                         <TableCell > 
-                            <Select onChange={(event)=>(setA_4_descr(event.target.value))}>     
+                            {
+                            A_4_descr != "_"?
+                            <Select 
+                            defaultValue = {A_4_descr}
+                            onChange={(event)=>(setA_4_descr(event.target.value))}>     
                                 <option value="Adult Pediatric">Adult Pediatric</option>
                                 <option value="other">other</option>
                             </Select> 
+                            :
+                            ""
+                            }
                         </TableCell>
                         <TableCell >
-                            <Select onChange={(event)=>(setA_4_brand(event.target.value))}>     
+                            {
+                            A_4_brand != "_"?
+                            <Select 
+                            defaultValue = {A_4_brand}
+                            onChange={(event)=>(setA_4_brand(event.target.value))}>     
                                 <option value="Medtronic">Medtronic</option>
                                 <option value="other">other</option>
                             </Select> 
+                            :
+                            ""
+                            }
                         </TableCell>
                         <TableCell >
-                        <input type="number" val="10" onChange={(event)=>(setA_4_qty(event.target.value))}></input> 
+                        <input type="number" value={A_4_qty} onChange={(event)=>(setA_4_qty(event.target.value))}></input> 
                         </TableCell>
                         {/* <TableCell >
                         <input onChange={(event)=>(setA_4_remarks(event.target.value))}></input>
@@ -442,6 +562,7 @@ export default function FormA(props) {
                         // defaultValue="Default Value"
                         placeholder="enter comments/remarks"
                         variant="outlined"
+                        onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>
                 
@@ -453,6 +574,7 @@ export default function FormA(props) {
                     // console.log('values====>\ncompany_name:',A_3A_brand,'\nQty_required:',A_3A_qty,'\nSpecification:',A_3A_descr,'\nRemarks:',A_3A_remarks,"\n------------- ",props.docnumber,"\n----------------")
                     //,console.log(testhandle(checkboxSelected_1),"---",testhandle(checkboxSelected_2),"---",testhandle(checkboxSelected_3),"---",testhandle(checkboxSelected_4))
                     console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
+                    ,patchreq()
                     ,final_a1brand=testhandle(checkboxSelected_3)
                     ,final_a2a_descr=testhandle(checkboxSelected_2)
                     ,final_a3abrand=testhandle(checkboxSelected_1)

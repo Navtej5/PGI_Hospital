@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
+import { createBrowserHistory } from 'history';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,7 +38,7 @@ import SentToPharma from "./Sent_to_pharma";
 import ReceivedFromPharma from "./received_from_pharma";
 // import Orders from './Pending';
 import Switch from "react-switch";
-
+const history = createBrowserHistory({forceRefresh:true});
 
 
 function Copyright() {
@@ -155,6 +156,10 @@ export default function ManagerDashboard() {
   const handleChange = ()  =>{
     setChecked(true);
   }
+  const logout=(async)=>{
+    localStorage.clear();
+    history.push("/");
+  }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const SwitchExample = () => {
@@ -198,7 +203,7 @@ export default function ManagerDashboard() {
             </Badge>
           </IconButton> */}
           <Link to="/">
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onclick={logout}>
             Logout
           </Button>
           </Link>

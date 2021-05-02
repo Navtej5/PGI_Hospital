@@ -7,6 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import {TextField} from '@material-ui/core';
 import Title from './Title';
 import Switch from "react-switch";
 import axios from 'axios';
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SentToPharma(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
+  const [patientSearch,setPatientSearch] = React.useState("");
 
   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
@@ -117,6 +119,9 @@ export default function SentToPharma(props) {
 
   return (
     <React.Fragment>
+      <TextField id="filled-basic" label="Patient Name" variant="filled"
+      onChange={(event) => (setPatientSearch(event.target.value))}
+      />
       
       {/* <Title>Requests</Title> */}
       <Table size="small">
@@ -136,6 +141,8 @@ export default function SentToPharma(props) {
 
           {rows.length>0 ? 
           rows.map((row) => (
+              row.naam.toLowerCase().includes(patientSearch.toLowerCase()) || row.doc.includes(patientSearch.toLowerCase()) || row.ward.toString().includes(patientSearch.toLowerCase())?
+
             <TableRow key={row.doc}>
               <TableCell>{row.doc}</TableCell>
               <TableCell>{row.naam}</TableCell>
@@ -167,6 +174,8 @@ export default function SentToPharma(props) {
               {/* <TableCell>{row.doc}</TableCell>    */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
+            :
+            ""
           ))
           : ""}
         </TableBody>

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import styled from 'styled-components';
 import Table from "@material-ui/core/Table";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import logo from '.././logo.svg';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory({forceRefresh:true});
@@ -70,6 +70,7 @@ export default class Login extends Component{
   state = {
     username:"",
     password:"",
+    user:{},
   }
 
 
@@ -81,24 +82,30 @@ export default class Login extends Component{
   };
     let USER_TABLE_API='http://127.0.0.1:8000/api/login'
     const response=await fetch(USER_TABLE_API,requestOptions);
-    const data=await response.json();
-    if(data.hasOwnProperty("non_field_errors")){
+    const _data=await response.json();
+    if(_data.hasOwnProperty("non_field_errors")){
       alert("Username or Password Incorrect")
     }
     else{
-      token=data["token"];
-      console.log(token);
-      if(data["user"]["category"]=="Nurse"){
-        history.push({
-          pathname: '/user',
-          state: { detail: data['token'] }
-      });
+      this.setState({user:response.data});
+  // store the user in localStorage
+  console.log(_data);
+    localStorage.setItem('user', _data["user"]["category"]);
+    //console.log(_data);
+      token=_data["token"];
+      //console.log(_data);
+      if(_data["user"]["category"]=="Nurse"){
+        // (<Redirect to="/user" />)
+           history.push({
+             pathname: '/user',
+             state: { detail: _data['token'] }
+         });
         console.log("yoo");
       }
-      else if(data["user"]["category"]=="Consultant"){
+      else if(_data["user"]["category"]=="Consultant"){
         history.push("/consultantDash");
       }
-      else if(data["user"]["category"]=="Unitman"){
+      else if(_data["user"]["category"]=="Unitman"){
         history.push("/unitmanDash");
       }
       else{
