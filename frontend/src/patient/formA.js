@@ -17,7 +17,6 @@ import TextField from '@material-ui/core/TextField';
 // import { useLocation } from "react-router";
 import { store } from 'react-notifications-component';
 import axios from 'axios';
-
 import {myvar} from '../user/user.js';
 
 const history = createBrowserHistory();

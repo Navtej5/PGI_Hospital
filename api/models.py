@@ -33,7 +33,7 @@ class Requests(models.Model):
     consultantflag = models.CharField(max_length=100,default='_')
     state = models.CharField(max_length=100,default="Pending")
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
-
+    notificationbit = models.BooleanField(default=False)
 
 #doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
 
