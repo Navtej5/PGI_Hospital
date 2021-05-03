@@ -432,7 +432,6 @@ export default function FormB(props) {
                         <TableCell >
                             <input
                             type="number"
-                            min="0"
                             value={B_3A_qty}
                             onchange={(event)=>(setB_3A_qty(event.target.value))}
                             ></input> 
@@ -610,7 +609,7 @@ export default function FormB(props) {
                     ,finalB_3C_brand=testhandle(B_3C_brand)
                     ,finalB_3D_brand=testhandle(B_3D_brand)
                     ,console.log("***********",myvar)
-                    ,fetch(SUBMIT_FORM_API+myvar,
+                    ,fetch(SUBMIT_FORM_API,
                         {
                         // credentials: 'include',
                         credentials: 'omit',

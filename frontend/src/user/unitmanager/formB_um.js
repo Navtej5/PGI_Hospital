@@ -71,8 +71,16 @@ export default function FormB_um(props) {
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
-            var qty_supplied = form["**Supplied**"][0][col4];
-            var qty_from_pharma = form["**Supplied**"][0][col5];
+            if(form["**Supplied**"].length>0){
+                var qty_supplied = form["**Supplied**"][0][col4];
+                var qty_from_pharma = form["**Supplied**"][0][col5];
+            }
+            else{
+                var qty_supplied = 0;
+                var qty_from_pharma = 0;
+            }
+            // var qty_supplied = form["**Supplied**"][0][col4];
+            // var qty_from_pharma = form["**Supplied**"][0][col5];
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_supplied}
             ));

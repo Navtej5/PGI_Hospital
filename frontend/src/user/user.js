@@ -201,7 +201,7 @@ logout=(async)=>{
                     <button className="fs-16" style={{background:'none',border:'none',boxShadow:'none', textDecoration: "none", color: "white" }}>
                     Welcome!
                     </button>
-                    <Button onClick={this.logout} >Logout</Button>
+                    <Button variant="contained" color="secondary" onClick={this.logout} >Logout</Button>
                  </span>                
                 <span style={help}>
                   
