@@ -690,10 +690,57 @@ class CombineCardiacView(ListAPIView):
         })
 
 
+# def export_form(request, docnumber):
+#     serializer_class = CardiacRequestedSerializer
+#     lookup_url_kwarg = 'docnumber'
+#     queryset = CardiacRequested.objects.filter(docnumber=docnumber)
+#     response = HttpResponse(content_type='application/ms-excel')
+#     response['Content-Disposition'] = 'attachment; filename="form.xls"'
+
+#     wb = xlwt.Workbook(encoding='utf-8')
+#     ws = wb.add_sheet('Form')
+
+#     # Sheet header, first row
+#     row_num = 3
+
+#     font_style = xlwt.XFStyle()
+#     font_style.font.bold = True
+
+#     columns = ['Name','Description','Brand','Quantity', ]
+
+#     for col_num in range(len(columns)):
+#         ws.write(0, col_num, columns[col_num], font_style)
+
+#     # Sheet body, remaining rows
+#     font_style = xlwt.XFStyle()
+
+#     rows = queryset[0] #CardiacRequested.objects.all().values_list('name', 'description', 'brand', 'quantity')
+#     col_num = -2
+#     # print(queryset.values_list())
+#     for y in queryset.values_list():
+#         # print(" y ===>",y)
+#         for x in y: 
+#             row_num += 1
+#             col_num += 1
+#             print(row_num//4, col_num%4,x)
+#             if col_num > -1:
+#                 ws.write(row_num//4, col_num%4, x, font_style)
+#             else:
+#                 row_num -= 1
+
+#     print(ws)
+#     wb.save(response)
+#     return response
+
+
+
 def export_form(request, docnumber):
     serializer_class = CardiacRequestedSerializer
+    serializer_class2 = RequestSerializer
     lookup_url_kwarg = 'docnumber'
     queryset = CardiacRequested.objects.filter(docnumber=docnumber)
+    requestset = Requests.objects.filter(docnumber=docnumber)
+    # requestset = requestset[0]
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="form.xls"'
 
@@ -701,21 +748,33 @@ def export_form(request, docnumber):
     ws = wb.add_sheet('Form')
 
     # Sheet header, first row
-    row_num = 3
+    row_num = 0
 
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
 
     columns = ['Name','Description','Brand','Quantity', ]
+    ws.write(row_num,0,"Patient Name",font_style)
+    ws.write(row_num,1,"Adhaar Number",font_style)
+    ws.write(row_num,2,"Document Number",font_style)
+    ws.write(row_num,3,"CR Number",font_style)
+    row_num+=1
+    ws.write(row_num,0,requestset[0].patientname,font_style)
+    ws.write(row_num,1,requestset[0].wardadhaar,font_style)
+    ws.write(row_num,2,requestset[0].docnumber,font_style)
+    ws.write(row_num,3,requestset[0].crnumber,font_style)
+    row_num+=3
 
     for col_num in range(len(columns)):
-        ws.write(0, col_num, columns[col_num], font_style)
+        ws.write(row_num, col_num, columns[col_num], font_style)
 
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
-    rows = queryset[0] #CardiacRequested.objects.all().values_list('name', 'description', 'brand', 'quantity')
+    # rows = queryset[0] #CardiacRequested.objects.all().values_list('name', 'description', 'brand', 'quantity')
+    row_num += 2
     col_num = -2
+    row_num *= 4
     # print(queryset.values_list())
     for y in queryset.values_list():
         # print(" y ===>",y)
@@ -726,10 +785,21 @@ def export_form(request, docnumber):
             if col_num > -1:
                 ws.write(row_num//4, col_num%4, x, font_style)
             else:
-                row_num -= 1
-
-    print(ws)
+                row_num -= 0
+    row_num = row_num//4
+    row_num += 5
+    # ws.write(row_num,0,"Patient Name",font_style)
+    # ws.write(row_num,1,"Adhaar Number",font_style)
+    # ws.write(row_num,2,"Document Number",font_style)
+    # ws.write(row_num,3,"CR Number",font_style)
+    # row_num+=1
+    # ws.write(row_num,0,requestset[0].patientname,font_style)
+    # ws.write(row_num,1,requestset[0].wardadhaar,font_style)
+    # ws.write(row_num,2,requestset[0].docnumber,font_style)
+    # ws.write(row_num,3,requestset[0].crnumber,font_style)
+    # print(requestset[0].patientname)
     wb.save(response)
     return response
+
 
 
