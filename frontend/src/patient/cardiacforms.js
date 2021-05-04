@@ -15,6 +15,7 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Deposits from "./details";
 //import Link from '@material-ui/core/Link';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
@@ -260,6 +261,9 @@ export default function CardiacForm(props) {
               <NotificationsIcon /> 
             </Badge>
           </IconButton> */}
+          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
+            Download Form
+          </Button>
           <Link to="/user">
           <Button variant="contained" color="secondary">
             Go Back
@@ -328,23 +332,38 @@ export default function CardiacForm(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-            {form===0? 
-          <Grid item xs={12}>
-            <Title>{readable[props.location.stage]}</Title>
-          <Paper className={classes.paper}>
-            <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-          </Paper>
-        </Grid>
+{form===0? 
+  <div>
+    <Grid item xs={12}>
+      <Title>{readable[props.location.stage]}</Title>
+      <Paper>
+        <Deposits docnumber={props.match.params.docnumber}/>
+      </Paper>
+    </Grid>
+    <Grid item xs={12}>
+      <Paper className={classes.paper}>
+        <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+      </Paper>  
+    </Grid>
+  </div>
           :
           ""
 }
 {form===1?
+  <div>
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
-              <Paper className={classes.paper}>
-                <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-              </Paper>
-            </Grid>
+      <Paper>
+        <Deposits docnumber={props.match.params.docnumber}/>
+      </Paper>
+    </Grid>
+    <Grid item xs={12}>
+      <Title>{readable[props.location.stage]}</Title>
+      <Paper className={classes.paper}>
+        <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+      </Paper>
+    </Grid>
+  </div>
 :""}
 {form===2?
     <Grid container spacing={3}>
