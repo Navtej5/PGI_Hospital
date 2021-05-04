@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,6 +42,7 @@ import FormB from './formB';
 import {myvar} from '../user/user.js';
 
 import Title from '../user/dashboard/Title'
+import axios from 'axios';
 
 
 const readable = {
@@ -210,6 +211,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardiacForm(props) {
+  const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [form,setForm]=React.useState(0)
@@ -223,6 +225,19 @@ export default function CardiacForm(props) {
 
   console.log("$$$$$$$$$$$$$$$$$$\ndocnumber:",props.location.docnumber,"\nstage:",props.location.stage);
 
+  const notificationfunction = async () =>{
+    console.log("in use effect");  
+    // fetchData();
+    var xy = await axios.get(SUBMIT_REQUEST_API+props.location.docnumber);
+    xy.data.notificationbit = 0;
+    axios.put(SUBMIT_REQUEST_API+props.location.docnumber,xy.data);
+  }
+
+  useEffect(()=>{
+    console.log("in use effect");  
+    notificationfunction();
+},[])
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -317,7 +332,7 @@ export default function CardiacForm(props) {
           <Grid item xs={12}>
             <Title>{readable[props.location.stage]}</Title>
           <Paper className={classes.paper}>
-            <FormA docnumber={props.match.params.docnumber}/>
+            <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
           </Paper>
         </Grid>
           :
@@ -327,7 +342,7 @@ export default function CardiacForm(props) {
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
               <Paper className={classes.paper}>
-                <FormB docnumber={props.match.params.docnumber}/>
+                <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
               </Paper>
             </Grid>
 :""}

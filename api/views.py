@@ -88,7 +88,6 @@ class UpdateRequestRemarksView(RetrieveUpdateDestroyAPIView):
     def patch(self, request,docnumber,format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
-        
         serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():
@@ -96,8 +95,11 @@ class UpdateRequestRemarksView(RetrieveUpdateDestroyAPIView):
             row = queryset[0]
             # print("*********************************\n",patientname,"\n***************************")
             row.remarksfromconsultant = serializer.data.get('remarks',row.remarksfromconsultant)
+            row.notificationbit = serializer.data.get('notificationbit',row.notificationbit)
+            
             row.save(update_fields=[
-                "remarksfromconsultant" 
+                "remarksfromconsultant",
+                "notificationbit"
             ])
 
             return Response({'GOOD':'OK'}, status=status.HTTP_200_OK)

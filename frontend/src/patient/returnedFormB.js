@@ -142,6 +142,67 @@ export default function ReturnedFormB(props) {
     // const [B_3D_remarks,setB_3D_remarks]=React.useState("_")
 
     return(
+
+        props.stage == 'Approved' || props.stage=="SentToPharma"?
+            <div>
+                
+            <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
+        }
+                <TableHead>
+                    <TableRow>
+                        <TableCell style={{color:"black"}}>
+                            Sr. No.
+                        </TableCell>
+                        <TableCell style={{color:"black"}}>
+                            Name
+                        </TableCell>
+                        <TableCell style={{color:"black"}}>
+                            Specification
+                        </TableCell>
+                        <TableCell style={{color:"black"}}>
+                            Company Name
+                        </TableCell>
+                        <TableCell style={{color:"black"}}>
+                            Quantity Required
+                        </TableCell>
+                        
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                {rows.length>0 ? 
+                    rows.map((row,index) => ( 
+                        <TableRow key={index}>
+                            <TableCell>{row.id}</TableCell>
+                            <TableCell>{row.name}</TableCell>
+                            <TableCell>{row.descr}</TableCell>
+                            <TableCell>{row.brand}</TableCell>
+                            <TableCell>{row.qty_requested}</TableCell>   
+                        </TableRow>
+                     ))
+                : ""}
+
+
+                </TableBody>
+            </Table>
+            <div style={{padding:"10px"}}>
+                <Grid container >
+                    <Grid item xs={10}>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Remarks"
+                        style={{width:"95%"}}
+                        multiline
+                        rows={4}
+                        // cols={12}
+                        // defaultValue="Default Value"
+                        placeholder="enter comments/remarks"
+                        variant="outlined"
+                    />
+                    </Grid>
+            </Grid>
+            </div>
+            </div>
+            :
             <div>
                 
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}

@@ -232,11 +232,15 @@ export default function ReturnedFormA(props) {
     //     setA_3B_brand(testhandle(checkboxSelected_4));
     // }
 
+    
     return(
+
+        props.stage == 'Approved' || props.stage=="SentToPharma" ?
+        
         <div>
                 
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
-        }
+                    }
                 <TableHead>
                     <TableRow>
                         <TableCell style={{color:"black"}}>
@@ -254,12 +258,6 @@ export default function ReturnedFormA(props) {
                         <TableCell style={{color:"black"}}>
                             Quantity Required
                         </TableCell>
-                        <TableCell style={{color:"black"}}>
-                            Quantity Supplied
-                        </TableCell>
-                        <TableCell style={{color:"black"}}>
-                            Difference
-                        </TableCell>
                         {/* <TableCell style={{color:"black"}}>
                             Remarks
                         </TableCell> */}
@@ -276,32 +274,6 @@ export default function ReturnedFormA(props) {
                         <TableCell>{row.descr}</TableCell>
                         <TableCell>{row.brand}</TableCell>
                         <TableCell>{row.qty_requested}</TableCell>   
-                        <TableCell>
-                            <input disabled
-                            type="number" name={row.id} min="0"
-                            value={
-                                qtySupplied[row.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtySupplied(qtySupplied => (
-                                    {...qtySupplied, [event.target.name]: event.target.value}
-                                ));
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                        
-                        {row.difference < 0?
-                        <TableCell style={{background:"#fc6456"}}>{row.difference}</TableCell>
-                        :""}
-                        {row.difference > 0?
-                        <TableCell style={{background:"yellow"}}>{row.difference}</TableCell>
-                        :""}
-                        {row.difference == 0?
-                        <TableCell style={{background:"#23ff4f"}}>{row.difference}</TableCell>
-                        :""}
-
                         {/* <TableCell></TableCell> */}
                         </TableRow>
                      ))
@@ -314,6 +286,7 @@ export default function ReturnedFormA(props) {
                 <Grid container >
                     <Grid item xs={10}>
                     <TextField
+                        disabled
                         id="outlined-multiline-static"
                         label="Remarks"
                         style={{width:"95%"}}
@@ -325,80 +298,178 @@ export default function ReturnedFormA(props) {
                         variant="outlined"
                     />
                     </Grid>
-                
-                <Grid item xs={2} style={{padding:"3.5%"}}>
-                <Button  
-            variant="contained" color="primary"
-                onClick={()=>(
-                    console.log("******submitting*********")
-                    ,console.log(JSON.stringify({
-                        code         : myvar,
-                        A_1_qty      :qtySupplied['1'],
-                        // A_1_remarks  :A_1_remarks,
-                        A_2A_qty      :qtySupplied['2A'],
-                        // A_2A_remarks  :A_2A_remarks,
-                        A_2B_qty      :qtySupplied['2B'],
-                        // A_2B_remarks  :A_2B_remarks,
-                        A_3A_qty      :qtySupplied['3A'],
-                        // A_3A_remarks  :A_3A_remarks,
-                        A_3B_qty      :qtySupplied['3B'],
-                        // A_3B_remarks  :A_3B_remarks, 
-                    }))
-                    ,fetch(SUBMIT_FORM_API,
-                        {
-                            // credentials: 'include',
-                            credentials: 'omit',
-                            method:'PATCH',
-                            headers: {
-                            Accept: 'application/json',
-                            "Content-Type": 'application/json',
-                        },
-                            body: JSON.stringify({
-                                code         : myvar,
-                                A_1_qty      :qtySupplied['1'],
-                                // A_1_remarks  :A_1_remarks,
-                                A_2A_qty      :qtySupplied['2A'],
-                                // A_2A_remarks  :A_2A_remarks,
-                                A_2B_qty      :qtySupplied['2B'],
-                                // A_2B_remarks  :A_2B_remarks,
-                                A_3A_qty      :qtySupplied['3A'],
-                                // A_3A_remarks  :A_3A_remarks,
-                                A_3B_qty      :qtySupplied['3B'],
-                                // A_3B_remarks  :A_3B_remarks, 
-                            }),
-                        })
-                    )}
+            </Grid>
+            </div>
+            </div>
 
-                    // .then((result)=>{store.addNotification({
-                    //     title: "Success",
-                    //     message: "Request added successfully",
-                    //     type: "success",
-                    //     insert: "top",
-                    //     container: "bottom-right",
-                    //     animationIn: ["animate_animated", "animate_fadeIn"],
-                    //     animationOut: ["animate_animated", "animate_fadeOut"],
-                    //     dismiss: {
-                    //       duration: 5000,
-                    //       onScreen: true
-                    //     }
-                    //   });console.log("Success===:",result)})
-                    // .catch((error)=>{store.addNotification({
-                    //     title: "Failed",
-                    //     message: "Request could not be added",
-                    //     type: "danger",
-                    //     insert: "top",
-                    //     container: "bottom-right",
-                    //     animationIn: ["animate_animated", "animate_fadeIn"],
-                    //     animationOut: ["animate_animated", "animate_fadeOut"],
-                    //     dismiss: {
-                    //       duration: 5000,
-                    //       onScreen: true
-                    //     }
-                    //   });console.log("Error===:",error)})
-            >Submit</Button>
-            </Grid>
+        :
+
+            <div>
+                    
+                <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
+            }
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{color:"black"}}>
+                                Sr. No.
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Name
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Specification
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Company Name
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Quantity Required
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Quantity Supplied
+                            </TableCell>
+                            <TableCell style={{color:"black"}}>
+                                Difference
+                            </TableCell>
+                            {/* <TableCell style={{color:"black"}}>
+                                Remarks
+                            </TableCell> */}
+    
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+    
+                    {rows.length>0 ? 
+                        rows.map((row,index) => ( 
+                            <TableRow key={index}>
+                            <TableCell>{row.id}</TableCell>
+                            <TableCell>{row.name}</TableCell>
+                            <TableCell>{row.descr}</TableCell>
+                            <TableCell>{row.brand}</TableCell>
+                            <TableCell>{row.qty_requested}</TableCell>   
+                            <TableCell>
+                                <input disabled
+                                type="number" name={row.id} min="0"
+                                value={
+                                    qtySupplied[row.id]
+                                }
+                                default={9}
+                                onChange={(event)=>{
+                                    setQtySupplied(qtySupplied => (
+                                        {...qtySupplied, [event.target.name]: event.target.value}
+                                    ));
+                                }}
+                                >
+                                </input>
+                            </TableCell>
+                            
+                            {row.difference < 0?
+                            <TableCell style={{background:"#fc6456"}}>{row.difference}</TableCell>
+                            :""}
+                            {row.difference > 0?
+                            <TableCell style={{background:"yellow"}}>{row.difference}</TableCell>
+                            :""}
+                            {row.difference == 0?
+                            <TableCell style={{background:"#23ff4f"}}>{row.difference}</TableCell>
+                            :""}
+    
+                            {/* <TableCell></TableCell> */}
+                            </TableRow>
+                         ))
+                    : ""}
+    
+                        
+                    </TableBody>
+                </Table>
+                <div style={{padding:"10px"}}>
+                    <Grid container >
+                        <Grid item xs={10}>
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Remarks"
+                            style={{width:"95%"}}
+                            multiline
+                            rows={4}
+                            // cols={12}
+                            // defaultValue="Default Value"
+                            placeholder="enter comments/remarks"
+                            variant="outlined"
+                        />
+                        </Grid>
+                    
+                    <Grid item xs={2} style={{padding:"3.5%"}}>
+                    <Button  
+                variant="contained" color="primary"
+                    onClick={()=>(
+                        console.log("******submitting*********")
+                        ,console.log(JSON.stringify({
+                            code         : myvar,
+                            A_1_qty      :qtySupplied['1'],
+                            // A_1_remarks  :A_1_remarks,
+                            A_2A_qty      :qtySupplied['2A'],
+                            // A_2A_remarks  :A_2A_remarks,
+                            A_2B_qty      :qtySupplied['2B'],
+                            // A_2B_remarks  :A_2B_remarks,
+                            A_3A_qty      :qtySupplied['3A'],
+                            // A_3A_remarks  :A_3A_remarks,
+                            A_3B_qty      :qtySupplied['3B'],
+                            // A_3B_remarks  :A_3B_remarks, 
+                        }))
+                        ,fetch(SUBMIT_FORM_API,
+                            {
+                                // credentials: 'include',
+                                credentials: 'omit',
+                                method:'PATCH',
+                                headers: {
+                                Accept: 'application/json',
+                                "Content-Type": 'application/json',
+                            },
+                                body: JSON.stringify({
+                                    code         : myvar,
+                                    A_1_qty      :qtySupplied['1'],
+                                    // A_1_remarks  :A_1_remarks,
+                                    A_2A_qty      :qtySupplied['2A'],
+                                    // A_2A_remarks  :A_2A_remarks,
+                                    A_2B_qty      :qtySupplied['2B'],
+                                    // A_2B_remarks  :A_2B_remarks,
+                                    A_3A_qty      :qtySupplied['3A'],
+                                    // A_3A_remarks  :A_3A_remarks,
+                                    A_3B_qty      :qtySupplied['3B'],
+                                    // A_3B_remarks  :A_3B_remarks, 
+                                }),
+                            })
+                        )}
+    
+                        // .then((result)=>{store.addNotification({
+                        //     title: "Success",
+                        //     message: "Request added successfully",
+                        //     type: "success",
+                        //     insert: "top",
+                        //     container: "bottom-right",
+                        //     animationIn: ["animate_animated", "animate_fadeIn"],
+                        //     animationOut: ["animate_animated", "animate_fadeOut"],
+                        //     dismiss: {
+                        //       duration: 5000,
+                        //       onScreen: true
+                        //     }
+                        //   });console.log("Success===:",result)})
+                        // .catch((error)=>{store.addNotification({
+                        //     title: "Failed",
+                        //     message: "Request could not be added",
+                        //     type: "danger",
+                        //     insert: "top",
+                        //     container: "bottom-right",
+                        //     animationIn: ["animate_animated", "animate_fadeIn"],
+                        //     animationOut: ["animate_animated", "animate_fadeOut"],
+                        //     dismiss: {
+                        //       duration: 5000,
+                        //       onScreen: true
+                        //     }
+                        //   });console.log("Error===:",error)})
+                >Submit</Button>
+                </Grid>
             </Grid>
             </div>
-            </div>
-        )
+        </div>
+    )
     }

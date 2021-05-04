@@ -135,7 +135,8 @@ export default function Approved() {
                     pathname:"/cardiacform_um/"+row.doc,
                     formsProps:{
                       mode:"view_only",
-                      from:"Completed_cons"
+                      from:"Completed_cons",
+                      user:"all"
                     }
                   }}
                 >

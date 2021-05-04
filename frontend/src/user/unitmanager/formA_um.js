@@ -241,7 +241,7 @@ export default function FormA_um(props) {
 
     return(
 
-        props.formsProps.mode == "view_only" ?
+        props.mode == "view_only" ?
         
         <div> 
             <Table> {
@@ -290,6 +290,8 @@ export default function FormA_um(props) {
                     
                 </TableBody>
             </Table>
+
+            {props.stage=="Pending"?
             <div style={{padding:"10px"}}>
                 <Grid container >
                     <Grid item xs={10}>
@@ -379,6 +381,7 @@ export default function FormA_um(props) {
                     </Grid>
                 </Grid>
             </div>
+            :""}
         </div>
 
 
@@ -429,36 +432,74 @@ export default function FormA_um(props) {
                     <TableCell>{row.descr}</TableCell>
                     <TableCell>{row.brand}</TableCell>
                     <TableCell>{row.qty_requested}</TableCell>
-                    <TableCell>
-                        <input 
-                        type="number" name={row.id} min="0"
-                        value={
-                            qtyRcdPharma[row.id]
-                        }
-                        default={9}
-                        onChange={(event)=>{
-                            setQtyRcdPharma(qtyRcdPharma => (
-                                {...qtyRcdPharma, [event.target.name]: event.target.value}
-                            ));
-                        }}
-                        >
-                        </input>
-                    </TableCell>
-                    <TableCell>
-                        <input 
-                        type="number" name={row.id} min="0"
-                        value={
-                            qtySupplied[row.id]
-                        }
-                        default={9}
-                        onChange={(event)=>{
-                            setQtySupplied(qtySupplied => (
-                                {...qtySupplied, [event.target.name]: event.target.value}
-                            ));
-                        }}
-                        >
-                        </input>
-                    </TableCell>
+                    
+                    {props.user=="unitman"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row.id} min="0"
+                            value={
+                                qtyRcdPharma[row.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row.id} min="0"
+                            value={
+                                qtyRcdPharma[row.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+
+                    {props.user=="unitman"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row.id} min="0"
+                            value={
+                                qtySupplied[row.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row.id} min="0"
+                            value={
+                                qtySupplied[row.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
                     </TableRow>
                 ))
             : ""}

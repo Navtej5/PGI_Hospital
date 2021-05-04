@@ -306,28 +306,28 @@ export default function ManagerDashboard() {
                   {choose==0?
                   <div>
                     <Title>Approved Requests</Title>
-                      <Approved fromUser="unitman"/>
+                      <Approved user="unitman"/>
                   </div>
                       
                   :""}
                   {choose==3?
                     <div>
                     <Title>Completed Requests</Title>
-                    <Completed fromUser="unitman"/>
+                    <Completed user="unitman"/>
                     </div>
                   :""}
 
                   {choose==1?
                     <div>
                     <Title>Requests sent to pharmacy</Title>
-                    <SentToPharma fromUser="unitman"/>
+                    <SentToPharma user="unitman"/>
                     </div>
                   :""}
 
                   {choose==2?
                     <div>
                     <Title>Received from Pharmacy (Audit Pending)</Title>
-                    <ReceivedFromPharma fromUser="unitman"/>
+                    <ReceivedFromPharma user="unitman"/>
                     </div>
                   :""}
                 </Paper>

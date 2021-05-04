@@ -140,10 +140,9 @@ export default function Approved() {
               <Link 
                   to={{
                     pathname:"/cardiacform_um/"+row.doc,
-                    formsProps:{
-                      mode:"view_only",
-                      from:"approved_cons"
-                    }
+                    mode:"view_only",
+                    stage:"Approved",
+                    user:"consultant",
                   }}
                 >
                 {row.link}

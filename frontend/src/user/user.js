@@ -8,6 +8,9 @@ import TableRow from "@material-ui/core/TableRow";
 import styled from 'styled-components';
 import { createBrowserHistory } from 'history';
 import PatientDetails from "../patient/patientDetails";
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 // import { useLocation } from "react-router-dom";
 import './user.css';
 //import { useHistory } from 'react-router-dom';
@@ -26,6 +29,14 @@ const readable = {
   "ReceivedFromPharma":"Requested Inventory Received",
   "SentToPharma":"Inventory Ordered and Waiting for delivery",
   "Completed":"Completed",
+};
+
+const redirect_url = {
+  "Pending":"/form/",
+  "Approved":"/returned/",
+  "SentToPharma":"/returned/",
+  "ReceivedFromPharma":"/returned/",
+  "Completed":"/returned/",
 };
 
 const headerleft = {
@@ -185,8 +196,9 @@ logout=(async)=>{
           height:"1000px",
           width:"100%",
           marginTop:"-20px",
-          overflow:"hidden",
-          backgroundImage: `url("https://wallpaperaccess.com/full/449895.jpg")`,
+          overflow:"auto",
+          // backgroundImage: `url("https://wallpaperaccess.com/full/449895.jpg")`,
+          backgroundColor:"#d9e6fa",
           backgroundRepeat: "no-repeat"
         }}>            
             <div style={{height:"20px"}}></div>
@@ -236,7 +248,7 @@ logout=(async)=>{
             }}
             >Sort</Button>
           </div>
-          <div style={{maxHeight:"270px",height:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"hidden"}}>
+          <div style={{maxHeight:"270px",height:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"auto"}}>
           {
           this.state.patients?
           <>
@@ -340,7 +352,7 @@ logout=(async)=>{
             >Sort</Button>
             {/* <HorizontalLine /> */}
           </div>
-          <div style={{height:"270px",maxHeight:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"hidden"}}>
+          <div style={{height:"270px",maxHeight:"270px",maxWidth:"700px",overflowY:"auto",overflowX:"auto"}}>
           {
           this.state.requests?
           <>
@@ -360,6 +372,7 @@ logout=(async)=>{
                     &emsp;
                     {/* {request.crnumber}- */}
                     {request.docnumber} - {request.wardadhaar} - {readable[request.state]}
+
                     </div>
                   
                     {/* <Link to={{
@@ -407,14 +420,22 @@ logout=(async)=>{
               
               <Link to={{
                 pathname:
-                (this.state.selected_request.state=="Pending"?'/form/':'/returned/')+this.state.selected_request.docnumber,
+                redirect_url[this.state.selected_request.state]+this.state.selected_request.docnumber,
                 docnumber: this.state.selected_request.docnumber,
                 stage: this.state.selected_request.state,
+                user: "user",
               }
               }>
               <Button color="primary" variant="contained">
                 View Details
               </Button>
+              {this.state.selected_request.notificationbit && this.state.selected_request.state=="Pending"?
+              <IconButton color="primary">
+                {/* <Badge badgeContent={1} color="secondary"> */}
+                  <NotificationsIcon color="secondary" /> 
+                {/* </Badge> */}
+              </IconButton>
+              :""}
               </Link>
             </Grid>
           </Grid>

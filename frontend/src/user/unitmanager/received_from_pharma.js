@@ -131,7 +131,7 @@ export default function SentToPharma(props) {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-            {props.fromUser == "unitman"?
+            {props.user == "unitman"?
             <TableCell>ACTION</TableCell>
             :""}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
@@ -151,17 +151,16 @@ export default function SentToPharma(props) {
                 <Link 
                   to={{
                     pathname:"/cardiacform_um/"+row.doc,
-                    formsProps:{
-                      mode:"read-write-both",
-                      from:"receivedFromPharma"
-                    }
+                    mode:"read-write-both",
+                    stage:"receivedFromPharma",
+                    user:props.user
                   }}
                 >
                   {/* {row.stage} */}
                   {row.link}
                 </Link>
               </TableCell>   
-              {props.fromUser=="unitman"?
+              {props.user=="unitman"?
               <TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant = "contained"onClick={()=>{ row.tog.state = "Completed";

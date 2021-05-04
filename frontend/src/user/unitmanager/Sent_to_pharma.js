@@ -130,7 +130,7 @@ export default function ReceivedFromPharma(props) {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-            {props.fromUser=="unitman"?
+            {props.user=="unitman"?
               <TableCell>ACTION</TableCell>:""}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
@@ -149,16 +149,16 @@ export default function ReceivedFromPharma(props) {
               <Link 
                   to={{
                     pathname:"/cardiacform_um/"+row.doc,
-                    formsProps:{
-                      mode:"view_only",
-                      from:"SentToPharma"
-                    }
+                    mode:"view_only",
+                    stage:"SentToPharma",
+                    user:props.user
                   }}
                 >
                   {row.link}
                 </Link>
               </TableCell>   
-              {props.fromUser=="unitman"?<TableCell>
+              {props.user=="unitman"?
+              <TableCell>
                 {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
               axios.patch(updateURL+row.doc,row.tog); 

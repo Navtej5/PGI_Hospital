@@ -140,10 +140,9 @@ export default function Pending() {
                 <Link 
                     to={{
                       pathname:"/cardiacform_um/"+row.doc,
-                      formsProps:{
-                        mode:"view_only",
-                        from:"Pending_cons"
-                      }
+                      mode:"view_only",
+                      stage:"Pending",
+                      user:"consultant",
                     }}
                   >
                   {row.link}

@@ -143,7 +143,8 @@ export default function Approved() {
                     pathname:"/cardiacform_um/"+row.doc,
                     formsProps:{
                       mode:"view_only",
-                      from:"approved"
+                      from:"approved",
+                      user:"unitman"
                     }
                   }}
                 >

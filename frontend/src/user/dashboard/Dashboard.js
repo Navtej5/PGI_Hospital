@@ -327,31 +327,31 @@ export default function Dashboard() {
                   {choose===0?
                       <div>
                         <Title>Pending Requests</Title>
-                        <Pending fromUser="consultant"/>
+                        <Pending user="consultant"/>
                       </div>
                   :""}
                   {choose===1?
                       <div>
                         <Title>Approved Requests</Title>
-                        <Approved fromUser="consultant"/>
+                        <Approved user="consultant"/>
                       </div>
                   :""}
                   {choose===2?
                       <div>
                         <Title>Requests sent to pharmacy</Title>
-                        <SentToPharma fromUser="consultant"/>
+                        <SentToPharma user="consultant"/>
                       </div>
                   :""}
                   {choose===3?
                       <div>
                         <Title>Received from Pharmacy (Audit Pending)</Title>
-                        <ReceivedFromPharma fromUser="consultant"/>
+                        <ReceivedFromPharma user="consultant"/>
                       </div>
                   :""}
                   {choose===4?
                       <div>
                         <Title>Completed Requests</Title>
-                        <Completed fromUser="consultant"/>
+                        <Completed user="consultant"/>
                       </div>
                   :""}
                 </Paper>

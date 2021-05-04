@@ -212,7 +212,7 @@ export default function CardiacForm_um(props) {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  console.log("***********HERE**********\n",props.location.formsProps);
+  console.log("***********HERE**********\n",props.location.mode,props.location.user);
 
   return (
     <div className={classes.root}>
@@ -307,7 +307,7 @@ export default function CardiacForm_um(props) {
             {form===0? 
           <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <FormA_um docnumber={props.match.params.docnumber} formsProps={props.location.formsProps}/>
+            <FormA_um docnumber={props.match.params.docnumber} user={props.location.user} mode={props.location.mode} stage={props.location.stage}/>
           </Paper>
         </Grid>
           :
@@ -316,7 +316,7 @@ export default function CardiacForm_um(props) {
 {form===1?
     <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <FormB_um docnumber={props.match.params.docnumber} formsProps={props.location.formsProps}/>
+                <FormB_um docnumber={props.match.params.docnumber} user={props.location.user} mode={props.location.mode} stage={props.location.stage}/>
               </Paper>
             </Grid>
 :""}

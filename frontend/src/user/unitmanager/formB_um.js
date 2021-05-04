@@ -152,7 +152,7 @@ export default function FormB_um(props) {
 
     return(
 
-        props.formsProps.mode == "view_only" ?
+        props.mode == "view_only" ?
             <div>
                 
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
@@ -194,7 +194,7 @@ export default function FormB_um(props) {
 
                 </TableBody>
             </Table>
-            
+            {props.stage=="Pending"?
             <div style={{padding:"10px"}}>
                 <Grid container >
                     <Grid item xs={10}>
@@ -269,6 +269,7 @@ export default function FormB_um(props) {
                 </Grid>
             </Grid>
             </div>
+            :""}
             </div>
 :
 

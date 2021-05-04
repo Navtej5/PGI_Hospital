@@ -316,7 +316,7 @@ export default function ReturnedCardiacForm(props) {
           <Grid item xs={12}>
             <Title>{readable[props.location.stage]}</Title>
           <Paper className={classes.paper}>
-            <ReturnedFormA docnumber={props.match.params.docnumber} stage={props.location.stage}/>
+            <ReturnedFormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
           </Paper>
         </Grid>
           :
@@ -327,7 +327,7 @@ export default function ReturnedCardiacForm(props) {
       <Title>{readable[props.location.stage]}</Title>
               <Paper className={classes.paper}>
               
-                <ReturnedFormB docnumber={props.match.params.docnumber} stage={props.location.stage}/>
+                <ReturnedFormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
               </Paper>
             </Grid>
 :""}
