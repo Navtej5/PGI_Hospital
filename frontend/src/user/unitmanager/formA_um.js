@@ -327,10 +327,9 @@ export default function FormA_um(props) {
                             // defaultValue="Default Value"
                             placeholder="enter comments/remarks"
                             variant="outlined"
-                            defaultValue="`12`12`"
-                            // value={remarkfc}
+                            value={remarkfc}
                             onChange={event => setreamarkfc(event.target.value)}
-                        >"ddd"</TextField>{remarkfc}
+                        ></TextField>
 
                     </Grid>
                 
