@@ -51,23 +51,28 @@ export default function FormA(props) {
         let brands = form.A_1_brand.split(";")
         console.log("SPLIT:",brands)
         if(brands.includes("helena lab"))
-        {
-            setCheckboxSelected_3({"helena Lab": true})
+        {   
+            // console.log("yoyoyoyooyo\n");
+            // setCheckboxSelected_3({"helena Lab": true})
             setCheckboxSelected_3({...checkboxSelected_3,["helena Lab"]: true});
+            // console.log("yoyoyoyooyo\n",checkboxOptions_3[0]) ;
+            // if(checkboxOptions_3==)
         }
         else{
             console.log("Not here h")
         }
         if(brands.includes("beaumount texas"))
         {
-            setCheckboxSelected_3({"Beaumont Texas": true})
-            setCheckboxSelected_3({["Beaumont Texas"]: true})
+            // setCheckboxSelected_3({"Beaumont Texas": true})
+            // setCheckboxSelected_3({["Beaumont Texas"]: true})
             setCheckboxSelected_3({...checkboxSelected_3,["Beaumont Texas"]: true});
-            setCheckboxSelected_3({...checkboxSelected_3,"Beaumont Texas": true});
+            // setCheckboxSelected_3({...checkboxSelected_3,"Beaumont Texas": true});
         }
         else{
             console.log("Not here B")
         }
+
+        console.log("after :",checkboxSelected_3)
         setA_1_qty(form.A_1_qty)
         setA_1_remarks(form.A_1_remarks)
         setA_2A_descr(form.A_2A_descr)

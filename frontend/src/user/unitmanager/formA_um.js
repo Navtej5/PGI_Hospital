@@ -42,6 +42,7 @@ export default function FormA_um(props) {
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
+    const [remarkfc,setreamarkfc]=React.useState("_")
 
     const fetchData = async () => {
         console.log("***************************\n",props.mode)
@@ -49,7 +50,7 @@ export default function FormA_um(props) {
         const response = await axios.get(GET_COMBINED_API)
         const form = await response.data;
         console.log("response\n",form);
-
+        
         var x;
         var temp = [];
         var ids = ['1','2A','2B','3A','3B']
@@ -93,6 +94,25 @@ export default function FormA_um(props) {
     },[])
 
 
+    
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    var temp;
+    const fetchreq = async () => {
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+        setreamarkfc(temp.data.remarksfromconsultant);
+        console.log(temp.data.remarksfromconsultant," ===== ",remarkfc);
+    }
+    const patchreq = async () => {
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+        temp.data.remarksfromconsultant = remarkfc;
+        temp.data.notificationbit = true;
+        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+    }
+    useEffect(() => {
+        // console.log(myvar);
+        fetchreq();
+    },[]);
     // useEffect(() => {
     //     console.log(myvar);
     // });
@@ -239,6 +259,8 @@ export default function FormA_um(props) {
     //     setA_3B_brand(testhandle(checkboxSelected_4));
     // }
 
+
+
     return(
 
         props.mode == "view_only" ?
@@ -305,7 +327,11 @@ export default function FormA_um(props) {
                             // defaultValue="Default Value"
                             placeholder="enter comments/remarks"
                             variant="outlined"
-                        />
+                            defaultValue="`12`12`"
+                            // value={remarkfc}
+                            onChange={event => setreamarkfc(event.target.value)}
+                        >"ddd"</TextField>{remarkfc}
+
                     </Grid>
                 
                     <Grid item xs={2} style={{padding:"3.5%"}}>
@@ -313,6 +339,7 @@ export default function FormA_um(props) {
                     <Button variant="contained" color="primary"
                         onClick={()=>(
                             console.log("******submitting*********")
+                            ,patchreq()
                             ,console.log(JSON.stringify({
                                 code         : myvar,
                                 A_1_qty      :qtySupplied['1'],
@@ -326,29 +353,30 @@ export default function FormA_um(props) {
                                 A_3B_qty      :qtySupplied['3B'],
                                 // A_3B_remarks  :A_3B_remarks, 
                             }))
-                            ,fetch(SUBMIT_FORM_API,
-                                {
-                                    // credentials: 'include',
-                                    credentials: 'omit',
-                                    method:'PATCH',
-                                    headers: {
-                                    Accept: 'application/json',
-                                    "Content-Type": 'application/json',
-                                },
-                                    body: JSON.stringify({
-                                        code         : myvar,
-                                        A_1_qty      :qtySupplied['1'],
-                                        // A_1_remarks  :A_1_remarks,
-                                        A_2A_qty      :qtySupplied['2A'],
-                                        // A_2A_remarks  :A_2A_remarks,
-                                        A_2B_qty      :qtySupplied['2B'],
-                                        // A_2B_remarks  :A_2B_remarks,
-                                        A_3A_qty      :qtySupplied['3A'],
-                                        // A_3A_remarks  :A_3A_remarks,
-                                        A_3B_qty      :qtySupplied['3B'],
-                                        // A_3B_remarks  :A_3B_remarks, 
-                                    }),
-                                })
+                            
+                            // fetch(SUBMIT_FORM_API,
+                            //     {
+                            //         // credentials: 'include',
+                            //         credentials: 'omit',
+                            //         method:'PATCH',
+                            //         headers: {
+                            //         Accept: 'application/json',
+                            //         "Content-Type": 'application/json',
+                            //     },
+                            //         body: JSON.stringify({
+                            //             code         : myvar,
+                            //             A_1_qty      :qtySupplied['1'],
+                            //             // A_1_remarks  :A_1_remarks,
+                            //             A_2A_qty      :qtySupplied['2A'],
+                            //             // A_2A_remarks  :A_2A_remarks,
+                            //             A_2B_qty      :qtySupplied['2B'],
+                            //             // A_2B_remarks  :A_2B_remarks,
+                            //             A_3A_qty      :qtySupplied['3A'],
+                            //             // A_3A_remarks  :A_3A_remarks,
+                            //             A_3B_qty      :qtySupplied['3B'],
+                            //             // A_3B_remarks  :A_3B_remarks, 
+                            //         }),
+                            //     })
                             )}
 
                             // .then((result)=>{store.addNotification({

@@ -243,10 +243,14 @@ export default function ReturnedCardiacForm(props) {
               <NotificationsIcon /> 
             </Badge>
           </IconButton> */}
-          <Link to="/user">
+          
+          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
+            Download Form
+          </Button>
+        <Link to="/user">
           <Button variant="contained" color="secondary">
             Go Back
-        </Button>
+          </Button>
         </Link>
         </Toolbar>
       </AppBar>

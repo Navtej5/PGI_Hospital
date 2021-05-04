@@ -767,15 +767,19 @@ def export_form(request, docnumber):
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
-
+    
+    # row_num+=8
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
 
+    
     # rows = queryset[0] #CardiacRequested.objects.all().values_list('name', 'description', 'brand', 'quantity')
     row_num += 2
     col_num = -2
     row_num *= 4
+    row_num-=1
     # print(queryset.values_list())
+    print("initial state :", row_num,col_num)
     for y in queryset.values_list():
         # print(" y ===>",y)
         for x in y: 
@@ -785,9 +789,10 @@ def export_form(request, docnumber):
             if col_num > -1:
                 ws.write(row_num//4, col_num%4, x, font_style)
             else:
-                row_num -= 0
+                row_num -= 1
     row_num = row_num//4
     row_num += 5
+    
     # ws.write(row_num,0,"Patient Name",font_style)
     # ws.write(row_num,1,"Adhaar Number",font_style)
     # ws.write(row_num,2,"Document Number",font_style)

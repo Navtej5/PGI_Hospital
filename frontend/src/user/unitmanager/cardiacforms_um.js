@@ -214,6 +214,8 @@ export default function CardiacForm_um(props) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   console.log("***********HERE**********\n",props.location.mode,props.location.user);
 
+  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -237,9 +239,13 @@ export default function CardiacForm_um(props) {
             </Badge>
           </IconButton> */}
           {/* <Link to="/unitmandash"> */}
+          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
+            Download Form
+          </Button>
           <Button variant="contained" color="secondary" onClick={()=>history.goBack()}>
             Go Back
-        </Button>
+          </Button>
+        
         {/* </Link> */}
         </Toolbar>
       </AppBar>
