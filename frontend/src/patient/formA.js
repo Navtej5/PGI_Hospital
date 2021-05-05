@@ -109,11 +109,14 @@ export default function FormA(props) {
     const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
-       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber)
+       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+       setreamarkfc(temp.data.remarksfromconsultant);
+        console.log(temp.data.remarksfromconsultant," ===== ",remarkfc);
     }
     const patchreq = async () => {
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
         temp.data.remarksfromconsultant = remarkfc;
-        temp.data.notificationbit = true;
+        // temp.data.notificationbit = true;
         console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
         await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
      }
@@ -566,6 +569,7 @@ export default function FormA(props) {
                         // defaultValue="Default Value"
                         placeholder="enter comments/remarks"
                         variant="outlined"
+                        value={remarkfc}
                         onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>

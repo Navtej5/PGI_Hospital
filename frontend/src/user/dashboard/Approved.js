@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Approved() {
+export default function Approved(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 

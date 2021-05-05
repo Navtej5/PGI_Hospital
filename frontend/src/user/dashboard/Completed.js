@@ -37,8 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export default function Approved() {
+export default function Completed(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
@@ -71,7 +70,7 @@ export default function Approved() {
   const [rows, setRows] = React. useState(createData(123323427897,11,"atul","yo","sfsdf"));
 
   const fetchData = async () => {
-      console.log("in fetch");
+      console.log("in fetch", "and user =", props.user);
       const response = await axios.get(apiURL)
       // const response = await fetch(apiURL);
       const books = await response.data;
@@ -117,7 +116,9 @@ export default function Approved() {
             <TableCell>PATIENT NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQEUST</TableCell>
+            { props.user!="consultant"?
             <TableCell>ACTION</TableCell>
+            :""}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
         </TableHead>
@@ -142,16 +143,16 @@ export default function Approved() {
                 >
                 {row.link}
               </Link>
-              </TableCell>   
+              </TableCell>
+              { props.user!="consultant"?
               <TableCell>
-                {/* var booktemp = {row.tog}; */}
               <Button color="primary" variant='contained'onClick={()=>{ row.tog.state = "Approved";
-      axios.patch(updateURL+row.doc,row.tog); 
-      }} >
-      Move to Approved
-      </Button>
-          
-                </TableCell>
+                axios.patch(updateURL+row.doc,row.tog); 
+                }} >
+                Move to Approved
+                </Button>
+              </TableCell>
+                :""}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
           ))

@@ -310,12 +310,7 @@ export default function ManagerDashboard() {
                   </div>
                       
                   :""}
-                  {choose==3?
-                    <div>
-                    <Title>Completed Requests</Title>
-                    <Completed user="unitman"/>
-                    </div>
-                  :""}
+                  
 
                   {choose==1?
                     <div>
@@ -328,6 +323,12 @@ export default function ManagerDashboard() {
                     <div>
                     <Title>Received from Pharmacy (Audit Pending)</Title>
                     <ReceivedFromPharma user="unitman"/>
+                    </div>
+                  :""}
+                  {choose==3?
+                    <div>
+                    <Title>Completed Requests</Title>
+                    <Completed user="unitman"/>
                     </div>
                   :""}
                 </Paper>
