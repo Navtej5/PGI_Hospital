@@ -317,23 +317,37 @@ export default function ReturnedCardiacForm(props) {
         <Container maxWidth="lg" className={classes.container}>
           
 {form===0? 
+          <div>
           <Grid item xs={12}>
             <Title>{readable[props.location.stage]}</Title>
-          <Paper className={classes.paper}>
-            <ReturnedFormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-          </Paper>
-        </Grid>
+            <Paper>
+              <Deposits docnumber={props.match.params.docnumber}/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <ReturnedFormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+            </Paper>  
+          </Grid>
+        </div>
           :
           ""
 }
 {form===1?
+    <div>
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
-              <Paper className={classes.paper}>
-              
-                <ReturnedFormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-              </Paper>
-            </Grid>
+      <Paper>
+        <Deposits docnumber={props.match.params.docnumber}/>
+      </Paper>
+    </Grid>
+    <Grid item xs={12}>
+      <Title>{readable[props.location.stage]}</Title>
+      <Paper className={classes.paper}>
+        <ReturnedFormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+      </Paper>
+    </Grid>
+  </div>
 :""}
 {form===2?
     <Grid container spacing={3}>

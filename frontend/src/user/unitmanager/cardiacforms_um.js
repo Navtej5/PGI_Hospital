@@ -311,20 +311,37 @@ export default function CardiacForm_um(props) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
             {form===0? 
+            <div>
           <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <FormA_um docnumber={props.match.params.docnumber} user={props.location.user} mode={props.location.mode} stage={props.location.stage}/>
+          <Title>{readable[props.location.stage]}</Title>
+          <Paper>
+            <Deposits docnumber={props.match.params.docnumber}/>
           </Paper>
         </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <FormA_um docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} mode={props.location.mode}/>
+          </Paper>  
+        </Grid>
+        </div>
           :
           ""
 }
 {form===1?
+    <div>
     <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <FormB_um docnumber={props.match.params.docnumber} user={props.location.user} mode={props.location.mode} stage={props.location.stage}/>
-              </Paper>
-            </Grid>
+      <Title>{readable[props.location.stage]}</Title>
+      <Paper>
+        <Deposits docnumber={props.match.params.docnumber}/>
+      </Paper>
+    </Grid>
+    <Grid item xs={12}>
+      <Title>{readable[props.location.stage]}</Title>
+      <Paper className={classes.paper}>
+        <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} mode={props.location.mode}/>
+      </Paper>
+    </Grid>
+  </div>
 :""}
 {form===2?
     <Grid container spacing={3}>
