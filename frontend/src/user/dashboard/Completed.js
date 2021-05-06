@@ -134,11 +134,10 @@ export default function Completed(props) {
               <Link 
                   to={{
                     pathname:"/cardiacform_um/"+row.doc,
-                    formsProps:{
-                      mode:"view_only",
-                      from:"Completed_cons",
-                      user:"all"
-                    }
+                    mode:"read-write-both",
+                    stage:"completed",
+                    docnumber:row.doc,
+                    user:"all",
                   }}
                 >
                 {row.link}

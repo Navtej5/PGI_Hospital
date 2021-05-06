@@ -47,6 +47,7 @@ export default function FormB_um(props) {
     // const [rows2,setRows2] = useState(null);
     // var rows2;
     const fetchData = async () => {
+        console.log("in formB_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
         const response = await axios.get(GET_COMBINED_API)
         // const response = await fetch(apiURL);
@@ -79,68 +80,56 @@ export default function FormB_um(props) {
                 var qty_supplied = 0;
                 var qty_from_pharma = 0;
             }
-            // var qty_supplied = form["**Supplied**"][0][col4];
-            // var qty_from_pharma = form["**Supplied**"][0][col5];
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_supplied}
             ));
             setQtyRcdPharma(qtyRcdPharma => (
                 {...qtyRcdPharma,[id]:qty_from_pharma}
             ));
-
-            // console.log(x,val1,val2,val3,val4);
             temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma});
             // console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied)
         }
         setRows(temp);
-
-
-        // setRows2(temp);
-        // rows2 = createData("x",'x','x','x','x');
-        
-        console.log("temp==>\n",temp);
-        // console.log("length => ",temp.length);
-        // console.log("first object =>\n",temp[0].val0,temp[0].val1,temp[0].val2,temp[0].val3,temp[0].val4);
-        console.log("rows===>\n",rows);
-        // console.log("rows2===>\n",rows2);
+        // console.log("temp==>\n",temp);
+        // console.log("rows===>\n",rows);
     }
 
-    console.log("globe");
+    // console.log("globe");
     useEffect(()=>{
-        console.log("in use effect");  
+        // console.log("in use effect");  
         fetchData();
       // getPatientList()
     },[])
 
 
-    function testhandle(var1){
-        var str_3A="";
-        var otherflag = false;
-        for (const [key, value] of Object.entries(var1)) {
-            if(key==='other'){
-                if(value){
-                    otherflag=true;
-                }
-                //console.log("hello",value);
-            }
-            else if(key==='otherval'){
-                if(otherflag){
-                    str_3A+=value;
-                    str_3A+=";";
-                }
-            }
-            else if(value){
-                str_3A+=key;
-                str_3A+=";";
-            }
-          }
+    // function testhandle(var1){
+    //     var str_3A="";
+    //     var otherflag = false;
+    //     for (const [key, value] of Object.entries(var1)) {
+    //         if(key==='other'){
+    //             if(value){
+    //                 otherflag=true;
+    //             }
+    //             //console.log("hello",value);
+    //         }
+    //         else if(key==='otherval'){
+    //             if(otherflag){
+    //                 str_3A+=value;
+    //                 str_3A+=";";
+    //             }
+    //         }
+    //         else if(value){
+    //             str_3A+=key;
+    //             str_3A+=";";
+    //         }
+    //       }
         
-        console.log("value ",otherflag," =>",str_3A,);
-        if(str_3A===""){
-            return "_";
-        }
-        return str_3A;
-    }
+    //     console.log("value ",otherflag," =>",str_3A,);
+    //     if(str_3A===""){
+    //         return "_";
+    //     }
+    //     return str_3A;
+    // }
 
     // const [B_1_remarks,setB_1_remarks]=React.useState("_")
     // const [B_2A_remarks,setB_2A_remarks]=React.useState("_")
@@ -153,8 +142,8 @@ export default function FormB_um(props) {
     return(
 
         props.mode == "view_only" ?
-            <div>
-                
+            
+            <div>    
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
         }
                 <TableHead>
@@ -318,47 +307,83 @@ export default function FormB_um(props) {
                             <TableCell>{row.descr}</TableCell>
                             <TableCell>{row.brand}</TableCell>
                             <TableCell>{row.qty_requested}</TableCell>
-                            <TableCell>
-                                <input 
-                                type="number" name={row.id} 
-                                value={
-                                    qtyRcdPharma[row.id]
-                                }
-                                min='0'
-                                default={9}
-                                onChange={(event)=>{
-                                    setQtyRcdPharma(qtyRcdPharma => (
-                                        {...qtyRcdPharma, [event.target.name]: event.target.value}
-                                    ));
-                                }}
-                                >
-                                </input>
-                            </TableCell>
-                            <TableCell>
-                                <input 
-                                type="number" name={row.id} 
-                                value={
-                                    qtySupplied[row.id]
-                                }
-                                min='0'
-                                default={9}
-                                onChange={(event)=>{
-                                    setQtySupplied(qtySupplied => (
-                                        {...qtySupplied, [event.target.name]: event.target.value}
-                                    ));
-                                }}
-                                >
-                                </input>
-                            </TableCell>
+                            {props.user=="unitman" && props.stage!="completed"?
+                                <TableCell>
+                                    <input 
+                                    type="number" name={row.id} 
+                                    value={
+                                        qtyRcdPharma[row.id]
+                                    }
+                                    min='0'
+                                    default={9}
+                                    onChange={(event)=>{
+                                        setQtyRcdPharma(qtyRcdPharma => (
+                                            {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                        ));
+                                    }}
+                                    >
+                                    </input>
+                                </TableCell>
+                            :
+                                <TableCell>
+                                    <input disabled
+                                    type="number" name={row.id} 
+                                    value={
+                                        qtyRcdPharma[row.id]
+                                    }
+                                    min='0'
+                                    default={9}
+                                    onChange={(event)=>{
+                                        setQtyRcdPharma(qtyRcdPharma => (
+                                            {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                        ));
+                                    }}
+                                    >
+                                    </input>
+                                </TableCell>
+                            }
+                            {props.user=="unitman" && props.stage!="completed"?
+                                <TableCell>
+                                    <input 
+                                    type="number" name={row.id} 
+                                    value={
+                                        qtySupplied[row.id]
+                                    }
+                                    min='0'
+                                    default={9}
+                                    onChange={(event)=>{
+                                        setQtySupplied(qtySupplied => (
+                                            {...qtySupplied, [event.target.name]: event.target.value}
+                                        ));
+                                    }}
+                                    >
+                                    </input>
+                                </TableCell>
+                            : 
+                                <TableCell>
+                                    <input disabled
+                                    type="number" name={row.id} 
+                                    value={
+                                        qtySupplied[row.id]
+                                    }
+                                    min='0'
+                                    default={9}
+                                    onChange={(event)=>{
+                                        setQtySupplied(qtySupplied => (
+                                            {...qtySupplied, [event.target.name]: event.target.value}
+                                        ));
+                                    }}
+                                    >
+                                    </input>
+                                </TableCell>
+                            }
                             </TableRow>
-                         ))
-                    : ""}
-    
-    
+                        ))
+                    :""}
                     </TableBody>
                 </Table>
                 
-                <div style={{padding:"10px"}}>
+                {/* <div style={{padding:"10px"}}>
                     <Grid container >
                         <Grid item xs={10}>
                         <TextField
@@ -444,7 +469,7 @@ export default function FormB_um(props) {
                     >Submit</Button>
                     </Grid>
                 </Grid>
-                </div>
+                </div> */}
                 </div>
         
         )

@@ -340,6 +340,7 @@ export default function CardiacForm(props) {
         <Deposits docnumber={props.match.params.docnumber}/>
       </Paper>
     </Grid>
+    <br></br>
     <Grid item xs={12}>
       <Paper className={classes.paper}>
         <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
@@ -357,6 +358,7 @@ export default function CardiacForm(props) {
         <Deposits docnumber={props.match.params.docnumber}/>
       </Paper>
     </Grid>
+    <br></br>
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
       <Paper className={classes.paper}>

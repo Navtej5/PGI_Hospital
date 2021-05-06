@@ -45,7 +45,7 @@ export default function FormA_um(props) {
     const [remarkfc,setreamarkfc]=React.useState("_")
 
     const fetchData = async () => {
-        console.log("***************************\n",props.mode)
+        console.log("in formA_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
         const response = await axios.get(GET_COMBINED_API)
         const form = await response.data;
@@ -83,13 +83,13 @@ export default function FormA_um(props) {
             // console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied)
         }
         setRows(temp);
-        console.log("temp==>\n",temp);
-        console.log("rows===>\n",rows);
+        // console.log("temp==>\n",temp);
+        // console.log("rows===>\n",rows);
     }
 
-    console.log("globe");
+    // console.log("globe");
     useEffect(()=>{
-        console.log("in use effect");  
+        // console.log("in use effect");  
         fetchData();
     },[])
 
@@ -332,7 +332,6 @@ export default function FormA_um(props) {
                         ></TextField>
 
                     </Grid>
-                
                     <Grid item xs={2} style={{padding:"3.5%"}}>
 
                     <Button variant="contained" color="primary"
@@ -352,7 +351,6 @@ export default function FormA_um(props) {
                                 A_3B_qty      :qtySupplied['3B'],
                                 // A_3B_remarks  :A_3B_remarks, 
                             }))
-                            
                             // fetch(SUBMIT_FORM_API,
                             //     {
                             //         // credentials: 'include',
@@ -377,33 +375,6 @@ export default function FormA_um(props) {
                             //         }),
                             //     })
                             )}
-
-                            // .then((result)=>{store.addNotification({
-                            //     title: "Success",
-                            //     message: "Request added successfully",
-                            //     type: "success",
-                            //     insert: "top",
-                            //     container: "bottom-right",
-                            //     animationIn: ["animate_animated", "animate_fadeIn"],
-                            //     animationOut: ["animate_animated", "animate_fadeOut"],
-                            //     dismiss: {
-                            //       duration: 5000,
-                            //       onScreen: true
-                            //     }
-                            //   });console.log("Success===:",result)})
-                            // .catch((error)=>{store.addNotification({
-                            //     title: "Failed",
-                            //     message: "Request could not be added",
-                            //     type: "danger",
-                            //     insert: "top",
-                            //     container: "bottom-right",
-                            //     animationIn: ["animate_animated", "animate_fadeIn"],
-                            //     animationOut: ["animate_animated", "animate_fadeOut"],
-                            //     dismiss: {
-                            //       duration: 5000,
-                            //       onScreen: true
-                            //     }
-                            //   });console.log("Error===:",error)})
                     >Submit</Button>
                     </Grid>
                 </Grid>
@@ -438,10 +409,10 @@ export default function FormA_um(props) {
                         Quantity Required
                     </TableCell>
                     <TableCell style={{color:"black"}}>
-                        Quantity from Pharmacy
+                        Quantity Received from Pharmacy
                     </TableCell>
                     <TableCell style={{color:"black"}}>
-                        Quantity Supplied
+                        Quantity Supplied to Dept
                     </TableCell>
                     {/* <TableCell style={{color:"black"}}>
                         Remarks
@@ -460,7 +431,7 @@ export default function FormA_um(props) {
                     <TableCell>{row.brand}</TableCell>
                     <TableCell>{row.qty_requested}</TableCell>
                     
-                    {props.user=="unitman"?
+                    {props.user=="unitman" && props.stage!="completed"?
                         <TableCell>
                             <input 
                             type="number" name={row.id} min="0"
@@ -494,7 +465,7 @@ export default function FormA_um(props) {
                         </TableCell>
                     }
 
-                    {props.user=="unitman"?
+                    {props.user=="unitman"  && props.stage!="completed"?
                         <TableCell>
                             <input 
                             type="number" name={row.id} min="0"
@@ -534,7 +505,7 @@ export default function FormA_um(props) {
                 
             </TableBody>
         </Table>
-        <div style={{padding:"10px"}}>
+        {/* <div style={{padding:"10px"}}>
             <Grid container >
                 <Grid item xs={10}>
                     <TextField
@@ -633,7 +604,7 @@ export default function FormA_um(props) {
                 >Submit</Button>
                 </Grid>
             </Grid>
-        </div>
+        </div> */}
         </div>
         )
     }

@@ -109,8 +109,8 @@ export default function FormA(props) {
     const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
-       temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
-       setreamarkfc(temp.data.remarksfromconsultant);
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+        setreamarkfc(temp.data.remarksfromconsultant);
         console.log(temp.data.remarksfromconsultant," ===== ",remarkfc);
     }
     const patchreq = async () => {
@@ -276,7 +276,28 @@ export default function FormA(props) {
         // const [dateofbirth,setdateofbirth] = useState(null);
         return(
             <div>
+            
+            <Grid container >
                 
+                <Grid item xs={12}>
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Remarks from consultant"
+                    style={{width:"95%"}}
+                    multiline
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                    rows={2}
+                    // cols={12}
+                    // defaultValue="Default Value"
+                    placeholder="enter comments/remarks"
+                    variant="filled"
+                    value={remarkfc}
+                    // onChange={event => setreamarkfc(event.target.value)}
+                />
+                </Grid>
+            </Grid>
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
         }
                 <TableHead>
@@ -561,16 +582,16 @@ export default function FormA(props) {
                     <Grid item xs={10}>
                     <TextField
                         id="outlined-multiline-static"
-                        label="Remarks"
+                        label="Additional details/comments"
                         style={{width:"95%"}}
                         multiline
                         rows={4}
                         // cols={12}
                         // defaultValue="Default Value"
-                        placeholder="enter comments/remarks"
+                        placeholder="enter additional details/comments here"
                         variant="outlined"
-                        value={remarkfc}
-                        onChange={event => setreamarkfc(event.target.value)}
+                        // value={remarkfc}
+                        // onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>
                 
@@ -582,7 +603,7 @@ export default function FormA(props) {
                     // console.log('values====>\ncompany_name:',A_3A_brand,'\nQty_required:',A_3A_qty,'\nSpecification:',A_3A_descr,'\nRemarks:',A_3A_remarks,"\n------------- ",props.docnumber,"\n----------------")
                     //,console.log(testhandle(checkboxSelected_1),"---",testhandle(checkboxSelected_2),"---",testhandle(checkboxSelected_3),"---",testhandle(checkboxSelected_4))
                     console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
-                    ,patchreq()
+                    // ,patchreq()
                     ,final_a1brand=testhandle(checkboxSelected_3)
                     ,final_a2a_descr=testhandle(checkboxSelected_2)
                     ,final_a3abrand=testhandle(checkboxSelected_1)

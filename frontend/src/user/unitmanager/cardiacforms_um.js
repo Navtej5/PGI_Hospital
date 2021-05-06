@@ -40,8 +40,17 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import FormA_um from './formA_um';
 import FormB_um from './formB_um';
 import {myvar} from '../user.js';
+import Deposits from "../../patient/details";
+import Title from './Title';
 
 
+const readable = {
+  "Pending":"Pending Approval",
+  "Approved":"Approved by Consultant",
+  "ReceivedFromPharma":"Requested Inventory Received",
+  "SentToPharma":"Inventory Ordered and Waiting for delivery",
+  "Completed":"Completed",
+};
 // export const mainListItems = (
 //   <div>
 //     <ListItem button>
@@ -169,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
+    overflowX: 'auto',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -212,7 +221,7 @@ export default function CardiacForm_um(props) {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  console.log("***********HERE**********\n",props.location.mode,props.location.user);
+  console.log("***********HERE**********\n","mode=",props.location.mode,"\nuser=",props.location.user,"\ndocnumber=",props.location.docnumber);
 
   
 
@@ -338,7 +347,7 @@ export default function CardiacForm_um(props) {
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
       <Paper className={classes.paper}>
-        <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} mode={props.location.mode}/>
+        <FormB_um docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} mode={props.location.mode}/>
       </Paper>
     </Grid>
   </div>

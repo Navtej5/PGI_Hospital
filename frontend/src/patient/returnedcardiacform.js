@@ -41,7 +41,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import ReturnedFormA from './returnedFormA';
 import ReturnedFormB from './returnedFormB';
 import { myvar } from '../user/user.js';
-import Title from '../user/dashboard/Title'
+import Deposits from "./details";
+import Title from '../user/dashboard/Title';
 
 
 const readable = {
