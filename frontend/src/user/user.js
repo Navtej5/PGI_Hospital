@@ -33,7 +33,7 @@ const readable = {
 
 const redirect_url = {
   "Filling":"/form/",
-  "Pending":"/form/",
+  "Pending":"/returned/",
   "Approved":"/returned/",
   "SentToPharma":"/returned/",
   "ReceivedFromPharma":"/returned/",

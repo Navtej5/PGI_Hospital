@@ -143,7 +143,7 @@ export default function ReturnedFormB(props) {
 
     return(
 
-        props.stage == 'Approved' || props.stage=="SentToPharma"?
+        props.stage == 'Approved' || props.stage=="SentToPharma" || props.stage=="Pending"?
             <div>
                 
             <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}

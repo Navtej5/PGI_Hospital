@@ -235,7 +235,7 @@ export default function ReturnedFormA(props) {
     
     return(
 
-        props.stage == 'Approved' || props.stage=="SentToPharma" ?
+        props.stage == 'Approved' || props.stage=="SentToPharma" || props.stage == 'Pending'?
         
         <div>
                 
