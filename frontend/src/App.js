@@ -14,6 +14,7 @@ import Dashboard from './user/dashboard/Dashboard';
 import ManagerDashboard from './user/unitmanager/ManagerDashboard';
 import CardiacForm_um from './user/unitmanager/cardiacforms_um';
 import ReturnedCardiacForm from './patient/returnedcardiacform';
+import ProductsTblPage from './user/sorttable';
 function App() {
   const [nurse, setNurse] = useState("false");
   const [consultant,setConsultant] = useState("false");
@@ -67,6 +68,7 @@ function App() {
       
       <Route path={"/cardiacform_um/:docnumber"} component={CardiacForm_um}/>
       <Route path={"/returned/:docnumber"} component={ReturnedCardiacForm}/>
+      <Route exact path={"/table"} component={ProductsTblPage}/>
       </Switch>
 
     </Router>
