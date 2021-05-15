@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
+import datetime
 # Create your models here.
 
 #class Users(models.Model):
@@ -25,17 +26,16 @@ class Requests(models.Model):
     height = models.IntegerField()
     weight = models.IntegerField()
     
-    
-    nurseflag = models.CharField(max_length=100,default='_')
-    perfusionistflag = models.CharField(max_length=100,default='_')
-    doctorflag = models.CharField(max_length=100,default='_')
-    technicianflag = models.CharField(max_length=100,default='_')
-    consultantflag = models.CharField(max_length=100,default='_')
+    nurseflag = models.CharField(max_length=1,default='F')
+    perfusionistflag = models.CharField(max_length=1,default='T')
+    doctorflag = models.CharField(max_length=1,default='F')
+    technicianflag = models.CharField(max_length=1,default='T')
+    consultantflag = models.CharField(max_length=1,default='F')
     state = models.CharField(max_length=100,default="Pending")
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
     notificationbit = models.BooleanField(default=False)
-
-#doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
+    dateofprocedure = models.DateField(default=datetime.date.today())
+# doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
 
 # class CardiacReceived(models.Model):
 #     docnumber = models.CharField(max_length=100,null=False,primary_key=True)
@@ -50,8 +50,7 @@ class Requests(models.Model):
 # class CardiacRequested(models.Model):
 #     super CardiacReceived  
 #     allreceived = models.BooleanField(default=False)
-    
-# class GuptRog
+
 class Patient(models.Model): 
     name = models.CharField(max_length=100)
     wardadhaar = models.IntegerField(primary_key=True,validators=[MinValueValidator(100000000000),MaxValueValidator(999999999999)])

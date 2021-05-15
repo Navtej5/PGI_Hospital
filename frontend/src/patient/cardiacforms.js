@@ -47,6 +47,7 @@ import axios from 'axios';
 
 
 const readable = {
+  "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
   "ReceivedFromPharma":"Requested Inventory Received",
@@ -212,10 +213,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardiacForm(props) {
-  const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+  const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'+props.match.params.docnumber;
+  const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.match.params.docnumber;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [form,setForm]=React.useState(0)
+  const [form,setForm]=React.useState(0);
+  const [nurseflag,setNurseflag] = React.useState('F');
+  const [techflag,setTechflag] = React.useState('F');
+  const [perflag,setPerflag] = React.useState('F');
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -229,9 +234,14 @@ export default function CardiacForm(props) {
   const notificationfunction = async () =>{
     console.log("in use effect");  
     // fetchData();
-    var xy = await axios.get(SUBMIT_REQUEST_API+props.location.docnumber);
+    var xy = await axios.get(SUBMIT_REQUEST_API);
     xy.data.notificationbit = 0;
-    axios.put(SUBMIT_REQUEST_API+props.location.docnumber,xy.data);
+    axios.put(SUBMIT_REQUEST_API,xy.data);
+    var xyz = await axios.get(GET_REQUEST_DATA_API);
+    setNurseflag(xyz.data.nurseflag);
+    setTechflag(xyz.data.technicianflag);
+    setPerflag(xyz.data.perfusionistflag);
+
   }
 
   useEffect(()=>{
@@ -343,7 +353,7 @@ export default function CardiacForm(props) {
     <br></br>
     <Grid item xs={12}>
       <Paper className={classes.paper}>
-        <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+        <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} nurseflag={nurseflag} perflag={perflag} techflag={techflag}/>
       </Paper>  
     </Grid>
   </div>
@@ -362,7 +372,7 @@ export default function CardiacForm(props) {
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
       <Paper className={classes.paper}>
-        <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
+        <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} nurseflag={nurseflag} perflag={perflag} techflag={techflag}/>
       </Paper>
     </Grid>
   </div>

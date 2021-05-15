@@ -124,7 +124,7 @@ export default function Approved(props) {
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
             {/* <TableCell>REMARKS</TableCell> */}
-            <TableCell>ACTION</TableCell>
+            {/* <TableCell>ACTION</TableCell> */}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
         </TableHead>
@@ -161,34 +161,17 @@ export default function Approved(props) {
                   }}
                 ></input> */}
               {/* </TableCell> */}
-              <TableCell>
-                {/* var booktemp = {row.tog}; */}
-              <Button color="primary" variant="contained" 
-              onClick={()=>{ 
-                row.tog.state = "Pending";
-                // axios.patch(updateURL+row.doc,{"remarksfromconsultant":row.remarks});
-                axios.patch(updateURL+row.doc,row.tog); 
-                
-                // fetch(REMARKS_API+row.doc,
-                //   {
-                //     credentials: 'include',
-                //     method:'PATCH',
-                //     headers: {
-                //     Accept: 'application/json',
-                //     "Content-Type": 'application/json',
-                // },
-                //     body: JSON.stringify({
-                //         remarks: tempstring,
-                //         // wardadhaar: "100000000000",
-
-                //     }),
-                // })
-
-      }} >
-      Move to Pending
-      </Button>
-          
-                </TableCell>
+              {/* <TableCell>
+                <Button 
+                  color="primary" 
+                  variant="contained" 
+                  onClick={()=>{ 
+                    row.tog.state = "Pending";
+                    // axios.patch(updateURL+row.doc,{"remarksfromconsultant":row.remarks});
+                    axios.patch(updateURL+row.doc,row.tog); 
+                  }} 
+                >Move to Pending</Button>
+              </TableCell> */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
           ))

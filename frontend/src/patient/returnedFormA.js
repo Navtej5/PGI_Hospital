@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { myvar } from '../user/user.js';
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({forceRefresh:true});
 
 const Input = styled.input`
   border-radius: 4px;
