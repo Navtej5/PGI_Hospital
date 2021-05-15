@@ -64,7 +64,7 @@ export default function Deposits(props) {
         CR number: {cr}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        
+        Gender: Male
       </Typography>
       {/* <div>
         <Link color="primary" href="#" onClick={preventDefault}>
