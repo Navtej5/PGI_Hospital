@@ -42,7 +42,7 @@
 
 
 
-// export default function ReceivedFromPharma(props) {
+// export default function SentToPharma(props) {
 //   const classes = useStyles();
 //   const [checked,setChecked]= React.useState(false);
 
@@ -160,7 +160,7 @@
 //               {props.user=="unitman"?
 //               <TableCell>
 //                 {/* var booktemp = {row.tog}; */}
-//               <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
+//               <Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
 //               axios.patch(updateURL+row.doc,row.tog); 
 //               }} >
 //               Received
@@ -407,7 +407,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReceivedFromPharma(props) {
+export default function SentToPharma(props) {
   const classes = useStyles();
   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
@@ -583,7 +583,7 @@ useEffect(()=>{
                 </Link>
                         </TableCell>
                         {props.user=="unitman"?
-                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
+                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
       axios.patch(updateURL+row.docnumber,row.tog); 
       }} >
       Received

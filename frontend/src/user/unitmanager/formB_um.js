@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 // import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -45,9 +46,19 @@ export default function FormB_um(props) {
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
+    const [verified,setVerified] = useState({'1':false,'2A':false,'2B':false,'3A':false,'3B':false,'3C':false,'3D':false})
     const [remarkfc,setreamarkfc]=React.useState("_")
     // const [rows2,setRows2] = useState(null);
     // var rows2;
+    function BooltoCharfunction(var1){
+        if(var1){
+            return "T";
+        }
+        else{
+            return "F";
+        }
+    }
+
     let history = useHistory();
     const fetchData = async () => {
         console.log("in formB_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
@@ -70,11 +81,22 @@ export default function FormB_um(props) {
             var col3 = "B_"+ids[x]+"_brand";
             var col4 = "B_"+ids[x]+"_qty";
             var col5 = "B_"+ids[x]+"_qty_rcd";
+            var col6 = "B_"+ids[x]+"_tally_unitman";
             var id = ids[x];
             var name = form["**Requested**"][0][col1];
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
+            var tallyunitman=false;
+            if(form["**Supplied**"][0][col6]=='T'){
+                tallyunitman=true;
+                setVerified(verified => (
+                    {...verified,[id]:true}
+                ));
+            }
+            else{
+                tallyunitman=false;
+            }
             if(form["**Supplied**"].length>0){
                 var qty_supplied = form["**Supplied**"][0][col4];
                 var qty_from_pharma = form["**Supplied**"][0][col5];
@@ -244,6 +266,11 @@ export default function FormB_um(props) {
                             <TableCell>
                                 Quantity Supplied To Dept
                             </TableCell>
+                            {props.user=="unitman" && props.stage!="completed"?
+                            <TableCell>
+                                Verfication done?
+                            </TableCell>
+                            :""}
                             {/* <TableCell style={{color:"black"}}>
                                 Remarks
                             </TableCell> */}
@@ -329,12 +356,105 @@ export default function FormB_um(props) {
                                     </input>
                                 </TableCell>
                             }
+
+
+                            {props.user=="unitman" && props.stage!="completed"?
+                                <TableCell>
+                                    <Checkbox 
+                                        checked={verified[row.id]}
+                                        // value={row.tallyunitman}
+                                        onChange={(event)=>{
+                                            setVerified(verified => (
+                                                {...verified,[row.id]:event.target.checked}
+                                            ));
+                                            console.log("row.id",row.id,event.target.checked,row.tallyunitman);
+                                        }}
+                                    />
+                                </TableCell>
+                            :
+                                ""
+                            }
                             </TableRow>
                         ))
                     :""}
                     </TableBody>
                 </Table>
-                
+        {props.user=="unitman" && props.stage!="completed"?
+            <Button variant="contained" color="primary"
+            onClick={()=>(
+                console.log("******submitting*********")
+                ,fetch(SUBMIT_FORM_API,
+                    {
+                        // credentials: 'include',
+                        credentials: 'omit',
+                        method:'PATCH',
+                        headers: {
+                        Accept: 'application/json',
+                        "Content-Type": 'application/json',
+                    },
+                        body: JSON.stringify({
+                            code         : myvar,
+                            B_1_qty      :qtySupplied['1'],
+                            // B_1_remarks  :B_1_remarks,
+                            B_2A_qty      :qtySupplied['2A'],
+                            // B_2A_remarks  :B_2A_remarks,
+                            B_2B_qty      :qtySupplied['2B'],
+                            // B_2B_remarks  :B_2B_remarks,
+                            B_3A_qty      :qtySupplied['3A'],
+                            // B_3A_remarks  :B_3A_remarks,
+                            B_3B_qty      :qtySupplied['3B'],
+                            // B_3B_remarks  :B_3B_remarks,
+                            B_3C_qty      :qtySupplied['3C'],
+                            // B_3C_remarks  :B_3C_remarks,
+                            B_3D_qty      :qtySupplied['3D'],
+                            // B_3D_remarks  :B_3D_remarks,
+                            B_1_qty_rcd      :qtyRcdPharma['1'],
+                            B_2A_qty_rcd      :qtyRcdPharma['2A'],
+                            B_2B_qty_rcd      :qtyRcdPharma['2B'],
+                            B_3A_qty_rcd      :qtyRcdPharma['3A'],
+                            B_3B_qty_rcd      :qtyRcdPharma['3B'],
+                            B_3C_qty_rcd      :qtyRcdPharma['3C'],
+                            B_3D_qty_rcd      :qtyRcdPharma['3D'],
+                            
+                            B_1_tally_unitman      :BooltoCharfunction(verified['1']),
+                            B_2A_tally_unitman      :BooltoCharfunction(verified['2A']),
+                            B_2B_tally_unitman      :BooltoCharfunction(verified['2B']),
+                            B_3A_tally_unitman      :BooltoCharfunction(verified['3A']),
+                            B_3B_tally_unitman      :BooltoCharfunction(verified['3B']),
+                            B_3C_tally_unitman      :BooltoCharfunction(verified['3C']),
+                            B_3D_tally_unitman      :BooltoCharfunction(verified['3D']),                            
+                        }),
+                    })
+                )}
+
+                // .then((result)=>{store.addNotification({
+                //     title: "Success",
+                //     message: "Request added successfully",
+                //     type: "success",
+                //     insert: "top",
+                //     container: "bottom-right",
+                //     animationIn: ["animate_animated", "animate_fadeIn"],
+                //     animationOut: ["animate_animated", "animate_fadeOut"],
+                //     dismiss: {
+                //       duration: 5000,
+                //       onScreen: true
+                //     }
+                //   });console.log("Success===:",result)})
+                // .catch((error)=>{store.addNotification({
+                //     title: "Failed",
+                //     message: "Request could not be added",
+                //     type: "danger",
+                //     insert: "top",
+                //     container: "bottom-right",
+                //     animationIn: ["animate_animated", "animate_fadeIn"],
+                //     animationOut: ["animate_animated", "animate_fadeOut"],
+                //     dismiss: {
+                //       duration: 5000,
+                //       onScreen: true
+                //     }
+                //   });console.log("Error===:",error)})
+            >Save As Draft</Button>
+        :""}
                 {/* <div style={{padding:"10px"}}>
                     <Grid container >
                         <Grid item xs={10}>

@@ -1,4 +1,3 @@
-// import React from 'react';
 // import React, { useState , useEffect} from 'react';
 // // import Link from '@material-ui/core/Link';
 // import { makeStyles } from '@material-ui/core/styles';
@@ -42,7 +41,7 @@
 
 
 
-// export default function SentToPharma(props) {
+// export default function ReceivedFromPharma(props) {
 //   const classes = useStyles();
 //   const [checked,setChecked]= React.useState(false);
 //   const [patientSearch,setPatientSearch] = React.useState("");
@@ -411,7 +410,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SentToPharma(props) {
+export default function ReceivedFromPharma(props) {
   const classes = useStyles();
   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
