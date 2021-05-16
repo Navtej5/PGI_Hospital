@@ -45,8 +45,19 @@ export default function FormA_um(props) {
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
+    const [verified,setVerified] = useState({'1':false,'2A':false,'2B':false,'3A':false,'3B':false,'3C':false,'3D':false})
     const [remarkfc,setreamarkfc]=React.useState("_")
     let history = useHistory();
+
+    function BooltoCharfunction(var1){
+        if(var1){
+            return "T";
+        }
+        else{
+            return "F";
+        }
+    }
+
     const fetchData = async () => {
         console.log("in formA_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
@@ -70,8 +81,11 @@ export default function FormA_um(props) {
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
             var tallyunitman=false;
-            if(form["**Supplied**"][0][col6]=="T"){
+            if(form["**Supplied**"][0][col6]=='T'){
                 tallyunitman=true;
+                setVerified(verified => (
+                    {...verified,[id]:true}
+                ));
             }
             else{
                 tallyunitman=false;
@@ -368,7 +382,7 @@ export default function FormA_um(props) {
         <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}
         }
             <TableHead>
-                <TableRow>
+                <TableRow> 
                     <TableCell style={{color:"black"}}>
                         Sr. No.
                     </TableCell>
@@ -486,10 +500,12 @@ export default function FormA_um(props) {
                     {props.user=="unitman" && props.stage!="completed"?
                         <TableCell>
                             <Checkbox 
-                                // checked={row.tallyunitman}
+                                checked={verified[row.id]}
                                 // value={row.tallyunitman}
                                 onChange={(event)=>{
-                                    row.tallyunitman = event.target.checked;
+                                    setVerified(verified => (
+                                        {...verified,[row.id]:event.target.checked}
+                                    ));
                                     console.log("row.id",row.id,event.target.checked,row.tallyunitman);
                                 }}
                             />
@@ -504,6 +520,71 @@ export default function FormA_um(props) {
                 
             </TableBody>
         </Table>
+
+        {props.user=="unitman" && props.stage!="completed"?
+            <Button variant="contained" color="primary"
+            onClick={()=>(
+                console.log("******submitting*********")
+                ,fetch(SUBMIT_FORM_API,
+                    {
+                        // credentials: 'include',
+                        credentials: 'omit',
+                        method:'PATCH',
+                        headers: {
+                        Accept: 'application/json',
+                        "Content-Type": 'application/json',
+                    },
+                        body: JSON.stringify({
+                            code         : myvar,
+                            A_1_qty      :qtySupplied['1'],
+                            A_2A_qty      :qtySupplied['2A'],
+                            A_2B_qty      :qtySupplied['2B'],
+                            A_3A_qty      :qtySupplied['3A'],
+                            A_3B_qty      :qtySupplied['3B'],
+                            A_1_qty_rcd      :qtyRcdPharma['1'],
+                            A_2A_qty_rcd      :qtyRcdPharma['2A'],
+                            A_2B_qty_rcd      :qtyRcdPharma['2B'],
+                            A_3A_qty_rcd      :qtyRcdPharma['3A'],
+                            A_3B_qty_rcd      :qtyRcdPharma['3B'],
+                            
+                            A_1_tally_unitman      :BooltoCharfunction(verified['1']),
+                            A_2A_tally_unitman      :BooltoCharfunction(verified['2A']),
+                            A_2B_tally_unitman      :BooltoCharfunction(verified['2B']),
+                            A_3A_tally_unitman      :BooltoCharfunction(verified['3A']),
+                            A_3B_tally_unitman      :BooltoCharfunction(verified['3B']),
+                        }),
+                    })
+                )}
+
+                // .then((result)=>{store.addNotification({
+                //     title: "Success",
+                //     message: "Request added successfully",
+                //     type: "success",
+                //     insert: "top",
+                //     container: "bottom-right",
+                //     animationIn: ["animate_animated", "animate_fadeIn"],
+                //     animationOut: ["animate_animated", "animate_fadeOut"],
+                //     dismiss: {
+                //       duration: 5000,
+                //       onScreen: true
+                //     }
+                //   });console.log("Success===:",result)})
+                // .catch((error)=>{store.addNotification({
+                //     title: "Failed",
+                //     message: "Request could not be added",
+                //     type: "danger",
+                //     insert: "top",
+                //     container: "bottom-right",
+                //     animationIn: ["animate_animated", "animate_fadeIn"],
+                //     animationOut: ["animate_animated", "animate_fadeOut"],
+                //     dismiss: {
+                //       duration: 5000,
+                //       onScreen: true
+                //     }
+                //   });console.log("Error===:",error)})
+            >Save As Draft</Button>
+        :""}
+
         {/* <div style={{padding:"10px"}}>
             <Grid container >
                 <Grid item xs={10}>
