@@ -12,7 +12,8 @@ User._meta.get_field('username')._unique = True
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ('name','wardadhaar','bloodgroup','gender','dob')
+        # fields = ('name','wardadhaar','bloodgroup','gender','dob')
+        fields = ('__all__')
 
 
 class RequestSerializer(serializers.ModelSerializer):

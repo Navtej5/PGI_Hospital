@@ -1,6 +1,6 @@
 from django.urls import path, include
 from knox.views import LogoutView
-from .views import CombineCardiacView,export_form,UpdateRequestRemarksView,GetPatientTable,GetPatients,PatientView,GetRequestTable,RequestView,LoginAPIView,ViewRequestTable,RegisterAPIView,ViewCardiacRequestTable, GetCardiacRequestTable,UpdateCardiacFormAView,UpdateCardiacFormBView, ViewCardiacSuppliedTable,UpdateCardiacSuppliedFormAView,UpdateCardiacSuppliedFormBView
+from .views import CombineCardiacView,export_form,print_pdf,UpdateRequestRemarksView,GetPatientTable,GetPatients,PatientView,GetRequestTable,RequestView,LoginAPIView,ViewRequestTable,RegisterAPIView,ViewCardiacRequestTable, GetCardiacRequestTable,UpdateCardiacFormAView,UpdateCardiacFormBView, ViewCardiacSuppliedTable,UpdateCardiacSuppliedFormAView,UpdateCardiacSuppliedFormBView
 urlpatterns = [
     # path('',include('frontend.urls')),
     # path('users',UsersView.as_view()),
@@ -30,4 +30,5 @@ urlpatterns = [
 
     path('combined-form/<str:docnumber>',CombineCardiacView.as_view()),
     path('get-form-xls/<str:docnumber>',export_form,name='export_form'),
+    path('print_pdf/<str:docnumber>',print_pdf,name='print_pdf'),
 ]

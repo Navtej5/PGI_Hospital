@@ -734,6 +734,161 @@ class CombineCardiacView(ListAPIView):
 #     return response
 
 
+def print_pdf(request,docnumber):
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter, inch
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
+    serializer_class = CardiacRequestedSerializer
+    serializer_class2 = RequestSerializer
+    serializer_class2 = PatientSerializer
+    lookup_url_kwarg = 'docnumber'
+    cardiacset = CardiacRequested.objects.filter(docnumber=docnumber)
+    requestset = Requests.objects.filter(docnumber=docnumber)
+    wardadhaar = requestset[0].wardadhaar
+    patientset = Patient.objects.filter(wardadhaar=wardadhaar)
+    
+    # ###################################
+    # Help
+    def drawMyRuler(pdf):
+        pdf.drawString(100,810, 'x100')
+        pdf.drawString(200,810, 'x200')
+        pdf.drawString(300,810, 'x300')
+        pdf.drawString(400,810, 'x400')
+        pdf.drawString(500,810, 'x500')
+
+        pdf.drawString(10,100, 'y100')
+        pdf.drawString(10,200, 'y200')
+        pdf.drawString(10,300, 'y300')
+        pdf.drawString(10,400, 'y400')
+        pdf.drawString(10,500, 'y500')
+        pdf.drawString(10,600, 'y600')
+        pdf.drawString(10,700, 'y700')
+        pdf.drawString(10,800, 'y800')    
+
+
+
+
+
+
+
+
+    # ###################################
+    # Content
+    fileName = str(docnumber)+'.pdf'
+    documentTitle = 'Utilization certificate ' + str(docnumber)
+    title = 'Utilization certificate'
+    subTitle = 'Congenital heart disease'
+    text_head1 = [
+        'Name: '+requestset[0].patientname,
+        'Dob/Sex: '+patientset[0].dob+" "+patientset[0].gender,
+        'Wt/BSA: '+requestset[0].weight+", "+requestset[0].bsa
+    ]
+    text_head2 = [
+        'Date: '+requestset[0].date,
+        'Cr no: '+requestset[0].crnumber,
+        'Consultant: '+requestset[0].consultantuname
+    ]
+    textLines = [
+    'The Tasmanian devil (Sarcophilus harrisii) is',
+    'a carnivorous marsupial of the family',
+    'Dasyuridae.'
+    ]
+    vals = cardiacset.values_list() 
+    print(vals)
+    return 0
+    data = [
+        ['Sr no', 'Name of item', 'Size', "Brand", "Quantity required","Quantity consumed", "Balance if any"],
+        [],
+
+    ]
+
+    # image = 'tasmanianDevil.jpg'
+
+
+    # ###################################
+    # 0) Create document
+    # import reportlab 
+    from reportlab.pdfgen import canvas 
+
+    pdf = canvas.Canvas(fileName)
+    pdf.setTitle(documentTitle)
+
+
+
+    drawMyRuler(pdf)
+    # ###################################
+    # 1) Title :: Set fonts 
+    # # Print available fonts
+    # for font in pdf.getAvailableFonts():
+    #     print(font)
+
+    # Register a new font
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.pdfbase import pdfmetrics
+
+    pdfmetrics.registerFont(
+        TTFont('abc', 'SakBunderan.ttf')
+    )
+    pdf.setFont('abc', 36)
+    pdf.drawCentredString(300, 770, title)
+
+
+
+
+
+
+
+
+
+    # ###################################
+    # 2) Sub Title 
+    # RGB - Red Green and Blue
+    pdf.setFillColorRGB(0, 0, 255)
+    pdf.setFont("Courier-Bold", 24)
+    pdf.drawCentredString(290,720, subTitle)
+
+
+
+
+
+
+    # ###################################
+    # 3) Draw a line
+    pdf.line(30, 710, 550, 710)
+
+
+
+
+
+
+
+
+
+    # ###################################
+    # 4) Text object :: for large amounts of text
+    from reportlab.lib import colors
+
+    text = pdf.beginText(40, 680)
+    text.setFont("Courier", 18)
+    text.setFillColor(colors.red)
+    for line in textLines:
+        text.textLine(line)
+
+    pdf.drawText(text)
+
+
+
+
+
+    # ###################################
+    # 5) Draw a image
+    # pdf.drawInlineImage(image, 130, 400)
+
+
+
+
+    pdf.save()
 
 def export_form(request, docnumber):
     serializer_class = CardiacRequestedSerializer
