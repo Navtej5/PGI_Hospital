@@ -240,6 +240,8 @@ export default function FormA(props) {
     //     console.log("value=>",str_3A);
     // }
     const [remarkfc,setreamarkfc]=React.useState("_")
+    const [boolareyousure,setBoolareyousure]=React.useState(false)
+
     const [A_1_descr,setA_1_descr]=React.useState("_")
     const [A_1_brand,setA_1_brand]=React.useState("_")
     const [A_1_qty,setA_1_qty]=React.useState("0")
@@ -385,9 +387,9 @@ export default function FormA(props) {
                         <TableCell style={{color:"black"}}>
                             Quantity Required
                         </TableCell>
-                        <TableCell style={{color:"black"}}>
+                        {/* <TableCell style={{color:"black"}}>
                             {props.docnumber},{props.nurseflag},{props.perflag},{props.techflag}
-                        </TableCell>
+                        </TableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -690,10 +692,9 @@ export default function FormA(props) {
                     </Grid>
                 
                 <Grid item xs={2} style={{padding:"1%"}}>
-                <Button  
-            
-            variant="contained" color="primary"
-                onClick={()=>(
+                    <Button  
+                    variant="contained" color="primary"
+                    onClick={()=>(
                     // console.log('values====>\ncompany_name:',A_3A_brand,'\nQty_required:',A_3A_qty,'\nSpecification:',A_3A_descr,'\nRemarks:',A_3A_remarks,"\n------------- ",props.docnumber,"\n----------------")
                     //,console.log(testhandle(checkboxSelected_1),"---",testhandle(checkboxSelected_2),"---",testhandle(checkboxSelected_3),"---",testhandle(checkboxSelected_4))
                     console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
@@ -766,22 +767,34 @@ export default function FormA(props) {
                     //   });console.log("Error===:",error)})
                 )}
             >Save as draft</Button>
+                </Grid>
+            </Grid>
             
             {props.nurseflag==='F'?
-            <Button
-                variant="contained"
-                color="default"
-                onClick={()=>{
-                    if (window.confirm("Are you sure you completed ALL forms (i.e. Anesthic, CardioPulmonary, stc.) ALERT: THIS ACTION CAN'T BE UNDONE")){
-                        console.log("pakaa"); 
-                        onclickMarkComplete(); 
-                        history2.goBack();
-                    }
-                }}
-            >Mark Complete</Button>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Checkbox 
+                        onChange={(event)=>(setBoolareyousure(event.target.checked),console.log("this checkbox is ==>",event.target.checked,document.getElementById('markcompletebutton').disabled))}/>
+                        {/* onClick = {(event)=>} */}
+                    I Have thoroughly checked all the Forms i.e. Anesthis form, Cardiopulmonary form, etc. and wish to submit it for approval 
+                </Grid>  
+                <Grid item xs={10} align="center">
+                    <Button
+                        id="markcompletebutton"
+                        variant="contained"
+                        disabled={!boolareyousure}
+                        color="default"
+                        onClick={()=>{
+                            if (window.confirm("ALERT: THIS ACTION CAN'T BE UNDONE, ARE YOU SURE YOU WANT TO PROCEED?")){
+                                console.log("pakaa"); 
+                                onclickMarkComplete(); 
+                                history2.goBack();
+                            }
+                        }}
+                    >Mark Complete</Button>
+                </Grid>
+            </Grid>
             :""}
-            </Grid>
-            </Grid>
             </div>
             </div>
         )

@@ -76,6 +76,11 @@ class RequestView(APIView):
                 height=height,weight=weight,bsa=bsa,
                 patientname=patientname)
             newRequest.save()
+
+            requestrow = CardiacRequested(docnumber=docnumber)
+            requestrow.save()
+            suppliedrow = CardiacSupplied(docnumber=docnumber)
+            suppliedrow.save()
             return Response({'GOOD':'entered new Request'},status=status.HTTP_201_CREATED)
         
         msg = serializer.errors
@@ -284,7 +289,12 @@ class UpdateCardiacFormAView(RetrieveUpdateDestroyAPIView):
                 newRow.save()
 
                 newSuppliedRow = CardiacSupplied(
-                    docnumber=docnumber
+                    docnumber=docnumber,
+                    A_1_qty_rcd=A_1_qty,
+                    A_2A_qty_rcd=A_2A_qty,
+                    A_2B_qty_rcd=A_2B_qty,
+                    A_3A_qty_rcd=A_3A_qty,
+                    A_3B_qty_rcd=A_3B_qty,
                 )
                 newSuppliedRow.save()
                 
@@ -322,6 +332,27 @@ class UpdateCardiacFormAView(RetrieveUpdateDestroyAPIView):
                     'A_3B_descr', 'A_3B_brand','A_3B_qty',
                 ])
                 
+                suppliedRow = CardiacSupplied.objects.filter(docnumber = docnumber)[0]
+                suppliedRow.A_1_qty_rcd = A_1_qty
+                suppliedRow.A_2A_qty_rcd = A_2A_qty
+                suppliedRow.A_2B_qty_rcd = A_2B_qty
+                suppliedRow.A_3A_qty_rcd = A_3A_qty
+                suppliedRow.A_3B_qty_rcd = A_3B_qty
+                
+                suppliedRow.A_1_qty = A_1_qty
+                suppliedRow.A_2A_qty = A_2A_qty
+                suppliedRow.A_2B_qty = A_2B_qty
+                suppliedRow.A_3A_qty = A_3A_qty
+                suppliedRow.A_3B_qty = A_3B_qty
+                
+                suppliedRow.save(update_fields=[
+                    'A_1_qty_rcd','A_1_qty',
+                    'A_2A_qty_rcd','A_2A_qty',
+                    'A_2B_qty_rcd','A_2B_qty',
+                    'A_3A_qty_rcd','A_3A_qty',
+                    'A_3B_qty_rcd','A_3B_qty',
+                ])
+
                 return Response(CardiacRequestedSerializer(cardiacrequest).data, status=status.HTTP_200_OK)
         print("serializer not VALID",serializer.errors)
         return Response({'Bad Request': "Invalid Data...",'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -382,7 +413,14 @@ class UpdateCardiacFormBView(RetrieveUpdateDestroyAPIView):
                 )
                 newRow.save()
                 newSuppliedRow = CardiacSupplied(
-                    docnumber=docnumber
+                    docnumber=docnumber,
+                    B_1_qty_rcd=B_1_qty,
+                    B_2A_qty_rcd=B_2A_qty,
+                    B_2B_qty_rcd=B_2B_qty,
+                    B_3A_qty_rcd=B_3A_qty,
+                    B_3B_qty_rcd=B_3B_qty,
+                    B_3C_qty_rcd=B_3C_qty,
+                    B_3D_qty_rcd=B_3D_qty,
                 )
                 newSuppliedRow.save()
                 print("\n************ \nDONE \n***********\n")
@@ -426,6 +464,33 @@ class UpdateCardiacFormBView(RetrieveUpdateDestroyAPIView):
                     'B_3B_descr', 'B_3B_brand','B_3B_qty',
 		            'B_3C_descr', 'B_3C_brand','B_3C_qty',
                     'B_3D_descr', 'B_3D_brand','B_3D_qty',
+                ])
+
+                suppliedRow = CardiacSupplied.objects.filter(docnumber = docnumber)[0]
+                suppliedRow.B_1_qty_rcd = B_1_qty
+                suppliedRow.B_2A_qty_rcd = B_2A_qty
+                suppliedRow.B_2B_qty_rcd = B_2B_qty
+                suppliedRow.B_3A_qty_rcd = B_3A_qty
+                suppliedRow.B_3B_qty_rcd = B_3B_qty
+                suppliedRow.B_3C_qty_rcd = B_3C_qty
+                suppliedRow.B_3D_qty_rcd = B_3D_qty
+                
+                suppliedRow.B_1_qty = B_1_qty
+                suppliedRow.B_2A_qty = B_2A_qty
+                suppliedRow.B_2B_qty = B_2B_qty
+                suppliedRow.B_3A_qty = B_3A_qty
+                suppliedRow.B_3B_qty = B_3B_qty
+                suppliedRow.B_3C_qty = B_3C_qty
+                suppliedRow.B_3D_qty = B_3D_qty
+
+                suppliedRow.save(update_fields=[
+                    'B_1_qty_rcd','B_1_qty',
+                    'B_2A_qty_rcd','B_2A_qty',
+                    'B_2B_qty_rcd','B_2B_qty',
+                    'B_3A_qty_rcd','B_3A_qty',
+                    'B_3B_qty_rcd','B_3B_qty',
+                    'B_3C_qty_rcd','B_3C_qty',
+                    'B_3D_qty_rcd','B_3D_qty',
                 ])
                 
                 return Response(CardiacRequestedSerializer(cardiacrequest).data, status=status.HTTP_200_OK)

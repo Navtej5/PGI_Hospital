@@ -10,6 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 // import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Checkbox from "@material-ui/core/Checkbox";
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -62,11 +63,19 @@ export default function FormA_um(props) {
             var col3 = "A_"+ids[x]+"_brand";
             var col4 = "A_"+ids[x]+"_qty";
             var col5 = "A_"+ids[x]+"_qty_rcd";
+            var col6 = "A_"+ids[x]+"_tally_unitman";
             var id = ids[x];
             var name = form["**Requested**"][0][col1];
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
+            var tallyunitman=false;
+            if(form["**Supplied**"][0][col6]=="T"){
+                tallyunitman=true;
+            }
+            else{
+                tallyunitman=false;
+            }
             if(form["**Supplied**"].length>0){
                 var qty_supplied = form["**Supplied**"][0][col4];
                 var qty_from_pharma = form["**Supplied**"][0][col5];
@@ -81,8 +90,8 @@ export default function FormA_um(props) {
             setQtyRcdPharma(qtyRcdPharma => (
                 {...qtyRcdPharma,[id]:qty_from_pharma}
             ));
-            temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma});
-            // console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied)
+            temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,tallyunitman});
+            console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_supplied=",qty_supplied,"tallyunitman",tallyunitman)
         }
         setRows(temp);
         // console.log("temp==>\n",temp);
@@ -328,8 +337,6 @@ export default function FormA_um(props) {
                             style={{width:"95%"}}
                             multiline
                             rows={4}
-                            // cols={12}
-                            // defaultValue="Default Value"
                             placeholder="enter comments/remarks"
                             variant="outlined"
                             value={remarkfc}
@@ -383,6 +390,12 @@ export default function FormA_um(props) {
                     <TableCell style={{color:"black"}}>
                         Quantity Supplied to Dept
                     </TableCell>
+                    {props.user=="unitman" && props.stage!="completed"?
+                    <TableCell>
+                        Verfication done?
+                    </TableCell>
+                    :""}
+
                     {/* <TableCell style={{color:"black"}}>
                         Remarks
                     </TableCell> */}
@@ -469,6 +482,21 @@ export default function FormA_um(props) {
                             </input>
                         </TableCell>
                     }
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <Checkbox 
+                                // checked={row.tallyunitman}
+                                // value={row.tallyunitman}
+                                onChange={(event)=>{
+                                    row.tallyunitman = event.target.checked;
+                                    console.log("row.id",row.id,event.target.checked,row.tallyunitman);
+                                }}
+                            />
+                        </TableCell>
+                    :""}
+
+
                     </TableRow>
                 ))
             : ""}
