@@ -30,5 +30,5 @@ urlpatterns = [
 
     path('combined-form/<str:docnumber>',CombineCardiacView.as_view()),
     path('get-form-xls/<str:docnumber>',export_form,name='export_form'),
-    path('print_pdf/<str:docnumber>',print_pdf,name='print_pdf'),
+    path('print-pdf/<str:docnumber>',print_pdf,name='print_pdf'),
 ]

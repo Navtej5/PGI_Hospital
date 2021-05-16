@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,FileResponse
 from rest_framework import generics, status, viewsets
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Patient, Requests , User, CardiacRequested, CardiacSupplied
@@ -10,6 +10,7 @@ from knox.models import AuthToken
 import math
 import xlwt
 import csv
+
 # Create your views here.
 
 
@@ -800,6 +801,9 @@ class CombineCardiacView(ListAPIView):
 
 
 def print_pdf(request,docnumber):
+    import io
+    from reportlab.lib.units import cm
+    buffer = io.BytesIO()
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import letter, inch
     from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
@@ -832,11 +836,9 @@ def print_pdf(request,docnumber):
         pdf.drawString(10,800, 'y800')    
 
 
-
-
-
-
-
+    #######initialise response
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
     # ###################################
     # Content
@@ -845,26 +847,26 @@ def print_pdf(request,docnumber):
     title = 'Utilization certificate'
     subTitle = 'Congenital heart disease'
     text_head1 = [
-        'Name: '+requestset[0].patientname,
-        'Dob/Sex: '+patientset[0].dob+" "+patientset[0].gender,
-        'Wt/BSA: '+requestset[0].weight+", "+requestset[0].bsa
+        'Name:   '+str(requestset[0].patientname),
+        'Dob/Sex:   '+str(patientset[0].dob)[:10]+" "+str(patientset[0].gender),
+        'Wt/BSA:   '+str(requestset[0].weight)+", "+str(requestset[0].bsa),
+        'Date:   '+str(requestset[0].createdat)[:10],
+        'Cr no:   '+str(requestset[0].crnumber),
+        'Consultant:   '+str(requestset[0].consultantuname),
+        "",
+        "",
+        'ANESTHETICS'
     ]
-    text_head2 = [
-        'Date: '+requestset[0].date,
-        'Cr no: '+requestset[0].crnumber,
-        'Consultant: '+requestset[0].consultantuname
-    ]
-    textLines = [
-    'The Tasmanian devil (Sarcophilus harrisii) is',
-    'a carnivorous marsupial of the family',
-    'Dasyuridae.'
-    ]
-    vals = cardiacset.values_list() 
-    print(vals)
-    return 0
+
+    elements = []
     data = [
-        ['Sr no', 'Name of item', 'Size', "Brand", "Quantity required","Quantity consumed", "Balance if any"],
-        [],
+        ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
+        ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_descr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty,0,0],
+        ['2A',cardiacset[0].A_2A_name,cardiacset[0].A_2A_descr,cardiacset[0].A_2A_brand,cardiacset[0].A_2A_qty,0,0],
+        ['2B',cardiacset[0].A_2B_name,cardiacset[0].A_2B_descr,cardiacset[0].A_2B_brand,cardiacset[0].A_2B_qty,0,0],
+        ['3A',cardiacset[0].A_3A_name,cardiacset[0].A_3A_descr,cardiacset[0].A_3A_brand,cardiacset[0].A_3A_qty,0,0],
+        ['3B',cardiacset[0].A_3B_name,cardiacset[0].A_3B_descr,cardiacset[0].A_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
 
     ]
 
@@ -876,84 +878,96 @@ def print_pdf(request,docnumber):
     # import reportlab 
     from reportlab.pdfgen import canvas 
 
-    pdf = canvas.Canvas(fileName)
+    pdf = canvas.Canvas(response)
+    # pdf = SimpleDocTemplate("simple_table_grid.pdf", pagesize=letter)
     pdf.setTitle(documentTitle)
 
-
-
-    drawMyRuler(pdf)
-    # ###################################
-    # 1) Title :: Set fonts 
-    # # Print available fonts
-    # for font in pdf.getAvailableFonts():
-    #     print(font)
-
-    # Register a new font
-    from reportlab.pdfbase.ttfonts import TTFont
-    from reportlab.pdfbase import pdfmetrics
-
-    pdfmetrics.registerFont(
-        TTFont('abc', 'SakBunderan.ttf')
-    )
-    pdf.setFont('abc', 36)
-    pdf.drawCentredString(300, 770, title)
-
-
-
-
-
-
-
-
-
-    # ###################################
-    # 2) Sub Title 
-    # RGB - Red Green and Blue
-    pdf.setFillColorRGB(0, 0, 255)
-    pdf.setFont("Courier-Bold", 24)
-    pdf.drawCentredString(290,720, subTitle)
-
-
-
-
-
-
-    # ###################################
-    # 3) Draw a line
-    pdf.line(30, 710, 550, 710)
-
-
-
-
-
-
-
-
-
-    # ###################################
-    # 4) Text object :: for large amounts of text
+    # t=Table(data,6*[0.4*inch], 6*[0.4*inch])
+    # t.setStyle(TableStyle([
+    #     # ('ALIGN',(1,1),(-2,-2),'RIGHT'),
+    # # ('TEXTCOLOR',(1,1),(-2,-2),colors.red),
+    # # ('VALIGN',(0,0),(0,-1),'TOP'),
+    # # ('TEXTCOLOR',(0,0),(0,-1),colors.blue),
+    # # ('ALIGN',(0,-1),(-1,-1),'CENTER'),
+    # # ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+    # # ('TEXTCOLOR',(0,-1),(-1,-1),colors.green),
+    # ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+    # ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+    # ]))
+    # drawMyRuler(pdf)
+    #######text head 1
     from reportlab.lib import colors
+    text = pdf.beginText(250, 800)
+    # for line in ti:
+    text.textLine(title)
 
-    text = pdf.beginText(40, 680)
-    text.setFont("Courier", 18)
-    text.setFillColor(colors.red)
-    for line in textLines:
+    pdf.drawText(text)
+    text = pdf.beginText(250, 750)
+    text.textLine(subTitle)
+
+    pdf.drawText(text)
+    # text = pdf.beginText(40, 680)
+    text = pdf.beginText(40, 700)
+    # text.setFont("Courier", 11)
+    # text.setFillColor(colors.red)
+    for line in text_head1:
         text.textLine(line)
+
+    pdf.drawText(text)
+    #########tableA
+    width = 700
+    height = 600
+    x = 38
+    y = 430
+    f = Table(data, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
+                               3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
+    f.setStyle(TableStyle([
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),('INNERGRID', (0,0), (-1,-1), 0.25, colors.black)]))
+    f.wrapOn(pdf, width, height)
+    f.drawOn(pdf, x, y)
+    ################textb
+    text = pdf.beginText(40, 360)
+    # for line in ti:
+    text.textLine("B table")
+
+    pdf.drawText(text)
+    ################tableB
+    dataB = [
+        ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
+        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr,cardiacset[0].B_1_brand,cardiacset[0].A_1_qty,0,0],
+        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr,cardiacset[0].B_2A_brand,cardiacset[0].A_2A_qty,0,0],
+        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr,cardiacset[0].B_2B_brand,cardiacset[0].A_2B_qty,0,0],
+        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr,cardiacset[0].B_3A_brand,cardiacset[0].A_3A_qty,0,0],
+        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr,cardiacset[0].B_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
+    ]
+    width = 100
+    height = 600
+    x = 38
+    y = 200
+    f = Table(dataB, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
+                               3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
+    f.setStyle(TableStyle([
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),('INNERGRID', (0,0), (-1,-1), 0.25, colors.black)]))
+    f.wrapOn(pdf, width, height)
+    f.drawOn(pdf, x, y)
+    ###footer
+    text = pdf.beginText(40, 110)
+    # for line in ti:
+    text.textLine("Checked by:")
 
     pdf.drawText(text)
 
 
+    text = pdf.beginText(40, 70)
+    # for line in ti:
+    text.textLine("Resident in charge             Perfusionist              OT technician           OT Nursing officer")
 
+    pdf.drawText(text)
 
-
-    # ###################################
-    # 5) Draw a image
-    # pdf.drawInlineImage(image, 130, 400)
-
-
-
-
+    ###########
     pdf.save()
+    return response
 
 def export_form(request, docnumber):
     serializer_class = CardiacRequestedSerializer
