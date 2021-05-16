@@ -412,6 +412,7 @@ export default function FormA_um(props) {
                                 setQtyRcdPharma(qtyRcdPharma => (
                                     {...qtyRcdPharma, [event.target.name]: event.target.value}
                                 ));
+                                Input.backgroundColor = 'blue';
                             }}
                             >
                             </input>
@@ -446,6 +447,7 @@ export default function FormA_um(props) {
                                 setQtySupplied(qtySupplied => (
                                     {...qtySupplied, [event.target.name]: event.target.value}
                                 ));
+                               Input.backgroundColor = 'blue';
                             }}
                             >
                             </input>

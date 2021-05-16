@@ -226,6 +226,7 @@ export default function Dashboard() {
           <Button variant="contained" color="secondary" onclick={logout}>
             Logout
           </Button>
+          
           </Link>
         </Toolbar>
       </AppBar>

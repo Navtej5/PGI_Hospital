@@ -35,7 +35,7 @@ class Requests(models.Model):
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
     notificationbit = models.BooleanField(default=False)
     dateofprocedure = models.DateField(default=datetime.date.today())
-# doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
+#doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
 
 # class CardiacReceived(models.Model):
 #     docnumber = models.CharField(max_length=100,null=False,primary_key=True)
