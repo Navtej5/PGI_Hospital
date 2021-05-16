@@ -31,7 +31,7 @@ class Requests(models.Model):
     doctorflag = models.CharField(max_length=1,default='F')
     technicianflag = models.CharField(max_length=1,default='T')
     consultantflag = models.CharField(max_length=1,default='F')
-    state = models.CharField(max_length=100,default="Pending")
+    state = models.CharField(max_length=100,default="Filling")
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
     notificationbit = models.BooleanField(default=False)
     dateofprocedure = models.DateField(default=datetime.date.today())
