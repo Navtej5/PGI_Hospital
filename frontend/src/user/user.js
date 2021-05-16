@@ -17,13 +17,13 @@ import './user.css';
 import { withRouter } from "react-router";
 import {Button,Table,TableBody,TableCell,Grid,TextField,Typography} from '@material-ui/core';
 import { token } from '../login/login.js';
-//const history = createBrowserHistory();
 const history = createBrowserHistory({forceRefresh:true});
 // const location = useLocation(); 
 // string myvar;
 var myvar;
 
 const readable = {
+  "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
   "ReceivedFromPharma":"Requested Inventory Received",
@@ -32,7 +32,8 @@ const readable = {
 };
 
 const redirect_url = {
-  "Pending":"/form/",
+  "Filling":"/form/",
+  "Pending":"/returned/",
   "Approved":"/returned/",
   "SentToPharma":"/returned/",
   "ReceivedFromPharma":"/returned/",
@@ -429,7 +430,7 @@ logout=(async)=>{
               <Button color="primary" variant="contained">
                 View Details
               </Button>
-              {this.state.selected_request.notificationbit && this.state.selected_request.state=="Pending"?
+              {this.state.selected_request.notificationbit && this.state.selected_request.state=="Filling"?
               <IconButton color="primary">
                 {/* <Badge badgeContent={1} color="secondary"> */}
                   <NotificationsIcon color="secondary" /> 
@@ -479,7 +480,7 @@ logout=(async)=>{
                         <TableCell class="col col-2" style={{width:"250px"}}>{this.state.selected_request==""?<></>:this.state.selected_request.id}</TableCell>
                     </li> */}
                     <li class="table-row">
-                        <TableCell class="col col-1" style={{width:"250px"}}><div style={{marginTop:"5px",marginLeft:"20px"}}>Room No.:</div></TableCell>
+                        <TableCell class="col col-1" style={{width:"250px"}}><div style={{marginTop:"5px",marginLeft:"20px"}}>Ward Adhaar no.:</div></TableCell>
                         <TableCell class="col col-2" style={{width:"250px"}}>{this.state.selected_request==""?<></>:this.state.selected_request.wardadhaar}</TableCell>
                     </li>
                     <li class="table-row">

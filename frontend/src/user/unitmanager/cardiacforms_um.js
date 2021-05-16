@@ -45,6 +45,7 @@ import Title from './Title';
 
 
 const readable = {
+  "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
   "ReceivedFromPharma":"Requested Inventory Received",

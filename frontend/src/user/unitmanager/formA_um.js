@@ -2,6 +2,8 @@ import React, {Component,useState,useEffect} from "react";
 // import {Row} from "simple-flexbox";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
+
+import {Link, useHistory } from "react-router-dom";
 // import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,7 +21,7 @@ import { createBrowserHistory } from 'history';
 import axios from 'axios';
 import {myvar} from '../user.js';
 
-const history = createBrowserHistory();
+// const history = createBrowserHistory({forceRefresh:true});
 
 const Input = styled.input`
   border-radius: 4px;
@@ -43,7 +45,7 @@ export default function FormA_um(props) {
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [remarkfc,setreamarkfc]=React.useState("_")
-
+    let history = useHistory();
     const fetchData = async () => {
         console.log("in formA_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
@@ -106,8 +108,11 @@ export default function FormA_um(props) {
         temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
         temp.data.remarksfromconsultant = remarkfc;
         temp.data.notificationbit = true;
+        temp.data.state = 'Filling';
+        temp.data.nurseflag="F";
         console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
         await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+        history.goBack()
     }
     useEffect(() => {
         // console.log(myvar);
@@ -335,47 +340,11 @@ export default function FormA_um(props) {
                     <Grid item xs={2} style={{padding:"3.5%"}}>
 
                     <Button variant="contained" color="primary"
-                        onClick={()=>(
-                            console.log("******submitting*********")
-                            ,patchreq()
-                            ,console.log(JSON.stringify({
-                                code         : myvar,
-                                A_1_qty      :qtySupplied['1'],
-                                // A_1_remarks  :A_1_remarks,
-                                A_2A_qty      :qtySupplied['2A'],
-                                // A_2A_remarks  :A_2A_remarks,
-                                A_2B_qty      :qtySupplied['2B'],
-                                // A_2B_remarks  :A_2B_remarks,
-                                A_3A_qty      :qtySupplied['3A'],
-                                // A_3A_remarks  :A_3A_remarks,
-                                A_3B_qty      :qtySupplied['3B'],
-                                // A_3B_remarks  :A_3B_remarks, 
-                            }))
-                            // fetch(SUBMIT_FORM_API,
-                            //     {
-                            //         // credentials: 'include',
-                            //         credentials: 'omit',
-                            //         method:'PATCH',
-                            //         headers: {
-                            //         Accept: 'application/json',
-                            //         "Content-Type": 'application/json',
-                            //     },
-                            //         body: JSON.stringify({
-                            //             code         : myvar,
-                            //             A_1_qty      :qtySupplied['1'],
-                            //             // A_1_remarks  :A_1_remarks,
-                            //             A_2A_qty      :qtySupplied['2A'],
-                            //             // A_2A_remarks  :A_2A_remarks,
-                            //             A_2B_qty      :qtySupplied['2B'],
-                            //             // A_2B_remarks  :A_2B_remarks,
-                            //             A_3A_qty      :qtySupplied['3A'],
-                            //             // A_3A_remarks  :A_3A_remarks,
-                            //             A_3B_qty      :qtySupplied['3B'],
-                            //             // A_3B_remarks  :A_3B_remarks, 
-                            //         }),
-                            //     })
-                            )}
-                    >Submit</Button>
+                        onClick={()=>{
+                            console.log("******submitting*********");
+                            if (window.confirm('Are you sure you want to send back this form for correction?')){patchreq();}
+                        }}
+                    >Suggest Edit</Button>
                     </Grid>
                 </Grid>
             </div>

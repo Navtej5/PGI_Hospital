@@ -33,6 +33,7 @@ import Chart from './Chart';
 // import Deposits from './Deposits';
 import Approved from './Approved';
 import Pending from './Pending';
+import InProgress from './inprogress';
 import Completed from './Completed';
 // import Orders from './Pending';
 import Switch from "react-switch";
@@ -251,9 +252,17 @@ export default function Dashboard() {
                         <AssignmentIcon />
                           {/* <DashboardIcon /> */}
                         </ListItemIcon>
+                        <ListItemText primary="In Progress Requests" />
+                      </ListItem>
+                      
+                      <ListItem button onClick={()=>{ setChoose(1) }} selected= {choose==1}>
+                        <ListItemIcon>
+                        <AssignmentIcon />
+                          {/* <DashboardIcon /> */}
+                        </ListItemIcon>
                         <ListItemText primary="Pending Requests" />
                       </ListItem>
-                      <ListItem button onClick={()=>{ setChoose(1) }} selected= {choose==1}>
+                      <ListItem button onClick={()=>{ setChoose(2) }} selected= {choose==2}>
                         <ListItemIcon>
                         <AssignmentIcon />
                           {/* <ShoppingCartIcon /> */}
@@ -262,7 +271,7 @@ export default function Dashboard() {
                       </ListItem>
 
                       {/* <SwitchExample /> */}
-                      <ListItem button onClick={()=>{ setChoose(2) }} selected= {choose==2}>
+                      <ListItem button onClick={()=>{ setChoose(3) }} selected= {choose==3}>
                         <ListItemIcon>
                         <AssignmentIcon />
                           {/* <ShoppingCartIcon /> */}
@@ -270,7 +279,7 @@ export default function Dashboard() {
                         <ListItemText primary="Sent to Pharmacy" />
                       </ListItem>
 
-                      <ListItem button onClick={()=>{ setChoose(3) }} selected= {choose==3}>
+                      <ListItem button onClick={()=>{ setChoose(4) }} selected= {choose==4}>
                         <ListItemIcon>
                         <AssignmentIcon />
                           {/* <ShoppingCartIcon /> */}
@@ -278,7 +287,7 @@ export default function Dashboard() {
                         <ListItemText primary="Received from Pharmacy" />
                       </ListItem>
 
-                      <ListItem button onClick={()=>{ setChoose(4) }} selected= {choose==4}>
+                      <ListItem button onClick={()=>{ setChoose(5) }} selected= {choose==5}>
                         <ListItemIcon>
                           <AssignmentIcon />
                           {/* <PeopleIcon /> */}
@@ -325,31 +334,38 @@ export default function Dashboard() {
                 <Paper className={classes.paper}>
                   {/* {conditional_render(choose)} */}
 
+
                   {choose===0?
+                      <div>
+                        <Title>In Progress Requests</Title>
+                        <InProgress user="consultant"/>
+                      </div>
+                  :""}
+                  {choose===1?
                       <div>
                         <Title>Pending Requests</Title>
                         <Pending user="consultant"/>
                       </div>
                   :""}
-                  {choose===1?
+                  {choose===2?
                       <div>
                         <Title>Approved Requests</Title>
                         <Approved user="consultant"/>
                       </div>
                   :""}
-                  {choose===2?
+                  {choose===3?
                       <div>
                         <Title>Requests sent to pharmacy</Title>
                         <SentToPharma user="consultant"/>
                       </div>
                   :""}
-                  {choose===3?
+                  {choose===4?
                       <div>
                         <Title>Received from Pharmacy (Audit Pending)</Title>
                         <ReceivedFromPharma user="consultant"/>
                       </div>
                   :""}
-                  {choose===4?
+                  {choose===5?
                       <div>
                         <Title>Completed Requests</Title>
                         <Completed user="consultant"/>

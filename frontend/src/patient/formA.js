@@ -18,8 +18,9 @@ import TextField from '@material-ui/core/TextField';
 import { store } from 'react-notifications-component';
 import axios from 'axios';
 import {myvar} from '../user/user.js';
+import { useHistory } from "react-router-dom";
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({forceRefresh:true});
 
 const Input = styled.input`
   border-radius: 4px;
@@ -36,8 +37,9 @@ const Input = styled.input`
 
 
 export default function FormA(props) {
-
+    let history2 = useHistory();
     const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-forma/'
+    const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.docnumber;
     var form = []
     const fetchData = async () => {
         const PREVIOUSLY_FILLED = "http://127.0.0.1:8000/api/get-cardiac-request-table/"+props.docnumber
@@ -160,6 +162,17 @@ export default function FormA(props) {
     },[])
 
 
+    var temp2;
+    const onclickMarkComplete = async () => {
+        console.log("function called")
+        temp2 = await axios.get(GET_REQUEST_DATA_API);
+        temp2.data.nurseflag = 'T';
+        temp2.data.state = 'Pending';
+        temp2.data.remarksfromconsultant = '';
+        console.log(remarkfc,"see here u  :::::::::: ", temp2.data.department)
+        await axios.put(GET_REQUEST_DATA_API,temp2.data);
+    }
+
 
     const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
     var temp;
@@ -168,13 +181,13 @@ export default function FormA(props) {
         setreamarkfc(temp.data.remarksfromconsultant);
         console.log(temp.data.remarksfromconsultant," ===== ",remarkfc);
     }
-    const patchreq = async () => {
-        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
-        temp.data.remarksfromconsultant = remarkfc;
-        // temp.data.notificationbit = true;
-        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
-        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
-     }
+    // const patchreq = async () => {
+    //     temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+    //     temp.data.remarksfromconsultant = remarkfc;
+    //     // temp.data.notificationbit = true;
+    //     console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+    //     await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+    //  }
     useEffect(() => {
         // console.log(myvar);
         fetchreq();
@@ -372,9 +385,9 @@ export default function FormA(props) {
                         <TableCell style={{color:"black"}}>
                             Quantity Required
                         </TableCell>
-                        {/* <TableCell style={{color:"black"}}>
-                            Remarks
-                        </TableCell> */}
+                        <TableCell style={{color:"black"}}>
+                            {props.docnumber},{props.nurseflag},{props.perflag},{props.techflag}
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -676,7 +689,7 @@ export default function FormA(props) {
                     />
                     </Grid>
                 
-                <Grid item xs={2} style={{padding:"3.5%"}}>
+                <Grid item xs={2} style={{padding:"1%"}}>
                 <Button  
             
             variant="contained" color="primary"
@@ -752,7 +765,21 @@ export default function FormA(props) {
                     //     }
                     //   });console.log("Error===:",error)})
                 )}
-            >Submit</Button>
+            >Save as draft</Button>
+            
+            {props.nurseflag==='F'?
+            <Button
+                variant="contained"
+                color="default"
+                onClick={()=>{
+                    if (window.confirm("Are you sure you completed ALL forms (i.e. Anesthic, CardioPulmonary, stc.) ALERT: THIS ACTION CAN'T BE UNDONE")){
+                        console.log("pakaa"); 
+                        onclickMarkComplete(); 
+                        history2.goBack();
+                    }
+                }}
+            >Mark Complete</Button>
+            :""}
             </Grid>
             </Grid>
             </div>

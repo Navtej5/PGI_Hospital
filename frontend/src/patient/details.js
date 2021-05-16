@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -28,7 +30,7 @@ export default function Deposits(props) {
   const [wardadhaar,setWardadhaar] = useState("");
   const [cr,setCr]= useState("");
   const fetchData = async () => {
-    //console.log("*********\n",props.mode)
+    //console.log("***\n",props.mode)
     console.log("in fetch");
     //const response1 = await axios.get(SUBMIT_FORM_API)
     //form1 = await response1.data;
@@ -48,7 +50,7 @@ export default function Deposits(props) {
   return (
     <React.Fragment>
       <Title>Patient Details</Title>
-      <Typography component="p" variant="h5">
+      {/* <Typography component="p" variant="h5">
         Name: { name}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
@@ -65,12 +67,41 @@ export default function Deposits(props) {
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Gender: Male
-      </Typography>
+      </Typography> */}
       {/* <div>
         <Link color="primary" href="#" onClick={preventDefault}>
           View balance
         </Link>
       </div> */}
+      <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+        <Typography component="p" variant="h4">
+        Name: { name}
+      </Typography>
+        </Grid>
+        <Grid item xs={3}>
+        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        Weight: {weight} kg
+      </Typography>
+        </Grid>
+        <Grid item xs={3}>
+        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        Height: {height} cm
+      </Typography>
+        </Grid>
+        <Grid item xs={3}>
+        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        Gender: Male
+      </Typography> 
+        </Grid>
+        <Grid item xs={3}>
+        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        CR number: {cr}
+      </Typography>
+        </Grid>
+      </Grid>
+    </div>
     </React.Fragment>
   );
 }

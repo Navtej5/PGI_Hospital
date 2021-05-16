@@ -12,32 +12,10 @@ import Switch from "react-switch";
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 
-// Generate Order Data
-
-
-  // const SwitchExample = (checked,setChecked) => {
-  //   // render() {
-  //     return (
-  //       <label>
-  //         {/* <span>Switch with default style</span> */}
-  //         {/* <Switch onChange={handleChange} checked={checked} /> */}
-  //         <Switch button onChange={()=>{ setChecked(checked^1) }} checked={0}/>
-  //       </label>
-  //     );
-  //   // }
-  // }
-
-  function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
+function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
     return {docnumber,wardadhaar,name ,ViewRequest, Toggle};
-  }
+}
 var i;
-// const rows = [
-//   createData(0, 'Pending: 19', '777', <a href="http://localhost:8000/addrequest">click here</a>,<SwitchExample state={0}/>),
-// ];
-// for(i=0;i<20;i++){
-//   rows.push(createData(0, 'Pending: '+13*i+11, 73*i+97, <a href="http://localhost:8000/addrequest">click here</a>,<SwitchExample state={0} />));
-// }
-
 
 function preventDefault(event) {
   event.preventDefault();
@@ -51,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Pending(props) {
+export default function InProgress(props) {
   const classes = useStyles();
   const [checked,setChecked]=React.useState(false);
   const [searchText,setSearchText] = React.useState("");
@@ -85,7 +63,7 @@ export default function Pending(props) {
 
     var temp = [];
     for(i=0;i<books.length;i++){
-      if(books[i].state != "Pending")continue;
+      if(books[i].state != "Filling")continue;
       var naam = books[i].patientname;
       var ward = books[i].wardadhaar;
       var link = "see details";
@@ -124,7 +102,7 @@ export default function Pending(props) {
             <TableCell>NAME</TableCell>
             <TableCell>WARD-ADHAAR</TableCell>
             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-            <TableCell>ACTION</TableCell>
+            {/* <TableCell>ACTION</TableCell> */}
             {/* <TableCell align="right">Sale Amount</TableCell> */}
           </TableRow>
         </TableHead>
@@ -141,7 +119,7 @@ export default function Pending(props) {
                     to={{
                       pathname:"/cardiacform_um/"+row.doc,
                       mode:"view_only",
-                      stage:"Pending",
+                      stage:"Filling",
                       user:"consultant",
                     }}
                   >
@@ -152,15 +130,15 @@ export default function Pending(props) {
               style={{color:"blue",textDecoration:"underline"}}
               onClick={()=>(history.push(`/consultantView/${row.ward}/${row.doc}`))}              
               >{row.link}</TableCell> */}
-              <TableCell>
+              {/* <TableCell> */}
                 {/* var booktemp = {row.tog}; */}
-              <Button color='primary' variant='contained'onClick={()=>{ row.tog.state = "Approved";
+              {/* <Button color='primary' variant='contained'onClick={()=>{ row.tog.state = "Approved";
       axios.patch(updateURL+row.doc,row.tog); 
       }} >
       Move to Approved
       </Button>
           
-                </TableCell>
+                </TableCell> */}
               {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
             :

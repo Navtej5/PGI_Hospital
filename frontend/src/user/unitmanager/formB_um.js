@@ -2,6 +2,7 @@ import React, {Component,useState,useEffect} from "react";
 // import {Row} from "simple-flexbox";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
+import {Link, useHistory } from "react-router-dom"; 
 // import Select from "@material-ui/core/Select";
 // import MenuItem from "@material-ui/core/MenuItem";
 import TableCell from "@material-ui/core/TableCell";
@@ -44,8 +45,10 @@ export default function FormB_um(props) {
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
+    const [remarkfc,setreamarkfc]=React.useState("_")
     // const [rows2,setRows2] = useState(null);
     // var rows2;
+    let history = useHistory();
     const fetchData = async () => {
         console.log("in formB_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
@@ -101,35 +104,27 @@ export default function FormB_um(props) {
       // getPatientList()
     },[])
 
-
-    // function testhandle(var1){
-    //     var str_3A="";
-    //     var otherflag = false;
-    //     for (const [key, value] of Object.entries(var1)) {
-    //         if(key==='other'){
-    //             if(value){
-    //                 otherflag=true;
-    //             }
-    //             //console.log("hello",value);
-    //         }
-    //         else if(key==='otherval'){
-    //             if(otherflag){
-    //                 str_3A+=value;
-    //                 str_3A+=";";
-    //             }
-    //         }
-    //         else if(value){
-    //             str_3A+=key;
-    //             str_3A+=";";
-    //         }
-    //       }
-        
-    //     console.log("value ",otherflag," =>",str_3A,);
-    //     if(str_3A===""){
-    //         return "_";
-    //     }
-    //     return str_3A;
-    // }
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    var temp;
+    const fetchreq = async () => {
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+        setreamarkfc(temp.data.remarksfromconsultant);
+        console.log(temp.data.remarksfromconsultant," ===== ",remarkfc);
+    }
+    const patchreq = async () => {
+        temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
+        temp.data.remarksfromconsultant = remarkfc;
+        temp.data.notificationbit = true;
+        temp.data.state = 'Filling';
+        temp.data.nurseflag="F";
+        console.log(remarkfc,"see here u  :::::::::: ", temp.data.department)
+        await axios.put(SUBMIT_REQUEST_API+props.docnumber,temp.data);
+        history.goBack()
+    }
+    useEffect(() => {
+        // console.log(myvar);
+        fetchreq();
+    },[]);
 
     // const [B_1_remarks,setB_1_remarks]=React.useState("_")
     // const [B_2A_remarks,setB_2A_remarks]=React.useState("_")
@@ -197,6 +192,8 @@ export default function FormB_um(props) {
                         // defaultValue="Default Value"
                         placeholder="enter comments/remarks"
                         variant="outlined"
+                        value={remarkfc}
+                        onChange={event => setreamarkfc(event.target.value)}
                     />
                     </Grid>
                 
@@ -207,54 +204,9 @@ export default function FormB_um(props) {
                     onClick={()=>(
                         
                         console.log("********** SUBMIT ***********")
-                        ,console.log(JSON.stringify({
-                            code         : myvar,
-                            B_1_qty      :qtySupplied['1'],
-                            // B_1_remarks  :B_1_remarks,
-                            B_2A_qty      :qtySupplied['2A'],
-                            // B_2A_remarks  :B_2A_remarks,
-                            B_2B_qty      :qtySupplied['2B'],
-                            // B_2B_remarks  :B_2B_remarks,
-                            B_3A_qty      :qtySupplied['3A'],
-                            // B_3A_remarks  :B_3A_remarks,
-                            B_3B_qty      :qtySupplied['3B'],
-                            // B_3B_remarks  :B_3B_remarks,
-                            B_3C_qty      :qtySupplied['3C'],
-                            // B_3C_remarks  :B_3C_remarks,
-                            B_3D_qty      :qtySupplied['3D'],
-                            // B_3D_remarks  :B_3D_remarks, 
-                            
-                        }))
-                        ,fetch(SUBMIT_FORM_API,
-                            {
-                                // credentials: 'include',
-                                credentials: 'omit',
-                                method:'PATCH',
-                                headers: {
-                                Accept: 'application/json',
-                                "Content-Type": 'application/json',
-                            },
-                                body: JSON.stringify({
-                                    code         : myvar,
-                                    B_1_qty      :qtySupplied['1'],
-                                    // B_1_remarks  :B_1_remarks,
-                                    B_2A_qty      :qtySupplied['2A'],
-                                    // B_2A_remarks  :B_2A_remarks,
-                                    B_2B_qty      :qtySupplied['2B'],
-                                    // B_2B_remarks  :B_2B_remarks,
-                                    B_3A_qty      :qtySupplied['3A'],
-                                    // B_3A_remarks  :B_3A_remarks,
-                                    B_3B_qty      :qtySupplied['3B'],
-                                    // B_3B_remarks  :B_3B_remarks,
-                                    B_3C_qty      :qtySupplied['3C'],
-                                    // B_3C_remarks  :B_3C_remarks,
-                                    B_3D_qty      :qtySupplied['3D'],
-                                    // B_3D_remarks  :B_3D_remarks, 
-                                }),
-                            })
-                        )}
-                
-                >Submit</Button>
+                        ,patchreq()
+                    )}
+                >Suggest Edit</Button>
                 </Grid>
             </Grid>
             </div>

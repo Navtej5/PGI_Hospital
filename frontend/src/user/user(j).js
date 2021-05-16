@@ -12,12 +12,13 @@ import './user.css';
 import { withRouter } from "react-router";
 import {Button,Table,TableBody,TableCell,Grid,TextField,Typography} from '@material-ui/core';
 import { token } from '../login/login.js';
-const history = createBrowserHistory();
+const history = createBrowserHistory({forceRefresh:true});
 // const location = useLocation(); 
 // string myvar;
 var myvar;
 
 const readable = {
+  "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
   "ReceivedFromPharma":"Requested Inventory Received",
