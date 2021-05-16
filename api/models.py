@@ -34,7 +34,7 @@ class Requests(models.Model):
     state = models.CharField(max_length=100,default="Pending")
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
     notificationbit = models.BooleanField(default=False)
-
+    dateofprocedure = models.DateField(auto_now_add=True)
 #doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
 
 # class CardiacReceived(models.Model):
