@@ -2,6 +2,7 @@
 import './App.css';
 import Login from './login/login.js';
 import User from './user/user.js';
+import UserNew from './user/user_new.js';
 import AddPatient from './user/addPatient.js';
 import AddRequest from './user/addRequest.js';
 import Routes from './routes';
@@ -43,6 +44,7 @@ function App() {
     <Router>
       <Switch>
       <Route exact path="/" component={Login}/>
+      <Route exact path="/user_new" component={UserNew} />
       {/* <Route exact path="/user" component={User} /> */}
       {nurse ? (
           <Route exact path="/user" component={User} />
