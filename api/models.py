@@ -35,6 +35,7 @@ class Requests(models.Model):
     remarksfromconsultant = models.CharField(max_length=500,default="",blank=True)
     notificationbit = models.BooleanField(default=False)
     dateofprocedure = models.DateField(default=datetime.date.today())
+
 #doubt on number of fields, dictionary coz each item has many features..e.g. brand, quantity
 
 # class CardiacReceived(models.Model):
@@ -109,6 +110,7 @@ class CardiacSupplied(models.Model):
     A_1_descr = models.CharField(max_length=500,default='_')
     A_1_brand = models.CharField(max_length=500,default='_')
     A_1_qty = models.CharField(max_length=100,default='0')
+    A_1_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     A_1_tally_unitman = models.CharField(max_length=1,default='F')
     A_1_tally_nurse = models.CharField(max_length=1,default='F')
     
@@ -116,6 +118,7 @@ class CardiacSupplied(models.Model):
     A_2A_descr = models.CharField(max_length=500,default='_')
     A_2A_brand = models.CharField(max_length=500,default='_')
     A_2A_qty = models.CharField(max_length=100,default='0')
+    A_2A_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     A_2A_tally_unitman = models.CharField(max_length=1,default='F')
     A_2A_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -123,6 +126,7 @@ class CardiacSupplied(models.Model):
     A_2B_descr = models.CharField(max_length=500,default='_')
     A_2B_brand = models.CharField(max_length=500,default='_')
     A_2B_qty = models.CharField(max_length=100,default='0')
+    A_2B_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     A_2B_tally_unitman = models.CharField(max_length=1,default='F')
     A_2B_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -130,6 +134,7 @@ class CardiacSupplied(models.Model):
     A_3A_descr = models.CharField(max_length=500,default='_')
     A_3A_brand = models.CharField(max_length=500,default='_')
     A_3A_qty = models.CharField(max_length=100,default='0')
+    A_3A_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     A_3A_tally_unitman = models.CharField(max_length=1,default='F')
     A_3A_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -137,13 +142,30 @@ class CardiacSupplied(models.Model):
     A_3B_descr = models.CharField(max_length=500,default='_')
     A_3B_brand = models.CharField(max_length=500,default='_')
     A_3B_qty = models.CharField(max_length=100,default='0')
+    A_3B_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     A_3B_tally_unitman = models.CharField(max_length=1,default='F')
     A_3B_tally_nurse = models.CharField(max_length=1,default='F')
+
+    A_1_consumed = models.CharField(max_length=100,default='0')
+    A_2A_consumed = models.CharField(max_length=100,default='0')
+    A_2B_consumed = models.CharField(max_length=100,default='0')
+    A_3A_consumed = models.CharField(max_length=100,default='0')
+    A_3B_consumed = models.CharField(max_length=100,default='0')
+    
+    B_1_consumed = models.CharField(max_length=100,default='0')
+    B_2A_consumed = models.CharField(max_length=100,default='0')
+    B_2B_consumed = models.CharField(max_length=100,default='0')
+    B_3A_consumed = models.CharField(max_length=100,default='0')
+    B_3B_consumed = models.CharField(max_length=100,default='0')
+    B_3C_consumed = models.CharField(max_length=100,default='0')
+    B_3D_consumed = models.CharField(max_length=100,default='0')
+
 
     B_1_qty_rcd = models.CharField(max_length=500,default='0')
     B_1_descr = models.CharField(max_length=500,default='_')
     B_1_brand = models.CharField(max_length=500,default='_')
     B_1_qty = models.CharField(max_length=100,default='0')
+    B_1_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_1_tally_unitman = models.CharField(max_length=1,default='F')
     B_1_tally_nurse = models.CharField(max_length=1,default='F')
     
@@ -151,6 +173,7 @@ class CardiacSupplied(models.Model):
     B_2A_descr = models.CharField(max_length=500,default='_')
     B_2A_brand = models.CharField(max_length=500,default='_')
     B_2A_qty = models.CharField(max_length=100,default='0')
+    B_2A_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_2A_tally_unitman = models.CharField(max_length=1,default='F')
     B_2A_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -158,6 +181,7 @@ class CardiacSupplied(models.Model):
     B_2B_descr = models.CharField(max_length=500,default='_')
     B_2B_brand = models.CharField(max_length=500,default='_')
     B_2B_qty = models.CharField(max_length=100,default='0')
+    B_2B_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_2B_tally_unitman = models.CharField(max_length=1,default='F')
     B_2B_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -165,6 +189,7 @@ class CardiacSupplied(models.Model):
     B_3A_descr = models.CharField(max_length=500,default='_')
     B_3A_brand = models.CharField(max_length=500,default='_')
     B_3A_qty = models.CharField(max_length=100,default='0')
+    B_3A_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_3A_tally_unitman = models.CharField(max_length=1,default='F')
     B_3A_tally_nurse = models.CharField(max_length=1,default='F')
     
@@ -172,6 +197,7 @@ class CardiacSupplied(models.Model):
     B_3B_descr = models.CharField(max_length=500,default='_')
     B_3B_brand = models.CharField(max_length=500,default='_')
     B_3B_qty = models.CharField(max_length=100,default='0')
+    B_3B_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_3B_tally_unitman = models.CharField(max_length=1,default='F')
     B_3B_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -179,6 +205,7 @@ class CardiacSupplied(models.Model):
     B_3C_descr = models.CharField(max_length=500,default='_')
     B_3C_brand = models.CharField(max_length=500,default='_')
     B_3C_qty = models.CharField(max_length=100,default='0')
+    B_3C_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_3C_tally_unitman = models.CharField(max_length=1,default='F')
     B_3C_tally_nurse = models.CharField(max_length=1,default='F')
 
@@ -186,6 +213,7 @@ class CardiacSupplied(models.Model):
     B_3D_descr = models.CharField(max_length=500,default='_')
     B_3D_brand = models.CharField(max_length=500,default='_')
     B_3D_qty = models.CharField(max_length=100,default='0')
+    B_3D_qty_rcd_nurse = models.CharField(max_length=100,default='0')
     B_3D_tally_unitman = models.CharField(max_length=1,default='F')
     B_3D_tally_nurse = models.CharField(max_length=1,default='F')
 
