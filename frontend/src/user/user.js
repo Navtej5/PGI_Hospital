@@ -29,7 +29,8 @@ const readable = {
   "SentToPharma":"Inventory Ordered and Waiting for delivery",
   "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
   "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
-  "Ready":"Read for Surgery/Operation",
+  "Ready":"Ready for Surgery/Operation",
+  "OperationDone":"Post Operation Consumption Updation",
   "Completed":"Completed",
 };
 
@@ -40,6 +41,8 @@ const redirect_url = {
   "SentToPharma":"/returned/",
   "ReceivedFromPharma":"/returned/",
   "ReceivedByNurse":"/returned/",
+  "Ready":"/returned/",
+  "OperationDone":"/returned/",
   "Completed":"/returned/",
 };
 

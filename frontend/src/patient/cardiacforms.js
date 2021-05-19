@@ -53,7 +53,7 @@ const readable = {
   "SentToPharma":"Inventory Ordered and Waiting for delivery",
   "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
   "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
-  "Ready":"Read for Surgery/Operation",
+  "Ready":"Ready for Surgery/Operation",
   "Completed":"Completed",
 };
 // export const mainListItems = (
