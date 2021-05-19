@@ -492,11 +492,7 @@ class UpdateCardiacFormBView(RetrieveUpdateDestroyAPIView):
                 suppliedRow.B_3C_qty = B_3C_qty
                 suppliedRow.B_3D_qty = B_3D_qty
 
-                suppliedRow.A_1_tally_unitman = A_1_tally_unitman
-                suppliedRow.A_2A_tally_unitman = A_2A_tally_unitman
-                suppliedRow.A_2B_tally_unitman = A_2B_tally_unitman
-                suppliedRow.A_3A_tally_unitman = A_3A_tally_unitman
-                suppliedRow.A_3B_tally_unitman = A_3B_tally_unitman
+                
 
                 suppliedRow.save(update_fields=[
                     'B_1_qty_rcd','B_1_qty',
@@ -634,11 +630,11 @@ class UpdateCardiacSuppliedFormAView(RetrieveUpdateDestroyAPIView):
                 
                 
                 cardiacsupply.save(update_fields=[
-                    'A_1_descr',  'A_1_brand', 'A_1_qty', 'A_1_qty_rcd', 'A_1_tally_unitman', 'A_1_tally_nurse',
-                    'A_2A_descr', 'A_2A_brand','A_2A_qty','A_2A_qty_rcd','A_2A_tally_unitman','A_2A_tally_nurse',
-                    'A_2B_descr', 'A_2B_brand','A_2B_qty','A_2B_qty_rcd','A_2B_tally_unitman','A_2B_tally_nurse',
-                    'A_3A_descr', 'A_3A_brand','A_3A_qty','A_3A_qty_rcd','A_3A_tally_unitman','A_3A_tally_nurse',
-                    'A_3B_descr', 'A_3B_brand','A_3B_qty','A_3B_qty_rcd','A_3B_tally_unitman','A_3B_tally_nurse',
+                    'A_1_consumed','A_1_descr',  'A_1_brand', 'A_1_qty', 'A_1_qty_rcd', 'A_1_tally_unitman', 'A_1_tally_nurse',
+                    'A_2A_consumed','A_2A_descr', 'A_2A_brand','A_2A_qty','A_2A_qty_rcd','A_2A_tally_unitman','A_2A_tally_nurse',
+                    'A_2B_consumed','A_2B_descr', 'A_2B_brand','A_2B_qty','A_2B_qty_rcd','A_2B_tally_unitman','A_2B_tally_nurse',
+                    'A_3A_consumed','A_3A_descr', 'A_3A_brand','A_3A_qty','A_3A_qty_rcd','A_3A_tally_unitman','A_3A_tally_nurse',
+                    'A_3B_consumed','A_3B_descr', 'A_3B_brand','A_3B_qty','A_3B_qty_rcd','A_3B_tally_unitman','A_3B_tally_nurse',
                 ])
                 
                 return Response(CardiacSuppliedSerializer(cardiacsupply).data, status=status.HTTP_200_OK)
@@ -792,13 +788,13 @@ class UpdateCardiacSuppliedFormBView(RetrieveUpdateDestroyAPIView):
                 cardiacsupply.B_3D_consumed = serializer.data.get('A_3D_consumed',cardiacsupply.A_3D_consumed)
                 # print(cardiacsupply.A_3A_descr,A_3A_descr,cardiacsupply.A_3A_brand,A_3A_brand,cardiacsupply.A_3A_qty,A_3A_qty)
                 cardiacsupply.save(update_fields=[
-                    'B_1_descr',  'B_1_brand', 'B_1_qty', 'B_1_qty_rcd', 'B_1_tally_unitman', 'B_1_tally_nurse',
-                    'B_2A_descr', 'B_2A_brand','B_2A_qty','B_2A_qty_rcd','B_2A_tally_unitman','B_2A_tally_nurse',
-                    'B_2B_descr', 'B_2B_brand','B_2B_qty','B_2B_qty_rcd','B_2B_tally_unitman','B_2B_tally_nurse',
-                    'B_3A_descr', 'B_3A_brand','B_3A_qty','B_3A_qty_rcd','B_3A_tally_unitman','B_3A_tally_nurse',
-                    'B_3B_descr', 'B_3B_brand','B_3B_qty','B_3B_qty_rcd','B_3B_tally_unitman','B_3B_tally_nurse',
-		            'B_3C_descr', 'B_3C_brand','B_3C_qty','B_3C_qty_rcd','B_3C_tally_unitman','B_3C_tally_nurse',
-                    'B_3D_descr', 'B_3D_brand','B_3D_qty','B_3D_qty_rcd','B_3D_tally_unitman','B_3D_tally_nurse',
+                    'B_1_consumed','B_1_descr',  'B_1_brand', 'B_1_qty', 'B_1_qty_rcd', 'B_1_tally_unitman', 'B_1_tally_nurse',
+                    'B_2A_consumed','B_2A_descr', 'B_2A_brand','B_2A_qty','B_2A_qty_rcd','B_2A_tally_unitman','B_2A_tally_nurse',
+                    'B_2B_consumed','B_2B_descr', 'B_2B_brand','B_2B_qty','B_2B_qty_rcd','B_2B_tally_unitman','B_2B_tally_nurse',
+                    'B_3A_consumed','B_3A_descr', 'B_3A_brand','B_3A_qty','B_3A_qty_rcd','B_3A_tally_unitman','B_3A_tally_nurse',
+                    'B_3B_consumed','B_3B_descr', 'B_3B_brand','B_3B_qty','B_3B_qty_rcd','B_3B_tally_unitman','B_3B_tally_nurse',
+		            'B_3C_consumed','B_3C_descr', 'B_3C_brand','B_3C_qty','B_3C_qty_rcd','B_3C_tally_unitman','B_3C_tally_nurse',
+                    'B_3D_consumed','B_3D_descr', 'B_3D_brand','B_3D_qty','B_3D_qty_rcd','B_3D_tally_unitman','B_3D_tally_nurse',
                 ])
                 
                 return Response(CardiacSuppliedSerializer(cardiacsupply).data, status=status.HTTP_200_OK)
@@ -882,6 +878,7 @@ def print_pdf(request,docnumber):
     serializer_class2 = PatientSerializer
     lookup_url_kwarg = 'docnumber'
     cardiacset = CardiacRequested.objects.filter(docnumber=docnumber)
+    suppcard =  CardiacSupplied.objects.filter(docnumber=docnumber)
     requestset = Requests.objects.filter(docnumber=docnumber)
     wardadhaar = requestset[0].wardadhaar
     patientset = Patient.objects.filter(wardadhaar=wardadhaar)
@@ -919,23 +916,24 @@ def print_pdf(request,docnumber):
         'Name:   '+str(requestset[0].patientname),
         'Dob/Sex:   '+str(patientset[0].dob)[:10]+" "+str(patientset[0].gender),
         'Wt/BSA:   '+str(requestset[0].weight)+", "+str(requestset[0].bsa),
-        'Date:   '+str(requestset[0].createdat)[:10],
-        'Cr no:   '+str(requestset[0].crnumber),
-        'Consultant:   '+str(requestset[0].consultantuname),
         'Date of Procedure:    '+str(requestset[0].dateofprocedure),
         "",
         "",
         'ANESTHETICS'
     ]
-
+    text_head2 = [
+        'Date:   '+str(requestset[0].createdat)[:10],
+        'Cr no:   '+str(requestset[0].crnumber),
+        'Consultant:   '+str(requestset[0].consultantuname)
+    ]
     elements = []
     data = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_descr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty,"",""],
-        ['2A',cardiacset[0].A_2A_name,cardiacset[0].A_2A_descr,cardiacset[0].A_2A_brand,cardiacset[0].A_2A_qty,"",""],
-        ['2B',cardiacset[0].A_2B_name,cardiacset[0].A_2B_descr,cardiacset[0].A_2B_brand,cardiacset[0].A_2B_qty,"",""],
-        ['3A',cardiacset[0].A_3A_name,cardiacset[0].A_3A_descr,cardiacset[0].A_3A_brand,cardiacset[0].A_3A_qty,"",""],
-        ['3B',cardiacset[0].A_3B_name,cardiacset[0].A_3B_descr,cardiacset[0].A_3B_brand,cardiacset[0].A_3B_qty,"",""]
+        ['1', cardiacset[0].A_1_name.replace(';','\n'),cardiacset[0].A_1_descr.replace(';','\n'),cardiacset[0].A_1_brand.replace(';','\n'),cardiacset[0].A_1_qty,suppcard[0].A_1_consumed,suppcard[0].A_1_qty-suppcard[0].A_1_consumed],
+        ['2A',cardiacset[0].A_2A_name.replace(';','\n'),cardiacset[0].A_2A_descr.replace(';','\n'),cardiacset[0].A_2A_brand.replace(';','\n'),cardiacset[0].A_2A_qty,suppcard[0].A_2A_consumed,suppcard[0].A_2A_qty-suppcard[0].A_2A_consumed],
+        ['2B',cardiacset[0].A_2B_name.replace(';','\n'),cardiacset[0].A_2B_descr.replace(';','\n'),cardiacset[0].A_2B_brand.replace(';','\n'),cardiacset[0].A_2B_qty,suppcard[0].A_2B_consumed,suppcard[0].A_2B_qty-suppcard[0].A_2B_consumed],
+        ['3A',cardiacset[0].A_3A_name.replace(';','\n'),cardiacset[0].A_3A_descr.replace(';','\n'),cardiacset[0].A_3A_brand.replace(';','\n'),cardiacset[0].A_3A_qty,suppcard[0].A_3A_consumed,suppcard[0].A_3A_qty-suppcard[0].A_3A_consumed],
+        ['3B',cardiacset[0].A_3B_name.replace(';','\n'),cardiacset[0].A_3B_descr.replace(';','\n'),cardiacset[0].A_3B_brand.replace(';','\n'),cardiacset[0].A_3B_qty,suppcard[0].A_3B_consumed,suppcard[0].A_3B_qty-suppcard[0].A_3B_consumed]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
 
     ]
@@ -986,11 +984,19 @@ def print_pdf(request,docnumber):
         text.textLine(line)
 
     pdf.drawText(text)
+    #########t2
+    text = pdf.beginText(440, 700)
+    text.setFont('Times-Bold',size=11)
+    # text.setFillColor(colors.red)
+    for line in text_head2:
+        text.textLine(line)
+
+    pdf.drawText(text)
     #########tableA
     width = 700
     height = 600
     x = 38
-    y = 430
+    y = 370
     f = Table(data, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
                                3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
     f.setStyle(TableStyle([
@@ -998,7 +1004,7 @@ def print_pdf(request,docnumber):
     f.wrapOn(pdf, width, height)
     f.drawOn(pdf, x, y)
     ################textb
-    text = pdf.beginText(40, 360)
+    text = pdf.beginText(40, 320)
     # for line in ti:
     text.textLine("B table")
 
@@ -1006,17 +1012,17 @@ def print_pdf(request,docnumber):
     ################tableB
     dataB = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr,cardiacset[0].B_1_brand,cardiacset[0].A_1_qty,"",""],
-        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr,cardiacset[0].B_2A_brand,cardiacset[0].A_2A_qty,"",""],
-        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr,cardiacset[0].B_2B_brand,cardiacset[0].A_2B_qty,"",""],
-        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr,cardiacset[0].B_3A_brand,cardiacset[0].A_3A_qty,"",""],
-        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr,cardiacset[0].B_3B_brand,cardiacset[0].A_3B_qty,"",""]
+        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr.replace(';','\n'),cardiacset[0].B_1_brand.replace(';','\n'),cardiacset[0].B_1_qty,suppcard[0].B_1_consumed,suppcard[0].B_1_qty-suppcard[0].B_1_consumed],
+        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr.replace(';','\n'),cardiacset[0].B_2A_brand.replace(';','\n'),cardiacset[0].B_2A_qty,suppcard[0].B_2A_consumed,suppcard[0].B_2A_qty-suppcard[0].B_2A_consumed],
+        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr.replace(';','\n'),cardiacset[0].B_2B_brand.replace(';','\n'),cardiacset[0].B_2B_qty,suppcard[0].B_2B_consumed,suppcard[0].B_2B_qty-suppcard[0].B_2B_consumed],
+        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr.replace(';','\n'),cardiacset[0].B_3A_brand.replace(';','\n'),cardiacset[0].B_3A_qty,suppcard[0].B_3A_consumed,suppcard[0].B_3A_qty-suppcard[0].B_3A_consumed],
+        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr.replace(';','\n'),cardiacset[0].B_3B_brand.replace(';','\n'),cardiacset[0].B_3B_qty,suppcard[0].B_3B_consumed,suppcard[0].B_3B_qty-suppcard[0].B_3B_consumed]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
     ]
     width = 100
     height = 600
     x = 38
-    y = 200
+    y = 100
     f = Table(dataB, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
                                3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
     f.setStyle(TableStyle([
@@ -1024,7 +1030,7 @@ def print_pdf(request,docnumber):
     f.wrapOn(pdf, width, height)
     f.drawOn(pdf, x, y)
     ###footer
-    text = pdf.beginText(40, 110)
+    text = pdf.beginText(40, 60)
     # for line in ti:
     text.setFont('Times-Bold',size=11)
     text.textLine("Checked by:")
@@ -1032,7 +1038,7 @@ def print_pdf(request,docnumber):
     pdf.drawText(text)
 
 
-    text = pdf.beginText(40, 70)
+    text = pdf.beginText(40, 20)
     text.setFont('Times-Bold',size=11)
     # for line in ti:
     text.textLine("Resident in charge             Perfusionist              OT technician           OT Nursing officer")
