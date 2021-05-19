@@ -104,12 +104,14 @@ export default function ReturnedFormA(props) {
             var col3 = "A_"+ids[x]+"_brand";
             var col4 = "A_"+ids[x]+"_qty";
             var col5 = "A_"+ids[x]+"_tally_nurse";
+            var col6 = "A_"+ids[x]+"_consumed";
             var id = ids[x];
             var name = form["**Requested**"][0][col1];
             var descr = form["**Requested**"][0][col2];
             var brand = form["**Requested**"][0][col3];
             var qty_requested= form["**Requested**"][0][col4];
             var qty_received = form["**Supplied**"][0][col4];
+            var qty_consumed = form["**Supplied**"][0][col6];
             if (form["**Supplied**"][0][col5]=='T'){
                 setTallyNurse(tallyNurse => (
                     {...tallyNurse,[id]:true}
@@ -119,6 +121,9 @@ export default function ReturnedFormA(props) {
             var difference=qty_received-qty_requested;
             setQtySupplied(qtySupplied => (
                 {...qtySupplied, [id]: qty_received}
+            ));
+            setQtyConsumed(qtyConsumed => (
+                {...qtyConsumed, [id]: qty_consumed}
             ));
             temp.push({id,name,descr,brand,qty_requested,qty_received,difference});
             console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_received=",qty_received)
@@ -144,6 +149,20 @@ export default function ReturnedFormA(props) {
         await axios.put(GET_REQUEST_DATA_API,temp2.data);
     }
     
+    const onClickChangeStatetoOperationDone = async () => {
+        console.log("function called")
+        temp2 = await axios.get(GET_REQUEST_DATA_API);
+        temp2.data.state = 'OperationDone';
+        await axios.put(GET_REQUEST_DATA_API,temp2.data);
+    }
+
+    const onClickChangeStatetoCompleted = async () => {
+        console.log("function called")
+        temp2 = await axios.get(GET_REQUEST_DATA_API);
+        temp2.data.state = 'Completed';
+        await axios.put(GET_REQUEST_DATA_API,temp2.data);
+    }
+
     return(
         <div>
         {
@@ -415,7 +434,7 @@ export default function ReturnedFormA(props) {
                                 default={9}
                                 onChange={(event)=>{
                                     setQtySupplied(qtySupplied => (
-                                        {...qtySupplied, [event.target.name]: event.target.value}
+                                        {...qtySupplied, [row.id]: event.target.value}
                                     ));
                                 }}
                                 >
@@ -442,97 +461,25 @@ export default function ReturnedFormA(props) {
                 </Table>
                 <div style={{padding:"10px"}}>
                     <Grid container >
-                        <Grid item xs={10}>
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Remarks"
-                            style={{width:"95%"}}
-                            multiline
-                            rows={4}
-                            // cols={12}
-                            // defaultValue="Default Value"
-                            placeholder="enter comments/remarks"
-                            variant="outlined"
-                        />
+                        <Grid item xs={10} align='center'>
+                            <Button  
+                                variant="contained" color="primary"
+                                onClick={()=>{
+                                    console.log("******submitting*********");
+                                    if (window.confirm('Once done you will be able update consumption of inventory. Are you sure operation is done? ')){
+                                        console.log("pakaa"); 
+                                        onClickChangeStatetoOperationDone(); 
+                                        history2.goBack();
+                                    }
+                                }}
+                        >Operation Done</Button>
                         </Grid>
-                    
-                    <Grid item xs={2} style={{padding:"3.5%"}}>
-                    <Button  
-                variant="contained" color="primary"
-                    onClick={()=>(
-                        console.log("******submitting*********")
-                        ,console.log(JSON.stringify({
-                            code         : myvar,
-                            A_1_qty      :qtySupplied['1'],
-                            // A_1_remarks  :A_1_remarks,
-                            A_2A_qty      :qtySupplied['2A'],
-                            // A_2A_remarks  :A_2A_remarks,
-                            A_2B_qty      :qtySupplied['2B'],
-                            // A_2B_remarks  :A_2B_remarks,
-                            A_3A_qty      :qtySupplied['3A'],
-                            // A_3A_remarks  :A_3A_remarks,
-                            A_3B_qty      :qtySupplied['3B'],
-                            // A_3B_remarks  :A_3B_remarks, 
-                        }))
-                        ,fetch(SUBMIT_FORM_API,
-                            {
-                                // credentials: 'include',
-                                credentials: 'omit',
-                                method:'PATCH',
-                                headers: {
-                                Accept: 'application/json',
-                                "Content-Type": 'application/json',
-                            },
-                                body: JSON.stringify({
-                                    code         : myvar,
-                                    A_1_qty      :qtySupplied['1'],
-                                    // A_1_remarks  :A_1_remarks,
-                                    A_2A_qty      :qtySupplied['2A'],
-                                    // A_2A_remarks  :A_2A_remarks,
-                                    A_2B_qty      :qtySupplied['2B'],
-                                    // A_2B_remarks  :A_2B_remarks,
-                                    A_3A_qty      :qtySupplied['3A'],
-                                    // A_3A_remarks  :A_3A_remarks,
-                                    A_3B_qty      :qtySupplied['3B'],
-                                    // A_3B_remarks  :A_3B_remarks, 
-                                }),
-                            })
-                        )}
-
-                        // .then((result)=>{store.addNotification({
-                        //     title: "Success",
-                        //     message: "Request added successfully",
-                        //     type: "success",
-                        //     insert: "top",
-                        //     container: "bottom-right",
-                        //     animationIn: ["animate_animated", "animate_fadeIn"],
-                        //     animationOut: ["animate_animated", "animate_fadeOut"],
-                        //     dismiss: {
-                        //       duration: 5000,
-                        //       onScreen: true
-                        //     }
-                        //   });console.log("Success===:",result)})
-                        // .catch((error)=>{store.addNotification({
-                        //     title: "Failed",
-                        //     message: "Request could not be added",
-                        //     type: "danger",
-                        //     insert: "top",
-                        //     container: "bottom-right",
-                        //     animationIn: ["animate_animated", "animate_fadeIn"],
-                        //     animationOut: ["animate_animated", "animate_fadeOut"],
-                        //     dismiss: {
-                        //       duration: 5000,
-                        //       onScreen: true
-                        //     }
-                        //   });console.log("Error===:",error)})
-                >Submit</Button>
-                </Grid>
-            </Grid>
+                    </Grid>
+                </div>
             </div>
-        </div>
         :
         props.stage == 'OperationDone'?
-            <div>           
+            <div>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -607,92 +554,72 @@ export default function ReturnedFormA(props) {
                 </Table>
                 <div style={{padding:"10px"}}>
                     <Grid container >
-                        <Grid item xs={10}>
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Remarks"
-                            style={{width:"95%"}}
-                            multiline
-                            rows={4}
-                            // cols={12}
-                            // defaultValue="Default Value"
-                            placeholder="enter comments/remarks"
-                            variant="outlined"
-                        />
-                        </Grid>
-                    
-                    <Grid item xs={2} style={{padding:"3.5%"}}>
-                    <Button  
-                variant="contained" color="primary"
-                    onClick={()=>(
-                        console.log("******submitting*********")
-                        ,console.log(JSON.stringify({
-                            code         : myvar,
-                            A_1_qty      :qtySupplied['1'],
-                            // A_1_remarks  :A_1_remarks,
-                            A_2A_qty      :qtySupplied['2A'],
-                            // A_2A_remarks  :A_2A_remarks,
-                            A_2B_qty      :qtySupplied['2B'],
-                            // A_2B_remarks  :A_2B_remarks,
-                            A_3A_qty      :qtySupplied['3A'],
-                            // A_3A_remarks  :A_3A_remarks,
-                            A_3B_qty      :qtySupplied['3B'],
-                            // A_3B_remarks  :A_3B_remarks, 
-                        }))
-                        ,fetch(SUBMIT_FORM_API,
-                            {
-                                // credentials: 'include',
-                                credentials: 'omit',
-                                method:'PATCH',
-                                headers: {
-                                Accept: 'application/json',
-                                "Content-Type": 'application/json',
-                            },
-                                body: JSON.stringify({
-                                    code         : myvar,
-                                    A_1_qty      :qtySupplied['1'],
-                                    // A_1_remarks  :A_1_remarks,
-                                    A_2A_qty      :qtySupplied['2A'],
-                                    // A_2A_remarks  :A_2A_remarks,
-                                    A_2B_qty      :qtySupplied['2B'],
-                                    // A_2B_remarks  :A_2B_remarks,
-                                    A_3A_qty      :qtySupplied['3A'],
-                                    // A_3A_remarks  :A_3A_remarks,
-                                    A_3B_qty      :qtySupplied['3B'],
-                                    // A_3B_remarks  :A_3B_remarks, 
-                                }),
-                            })
-                        )}
+                        <Grid item xs={10} style={{padding:"3.5%"}}>
+                            <Button  
+                                variant="contained" color="primary"
+                                onClick={()=>(
+                                    console.log("******submitting*********")
+                                    ,fetch(SUBMIT_FORM_API,
+                                        {
+                                            // credentials: 'include',
+                                            credentials: 'omit',
+                                            method:'PATCH',
+                                            headers: {
+                                            Accept: 'application/json',
+                                            "Content-Type": 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            code         : myvar,
+                                            A_1_consumed      :qtyConsumed['1'],
+                                            // A_1_remarks  :A_1_remarks,
+                                            A_2A_consumed      :qtyConsumed['2A'],
+                                            // A_2A_remarks  :A_2A_remarks,
+                                            A_2B_consumed      :qtyConsumed['2B'],
+                                            // A_2B_remarks  :A_2B_remarks,
+                                            A_3A_consumed   :qtyConsumed['3A'],
+                                            // A_3A_remarks  :A_3A_remarks,
+                                            A_3B_consumed      :qtyConsumed['3B'],
+                                            // A_3B_remarks  :A_3B_remarks, 
+                                        }),
+                                    })
+                                )}
 
-                        // .then((result)=>{store.addNotification({
-                        //     title: "Success",
-                        //     message: "Request added successfully",
-                        //     type: "success",
-                        //     insert: "top",
-                        //     container: "bottom-right",
-                        //     animationIn: ["animate_animated", "animate_fadeIn"],
-                        //     animationOut: ["animate_animated", "animate_fadeOut"],
-                        //     dismiss: {
-                        //       duration: 5000,
-                        //       onScreen: true
-                        //     }
-                        //   });console.log("Success===:",result)})
-                        // .catch((error)=>{store.addNotification({
-                        //     title: "Failed",
-                        //     message: "Request could not be added",
-                        //     type: "danger",
-                        //     insert: "top",
-                        //     container: "bottom-right",
-                        //     animationIn: ["animate_animated", "animate_fadeIn"],
-                        //     animationOut: ["animate_animated", "animate_fadeOut"],
-                        //     dismiss: {
-                        //       duration: 5000,
-                        //       onScreen: true
-                        //     }
-                        //   });console.log("Error===:",error)})
-                >Submit</Button>
+                            >Save as Draft</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container>
+                    {
+                        
+                        <Grid item>
+                        <Checkbox 
+                            value={boolConfirmed}
+                            onChange={(event)=>{
+                                setBoolConfirmed(event.target.checked);
+                            }}
+                        />
+                        I have thorough checked the consumption of each and every item related to this surgery/Operation.
+                        </Grid>
+                    }
+                    {
+                        boolConfirmed==true?
+                        <Grid item xs={10} align='center'>
+                            <Button variant="contained" color="secondary"
+                                onClick={()=>{
+                                    console.log("******submitting*********");
+                                    if (window.confirm("Are you sure you want to Mark as Complete? NOTE: YOU WON'T BE ABLE TO CHANGE THIS LATER.")){
+                                        console.log("pakaa"); 
+                                        onClickChangeStatetoCompleted(); 
+                                        history2.goBack();
+                                    }
+                                }}
+                            >Mark Complete</Button>
+                        </Grid>
+                    :
+                        <Grid item xs={10} align='center'>
+                         <Button disabled variant="contained" color="secondary">Mark Complete</Button>
+                        </Grid>
+                    }
                 </Grid>
-            </Grid>
             </div>
         </div>
         :

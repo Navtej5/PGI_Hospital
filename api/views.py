@@ -492,11 +492,7 @@ class UpdateCardiacFormBView(RetrieveUpdateDestroyAPIView):
                 suppliedRow.B_3C_qty = B_3C_qty
                 suppliedRow.B_3D_qty = B_3D_qty
 
-                suppliedRow.A_1_tally_unitman = A_1_tally_unitman
-                suppliedRow.A_2A_tally_unitman = A_2A_tally_unitman
-                suppliedRow.A_2B_tally_unitman = A_2B_tally_unitman
-                suppliedRow.A_3A_tally_unitman = A_3A_tally_unitman
-                suppliedRow.A_3B_tally_unitman = A_3B_tally_unitman
+                
 
                 suppliedRow.save(update_fields=[
                     'B_1_qty_rcd','B_1_qty',
@@ -634,11 +630,11 @@ class UpdateCardiacSuppliedFormAView(RetrieveUpdateDestroyAPIView):
                 
                 
                 cardiacsupply.save(update_fields=[
-                    'A_1_descr',  'A_1_brand', 'A_1_qty', 'A_1_qty_rcd', 'A_1_tally_unitman', 'A_1_tally_nurse',
-                    'A_2A_descr', 'A_2A_brand','A_2A_qty','A_2A_qty_rcd','A_2A_tally_unitman','A_2A_tally_nurse',
-                    'A_2B_descr', 'A_2B_brand','A_2B_qty','A_2B_qty_rcd','A_2B_tally_unitman','A_2B_tally_nurse',
-                    'A_3A_descr', 'A_3A_brand','A_3A_qty','A_3A_qty_rcd','A_3A_tally_unitman','A_3A_tally_nurse',
-                    'A_3B_descr', 'A_3B_brand','A_3B_qty','A_3B_qty_rcd','A_3B_tally_unitman','A_3B_tally_nurse',
+                    'A_1_consumed','A_1_descr',  'A_1_brand', 'A_1_qty', 'A_1_qty_rcd', 'A_1_tally_unitman', 'A_1_tally_nurse',
+                    'A_2A_consumed','A_2A_descr', 'A_2A_brand','A_2A_qty','A_2A_qty_rcd','A_2A_tally_unitman','A_2A_tally_nurse',
+                    'A_2B_consumed','A_2B_descr', 'A_2B_brand','A_2B_qty','A_2B_qty_rcd','A_2B_tally_unitman','A_2B_tally_nurse',
+                    'A_3A_consumed','A_3A_descr', 'A_3A_brand','A_3A_qty','A_3A_qty_rcd','A_3A_tally_unitman','A_3A_tally_nurse',
+                    'A_3B_consumed','A_3B_descr', 'A_3B_brand','A_3B_qty','A_3B_qty_rcd','A_3B_tally_unitman','A_3B_tally_nurse',
                 ])
                 
                 return Response(CardiacSuppliedSerializer(cardiacsupply).data, status=status.HTTP_200_OK)
@@ -792,13 +788,13 @@ class UpdateCardiacSuppliedFormBView(RetrieveUpdateDestroyAPIView):
                 cardiacsupply.B_3D_consumed = serializer.data.get('A_3D_consumed',cardiacsupply.A_3D_consumed)
                 # print(cardiacsupply.A_3A_descr,A_3A_descr,cardiacsupply.A_3A_brand,A_3A_brand,cardiacsupply.A_3A_qty,A_3A_qty)
                 cardiacsupply.save(update_fields=[
-                    'B_1_descr',  'B_1_brand', 'B_1_qty', 'B_1_qty_rcd', 'B_1_tally_unitman', 'B_1_tally_nurse',
-                    'B_2A_descr', 'B_2A_brand','B_2A_qty','B_2A_qty_rcd','B_2A_tally_unitman','B_2A_tally_nurse',
-                    'B_2B_descr', 'B_2B_brand','B_2B_qty','B_2B_qty_rcd','B_2B_tally_unitman','B_2B_tally_nurse',
-                    'B_3A_descr', 'B_3A_brand','B_3A_qty','B_3A_qty_rcd','B_3A_tally_unitman','B_3A_tally_nurse',
-                    'B_3B_descr', 'B_3B_brand','B_3B_qty','B_3B_qty_rcd','B_3B_tally_unitman','B_3B_tally_nurse',
-		            'B_3C_descr', 'B_3C_brand','B_3C_qty','B_3C_qty_rcd','B_3C_tally_unitman','B_3C_tally_nurse',
-                    'B_3D_descr', 'B_3D_brand','B_3D_qty','B_3D_qty_rcd','B_3D_tally_unitman','B_3D_tally_nurse',
+                    'B_1_consumed','B_1_descr',  'B_1_brand', 'B_1_qty', 'B_1_qty_rcd', 'B_1_tally_unitman', 'B_1_tally_nurse',
+                    'B_2A_consumed','B_2A_descr', 'B_2A_brand','B_2A_qty','B_2A_qty_rcd','B_2A_tally_unitman','B_2A_tally_nurse',
+                    'B_2B_consumed','B_2B_descr', 'B_2B_brand','B_2B_qty','B_2B_qty_rcd','B_2B_tally_unitman','B_2B_tally_nurse',
+                    'B_3A_consumed','B_3A_descr', 'B_3A_brand','B_3A_qty','B_3A_qty_rcd','B_3A_tally_unitman','B_3A_tally_nurse',
+                    'B_3B_consumed','B_3B_descr', 'B_3B_brand','B_3B_qty','B_3B_qty_rcd','B_3B_tally_unitman','B_3B_tally_nurse',
+		            'B_3C_consumed','B_3C_descr', 'B_3C_brand','B_3C_qty','B_3C_qty_rcd','B_3C_tally_unitman','B_3C_tally_nurse',
+                    'B_3D_consumed','B_3D_descr', 'B_3D_brand','B_3D_qty','B_3D_qty_rcd','B_3D_tally_unitman','B_3D_tally_nurse',
                 ])
                 
                 return Response(CardiacSuppliedSerializer(cardiacsupply).data, status=status.HTTP_200_OK)
