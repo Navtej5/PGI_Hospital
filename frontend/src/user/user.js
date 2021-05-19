@@ -26,8 +26,10 @@ const readable = {
   "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
-  "ReceivedFromPharma":"Requested Inventory Received",
   "SentToPharma":"Inventory Ordered and Waiting for delivery",
+  "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
+  "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
+  "Ready":"Read for Surgery/Operation",
   "Completed":"Completed",
 };
 
@@ -37,6 +39,7 @@ const redirect_url = {
   "Approved":"/returned/",
   "SentToPharma":"/returned/",
   "ReceivedFromPharma":"/returned/",
+  "ReceivedByNurse":"/returned/",
   "Completed":"/returned/",
 };
 

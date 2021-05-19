@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +15,7 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
+//import Deposits from "./details";
 //import Link from '@material-ui/core/Link';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
@@ -38,21 +38,23 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import ReturnedFormA from './returnedFormA';
-import ReturnedFormB from './returnedFormB';
-import { myvar } from '../user/user.js';
-import Deposits from "./details";
-import Title from '../user/dashboard/Title';
-
+//import FormA from './formA';
+//import FormB from './formB';
+import {myvar} from '../user/user.js';
+import { createBrowserHistory } from 'history';
+import Title from '../user/dashboard/Title'
+import axios from 'axios';
+import AddPatient from './addPatient';
+import AddRequest from './addRequest';
+import CollapsibleTable from './requestlist.js';
+const history = createBrowserHistory({forceRefresh:true});
 
 const readable = {
   "Filling":"In Progress",
   "Pending":"Pending Approval",
   "Approved":"Approved by Consultant",
+  "ReceivedFromPharma":"Requested Inventory Received",
   "SentToPharma":"Inventory Ordered and Waiting for delivery",
-  "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
-  "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
-  "Ready":"Read for Surgery/Operation",
   "Completed":"Completed",
 };
 // export const mainListItems = (
@@ -124,7 +126,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        IIT Ropar
+        Your Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -213,10 +215,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReturnedCardiacForm(props) {
+export default function UserNew(props) {
+  //const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'+props.match.params.docnumber;
+  //const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.match.params.docnumber;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [form,setForm]=React.useState(0)
+  const [form,setForm]=React.useState(0);
+  const logout = async () => {
+    localStorage.clear();
+    history.push("/");
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -225,6 +233,26 @@ export default function ReturnedCardiacForm(props) {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+//   console.log("$$$$$$$$$$$$$$$$$$\ndocnumber:",props.location.docnumber,"\nstage:",props.location.stage);
+
+//   const notificationfunction = async () =>{
+//     console.log("in use effect");  
+//     // fetchData();
+//     var xy = await axios.get(SUBMIT_REQUEST_API);
+//     xy.data.notificationbit = 0;
+//     axios.put(SUBMIT_REQUEST_API,xy.data);
+//     var xyz = await axios.get(GET_REQUEST_DATA_API);
+//     setNurseflag(xyz.data.nurseflag);
+//     setTechflag(xyz.data.technicianflag);
+//     setPerflag(xyz.data.perfusionistflag);
+
+//   }
+
+//   useEffect(()=>{
+//     console.log("in use effect");  
+//     notificationfunction();
+// },[])
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -240,22 +268,14 @@ export default function ReturnedCardiacForm(props) {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            PGIMER-Cardiac Form
+            PGIMER Nurse Page
           </Typography>
           {/* <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon /> 
             </Badge>
           </IconButton> */}
-          
-          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
-            Download Form
-          </Button>
-        <Link to="/user">
-          <Button variant="contained" color="secondary">
-            Go Back
-          </Button>
-        </Link>
+          <Button variant="contained" color="secondary" onClick={logout} >Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -278,7 +298,7 @@ export default function ReturnedCardiacForm(props) {
       <ListItemIcon>
         <Filter1Icon />
       </ListItemIcon>
-      <ListItemText primary="Anaesthetic" />
+      <ListItemText primary="Request" />
     </ListItem>
     <ListItem button onClick={()=>{
                     setForm(1)
@@ -286,7 +306,7 @@ export default function ReturnedCardiacForm(props) {
       <ListItemIcon>
         <Filter2Icon />
       </ListItemIcon>
-      <ListItemText primary="CardioPulmonary" />
+      <ListItemText primary="Add Patient" />
     </ListItem>
     <ListItem button onClick={()=>{
                     setForm(2)
@@ -294,7 +314,7 @@ export default function ReturnedCardiacForm(props) {
       <ListItemIcon>
         <Filter3Icon />
       </ListItemIcon>
-      <ListItemText primary="Strenotomy" />
+      <ListItemText primary="Add Request" />
     </ListItem>
     <ListItem button onClick={()=>{
                     setForm(3)
@@ -319,61 +339,46 @@ export default function ReturnedCardiacForm(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          
 {form===0? 
-          <div>
-          <Grid item xs={12}>
-            <Title>{readable[props.location.stage]}</Title>
-            <Paper>
-              <Deposits docnumber={props.match.params.docnumber}/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <ReturnedFormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-            </Paper>  
-          </Grid>
-        </div>
+  <div>
+    <Grid item xs={12}>
+      {/* <Paper className={classes.paper}> */}
+          <CollapsibleTable />
+        {/* <FormA docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} nurseflag={nurseflag} perflag={perflag} techflag={techflag}/> */}
+      {/* </Paper>   */}
+    </Grid>
+  </div>
           :
           ""
 }
 {form===1?
-    <div>
+  <div>
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
       <Paper>
-        <Deposits docnumber={props.match.params.docnumber}/>
+        {/* <Deposits docnumber={props.match.params.docnumber}/> */}
       </Paper>
     </Grid>
+    <br></br>
     <Grid item xs={12}>
       <Title>{readable[props.location.stage]}</Title>
-      <Paper className={classes.paper}>
-        <ReturnedFormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage}/>
-      </Paper>
+      {/* <Paper className={classes.paper}> */}
+        {/* <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} nurseflag={nurseflag} perflag={perflag} techflag={techflag}/> */}
+        <AddPatient />
+      {/* </Paper> */}
     </Grid>
   </div>
 :""}
 {form===2?
-    <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-              </Paper>
-            </Grid>
-          </Grid>
-    
+    <div>
+    <Grid item xs={12}>
+      {/* <Title>Add Request</Title> */}
+      
+        {/* <FormB docnumber={props.match.params.docnumber} user={props.location.user} stage={props.location.stage} nurseflag={nurseflag} perflag={perflag} techflag={techflag}/> */}
+        <AddRequest />
+      
+    </Grid>
+  </div>
 :""}
           <Box pt={4}>
             <Copyright />

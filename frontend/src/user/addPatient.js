@@ -168,7 +168,7 @@ class AddPatient extends Component{
         const { classes } = this.props;
         return(
             
-            <div style={{marginTop:"0px",height:"750px",background:"linear-gradient(45deg, lightblue , transparent)",overflow:"hidden"}}>
+            <div style={{background:"linear-gradient(45deg, lightblue , transparent)",overflow:"hidden"}}>
                 <ReactNotification />
             {/* <Row style={headerDiv}>
                 <div className="montserrat" 
@@ -188,7 +188,7 @@ class AddPatient extends Component{
               </span>
             </Row> */}
 
-            <AppBar position="absolute" className={clsx(classes.appBar)}>
+            {/* <AppBar position="absolute" className={clsx(classes.appBar)}>
                 <Toolbar className={classes.toolbar}>
                 <Typography component="h1" variant="h6" color="inherit" align="center" noWrap className={classes.title}>
                     ADD PATIENT 
@@ -200,9 +200,10 @@ class AddPatient extends Component{
                 </Button>
                 </Link>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
-            <Table style={{marginTop:"100px",marginLeft:"400px",width:"650px"}}>
+            {/* <Table style={{marginTop:"100px",marginLeft:"100px",width:"650px"}}> */}
+            <Table>
                 <TableBody>
                     <TableRow>
                         <TableCell><div style={{marginTop:"20px",marginLeft:"10%",fontSize:"18px"}}>Name of Patient:</div></TableCell>
@@ -275,7 +276,7 @@ class AddPatient extends Component{
                 </TableBody>
             </Table>
             <Button variant="contained" color="primary" 
-            style={{marginLeft:"680px",marginTop:"20px"}}
+            style={{margin: '0 auto', display: "flex"}}
             onClick={()=>(
                 console.log("Posting"),
                 //this.createNotification('success'),

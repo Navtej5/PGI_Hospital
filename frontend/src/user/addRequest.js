@@ -124,8 +124,7 @@ export default function AddRequest(){
         const classes = useStyles();
 
         return(
-        <div style={{background: "linear-gradient(45deg, lightblue , transparent)",position:"fixed",padding:0,margin:0,top:0,left:0,width: "100%",height: "100%"}}
-        >
+        <div style={{background: "linear-gradient(45deg, lightblue , transparent)"}}>
             <ReactNotification />
             {/* <Row style={headerDiv}>
                 <div className="montserrat" 
@@ -145,7 +144,7 @@ export default function AddRequest(){
               </span>
             </Row> */}
 
-            <AppBar position="absolute" className={clsx(classes.appBar)}>
+            {/* <AppBar position="absolute" className={clsx(classes.appBar)}>
                 <Toolbar className={classes.toolbar}>
                 
                 <Typography component="h1" variant="h6" color="inherit" align="center" noWrap className={classes.title}>
@@ -155,14 +154,14 @@ export default function AddRequest(){
                     <Badge badgeContent={4} color="secondary">
                     <NotificationsIcon />
                     </Badge>
-                </IconButton> */}
+                </IconButton> 
                 <Link to="/user">
                 <Button variant="contained" color="secondary">
                     Go Back
                 </Button>
                 </Link>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
             <Table style={{marginTop:"80px",marginLeft:"400px",width:"650px"}}>
                 <TableBody>
