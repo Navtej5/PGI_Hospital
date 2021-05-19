@@ -3,7 +3,7 @@ from django.http import HttpResponse,FileResponse
 from rest_framework import generics, status, viewsets
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Patient, Requests , User, CardiacRequested, CardiacSupplied
-from .serializers import UserSerializer, RegisterSerializer,LoginSerializer, PatientSerializer, CreatePatientSerializer, RequestSerializer, CreateRequestSerializer, CardiacRequestedSerializer,CardiacSuppliedSerializer
+from .serializers import UserSerializer, RegisterSerializer,LoginSerializer, PatientSerializer, CreatePatientSerializer, RequestSerializer, CreateRequestSerializer, CardiacRequestedSerializer, CardiacSuppliedSerializer_A,CardiacSuppliedSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from knox.models import AuthToken
@@ -513,7 +513,7 @@ class UpdateCardiacFormBView(RetrieveUpdateDestroyAPIView):
 
 class UpdateCardiacSuppliedFormAView(RetrieveUpdateDestroyAPIView):
     queryset = CardiacSupplied.objects.all()
-    serializer_class = CardiacSuppliedSerializer
+    serializer_class = CardiacSuppliedSerializer_A
     lookup_field = 'docnumber'
     
     def patch(self, request, docnumber, format=None):

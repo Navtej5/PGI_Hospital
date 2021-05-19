@@ -262,7 +262,7 @@ export default function CollapsibleTable() {
   useEffect(()=>{
     console.log("in use effect");  
     fetchData()
-    },)
+    },[])
 
   return (
       <div>

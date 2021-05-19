@@ -551,12 +551,12 @@ export default function FormA_um(props) {
                         },
                         body: JSON.stringify({
                             code         : myvar,
-                            A_1_qty      :qtySupplied['1'],
+                            A_1_qty       :qtySupplied['1'] ,
                             A_2A_qty      :qtySupplied['2A'],
                             A_2B_qty      :qtySupplied['2B'],
                             A_3A_qty      :qtySupplied['3A'],
                             A_3B_qty      :qtySupplied['3B'],
-                            A_1_qty_rcd      :qtyRcdPharma['1'],
+                            A_1_qty_rcd       : qtyRcdPharma['1'],
                             A_2A_qty_rcd      :qtyRcdPharma['2A'],
                             A_2B_qty_rcd      :qtyRcdPharma['2B'],
                             A_3A_qty_rcd      :qtyRcdPharma['3A'],
@@ -567,6 +567,14 @@ export default function FormA_um(props) {
                             A_2B_tally_unitman      :BooltoCharfunction(verified['2B']),
                             A_3A_tally_unitman      :BooltoCharfunction(verified['3A']),
                             A_3B_tally_unitman      :BooltoCharfunction(verified['3B']),
+
+                            A_1_consumed       :qtySupplied['1'] ,
+                            A_2A_consumed      :qtySupplied['2A'],
+                            A_2B_consumed      :qtySupplied['2B'],
+                            A_3A_consumed      :qtySupplied['3A'],
+                            A_3B_consumed      :qtySupplied['3B'],
+
+
                         }),
                     })
                 )}

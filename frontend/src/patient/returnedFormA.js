@@ -84,6 +84,7 @@ export default function ReturnedFormA(props) {
     const [rows, setRows] = React.useState([]);
     
     const [boolConfirmed,setBoolConfirmed]=React.useState(false);
+    const [qtyRcdPharma, setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyConsumed, setQtyConsumed] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [tallyNurse, setTallyNurse] = useState({'1':false,'2A':false,'2B':false,'3A':false,'3B':false,'3C':false,'3D':false});
@@ -103,8 +104,10 @@ export default function ReturnedFormA(props) {
             var col2 = "A_"+ids[x]+"_descr";
             var col3 = "A_"+ids[x]+"_brand";
             var col4 = "A_"+ids[x]+"_qty";
+            
             var col5 = "A_"+ids[x]+"_tally_nurse";
             var col6 = "A_"+ids[x]+"_consumed";
+            var col7 = "A_"+ids[x]+"_qty_rcd";
             var id = ids[x];
             var name = form["**Requested**"][0][col1];
             var descr = form["**Requested**"][0][col2];
@@ -112,6 +115,7 @@ export default function ReturnedFormA(props) {
             var qty_requested= form["**Requested**"][0][col4];
             var qty_received = form["**Supplied**"][0][col4];
             var qty_consumed = form["**Supplied**"][0][col6];
+            var qty_from_pharma = form["**Supplied**"][0][col7];
             if (form["**Supplied**"][0][col5]=='T'){
                 setTallyNurse(tallyNurse => (
                     {...tallyNurse,[id]:true}
@@ -124,6 +128,9 @@ export default function ReturnedFormA(props) {
             ));
             setQtyConsumed(qtyConsumed => (
                 {...qtyConsumed, [id]: qty_consumed}
+            ));
+            setQtyRcdPharma(qtyRcdPharma => (
+                {...qtyRcdPharma, [id]: qty_from_pharma}
             ));
             temp.push({id,name,descr,brand,qty_requested,qty_received,difference});
             console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_received=",qty_received)
@@ -324,12 +331,16 @@ export default function ReturnedFormA(props) {
                                     },
                                 body: JSON.stringify({
                                     code         : myvar,
-                                    // A_1_qty      :qtySupplied['1'],
-                                    // A_2A_qty      :qtySupplied['2A'],
-                                    // A_2B_qty      :qtySupplied['2B'],
-                                    // A_3A_qty      :qtySupplied['3A'],
-                                    // A_3B_qty      :qtySupplied['3B'],
-                                    
+                                    A_1_qty       :qtySupplied['1' ],
+                                    A_2A_qty      :qtySupplied['2A'],
+                                    A_2B_qty      :qtySupplied['2B'],
+                                    A_3A_qty      :qtySupplied['3A'],
+                                    A_3B_qty      :qtySupplied['3B'],
+                                    A_1_consumed       :qtyConsumed['1' ],
+                                    A_2A_consumed      :qtyConsumed['2A'],
+                                    A_2B_consumed      :qtyConsumed['2B'],
+                                    A_3A_consumed      :qtyConsumed['3A'],
+                                    A_3B_consumed      :qtyConsumed['3B'],
                                     A_1_tally_nurse      :BooltoCharfunction(tallyNurse['1']),
                                     A_2A_tally_nurse      :BooltoCharfunction(tallyNurse['2A']),
                                     A_2B_tally_nurse     :BooltoCharfunction(tallyNurse['2B']),
@@ -580,6 +591,11 @@ export default function ReturnedFormA(props) {
                                             // A_3A_remarks  :A_3A_remarks,
                                             A_3B_consumed      :qtyConsumed['3B'],
                                             // A_3B_remarks  :A_3B_remarks, 
+                                            A_1_qty       :qtySupplied['1' ],
+                                            A_2A_qty      :qtySupplied['2A'],
+                                            A_2B_qty      :qtySupplied['2B'],
+                                            A_3A_qty      :qtySupplied['3A'],
+                                            A_3B_qty      :qtySupplied['3B'],
                                         }),
                                     })
                                 )}
@@ -703,7 +719,7 @@ export default function ReturnedFormA(props) {
                         </TableBody>
                     </Table>    
             </div>
-            :
+        :
             <div>
                     
                     <Table> {//style={{marginTop:"-350px",marginLeft:"400px",width:"650px",color:"white"}}>}

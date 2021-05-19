@@ -81,6 +81,18 @@ class CardiacSuppliedSerializer(serializers.ModelSerializer):
         model = CardiacSupplied
         fields = '__all__'
 
+
+class CardiacSuppliedSerializer_A(serializers.ModelSerializer):
+    class Meta:
+        model = CardiacSupplied
+        fields = (  'A_1_consumed','A_2A_consumed','A_2B_consumed','A_3A_consumed','A_3B_consumed',
+                    'A_1_qty','A_2A_qty','A_2B_qty','A_3A_qty','A_3B_qty',
+                    'A_1_qty_rcd','A_2A_qty_rcd','A_2B_qty_rcd','A_3A_qty_rcd','A_3B_qty_rcd',
+                    'A_1_tally_nurse','A_2A_tally_nurse','A_2B_tally_nurse','A_3A_tally_nurse','A_3B_tally_nurse',
+                    'A_1_tally_unitman','A_2A_tally_unitman','A_2B_tally_unitman','A_3A_tally_unitman','A_3B_tally_unitman',
+                    'A_1_brand','A_2A_brand','A_2B_brand','A_3A_brand','A_3B_brand',
+                    'A_1_descr','A_2A_descr','A_2B_descr','A_3A_descr','A_3B_descr',
+)
 # class UpdateCardiacSerializer(serializers.ModelSerializer):
 #     #code = serializers.CharField(validators=[])
     

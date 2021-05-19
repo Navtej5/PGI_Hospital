@@ -598,51 +598,6 @@ export default function FormA(props) {
                         </TableCell> */}
                     </TableRow> 
                     
-                    <TableRow style={{marginTop:"0px"}}>
-                        <TableCell >4</TableCell>
-                        <TableCell >BIS Sensor</TableCell>
-                        <TableCell > 
-                            {
-                            A_4_descr != "_"?
-                            <Select 
-                            defaultValue = {A_4_descr}
-                            onChange={(event)=>(setA_4_descr(event.target.value))}>     
-                                <option value="Adult Pediatric">Adult Pediatric</option>
-                                <option value="other">other</option>
-                            </Select> 
-                            :
-                            <Select 
-                            onChange={(event)=>(setA_4_descr(event.target.value))}>     
-                                <option value="Adult Pediatric">Adult Pediatric</option>
-                                <option value="other">other</option>
-                            </Select>
-                            }
-                        </TableCell>
-                        <TableCell >
-                            {
-                            A_4_brand != "_"?
-                            <Select 
-                            defaultValue = {A_4_brand}
-                            onChange={(event)=>(setA_4_brand(event.target.value))}>     
-                                <option value="Medtronic">Medtronic</option>
-                                <option value="other">other</option>
-                            </Select> 
-                            :
-                            <Select 
-                            onChange={(event)=>(setA_4_brand(event.target.value))}>     
-                                <option value="Medtronic">Medtronic</option>
-                                <option value="other">other</option>
-                            </Select>
-                            }
-                        </TableCell>
-                        <TableCell >
-                        <input type="number" value={A_4_qty} onChange={(event)=>(setA_4_qty(event.target.value))}></input> 
-                        </TableCell>
-                        {/* <TableCell >
-                        <input onChange={(event)=>(setA_4_remarks(event.target.value))}></input>
-                        </TableCell> */}
-                    </TableRow>
-                    
                     {/* <TableRow style={{marginTop:"0px"}}>
                         <TableCell >5</TableCell>
                         <TableCell >Bronchial blocker</TableCell>
@@ -703,7 +658,7 @@ export default function FormA(props) {
                     ,final_a2a_descr=testhandle(checkboxSelected_2)
                     ,final_a3abrand=testhandle(checkboxSelected_1)
                     ,final_a3bbrand=testhandle(checkboxSelected_4)
-                    ,console.log("\ndocnumber from props ===> ",props.docnumber,myvar)
+                    ,console.log("\ndocnumber from props ===> ",props.docnumber)
                     ,fetch(SUBMIT_FORM_API+props.docnumber,
                         {
                         // credentials: 'include',
@@ -770,7 +725,7 @@ export default function FormA(props) {
                 </Grid>
             </Grid>
             
-            {props.nurseflag==='F'?
+            
             <Grid container>
                 <Grid item xs={12}>
                     <Checkbox 
@@ -794,7 +749,7 @@ export default function FormA(props) {
                     >Mark Complete</Button>
                 </Grid>
             </Grid>
-            :""}
+            
             </div>
             </div>
         )
