@@ -565,7 +565,7 @@ export default function ReturnedFormA(props) {
                 </Table>
                 <div style={{padding:"10px"}}>
                     <Grid container >
-                        <Grid item xs={10} style={{padding:"3.5%"}}>
+                        <Grid item xs={10} style={{padding:"1%"}}>
                             <Button  
                                 variant="contained" color="primary"
                                 onClick={()=>(
