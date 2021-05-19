@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -25,6 +26,7 @@ import Filter5Icon from '@material-ui/icons/Filter5';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import Button from '@material-ui/core/Button';
 //import { mainListItems, secondaryListItems } from './listItems';
 //import React from 'react';
@@ -50,13 +52,27 @@ import CollapsibleTable from './requestlist.js';
 const history = createBrowserHistory({forceRefresh:true});
 
 const readable = {
-  "Filling":"In Progress",
-  "Pending":"Pending Approval",
-  "Approved":"Approved by Consultant",
-  "ReceivedFromPharma":"Requested Inventory Received",
-  "SentToPharma":"Inventory Ordered and Waiting for delivery",
-  "Completed":"Completed",
-};
+    "Filling":"In Progress",
+    "Pending":"Pending Approval",
+    "Approved":"Approved by Consultant",
+    "SentToPharma":"Inventory Ordered and Waiting for delivery",
+    "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
+    "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
+    "Ready":"Ready for Surgery/Operation",
+    "OperationDone":"Post Operation Consumption Updation",
+    "Completed":"Completed",
+  };
+  const redirect_url = {
+    "Filling":"/form/",
+    "Pending":"/returned/",
+    "Approved":"/returned/",
+    "SentToPharma":"/returned/",
+    "ReceivedFromPharma":"/returned/",
+    "ReceivedByNurse":"/returned/",
+    "Ready":"/returned/",
+    "OperationDone":"/returned/",
+    "Completed":"/returned/",
+  };
 // export const mainListItems = (
 //   <div>
 //     <ListItem button>
@@ -296,7 +312,7 @@ export default function UserNew(props) {
                     setForm(0)
                 }}>
       <ListItemIcon>
-        <Filter1Icon />
+        <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Request" />
     </ListItem>
@@ -304,7 +320,7 @@ export default function UserNew(props) {
                     setForm(1)
                 }}>
       <ListItemIcon>
-        <Filter2Icon />
+        <AddCircleOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Add Patient" />
     </ListItem>
@@ -312,11 +328,11 @@ export default function UserNew(props) {
                     setForm(2)
                 }}>
       <ListItemIcon>
-        <Filter3Icon />
+        <AddBoxIcon />
       </ListItemIcon>
       <ListItemText primary="Add Request" />
     </ListItem>
-    <ListItem button onClick={()=>{
+    {/* <ListItem button onClick={()=>{
                     setForm(3)
                 }}>
       <ListItemIcon>
@@ -331,7 +347,7 @@ export default function UserNew(props) {
         <Filter5Icon />
       </ListItemIcon>
       <ListItemText primary="Drugs/Medicines" />
-    </ListItem>
+    </ListItem> */}
   </div></List>
         {/* <Divider />
         <List>{secondaryListItems}</List> */}
