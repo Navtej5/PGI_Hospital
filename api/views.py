@@ -894,6 +894,7 @@ def print_pdf(request,docnumber):
         'Date:   '+str(requestset[0].createdat)[:10],
         'Cr no:   '+str(requestset[0].crnumber),
         'Consultant:   '+str(requestset[0].consultantuname),
+        'Date of Procedure:    '+str(requestset[0].dateofprocedure),
         "",
         "",
         'ANESTHETICS'
@@ -902,11 +903,11 @@ def print_pdf(request,docnumber):
     elements = []
     data = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_descr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty,0,0],
-        ['2A',cardiacset[0].A_2A_name,cardiacset[0].A_2A_descr,cardiacset[0].A_2A_brand,cardiacset[0].A_2A_qty,0,0],
-        ['2B',cardiacset[0].A_2B_name,cardiacset[0].A_2B_descr,cardiacset[0].A_2B_brand,cardiacset[0].A_2B_qty,0,0],
-        ['3A',cardiacset[0].A_3A_name,cardiacset[0].A_3A_descr,cardiacset[0].A_3A_brand,cardiacset[0].A_3A_qty,0,0],
-        ['3B',cardiacset[0].A_3B_name,cardiacset[0].A_3B_descr,cardiacset[0].A_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_descr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty,"",""],
+        ['2A',cardiacset[0].A_2A_name,cardiacset[0].A_2A_descr,cardiacset[0].A_2A_brand,cardiacset[0].A_2A_qty,"",""],
+        ['2B',cardiacset[0].A_2B_name,cardiacset[0].A_2B_descr,cardiacset[0].A_2B_brand,cardiacset[0].A_2B_qty,"",""],
+        ['3A',cardiacset[0].A_3A_name,cardiacset[0].A_3A_descr,cardiacset[0].A_3A_brand,cardiacset[0].A_3A_qty,"",""],
+        ['3B',cardiacset[0].A_3B_name,cardiacset[0].A_3B_descr,cardiacset[0].A_3B_brand,cardiacset[0].A_3B_qty,"",""]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
 
     ]
@@ -938,18 +939,20 @@ def print_pdf(request,docnumber):
     # drawMyRuler(pdf)
     #######text head 1
     from reportlab.lib import colors
-    text = pdf.beginText(250, 800)
+    text = pdf.beginText(240, 800)
     # for line in ti:
+    text.setFont('Times-Bold',size=15)
     text.textLine(title)
 
     pdf.drawText(text)
-    text = pdf.beginText(250, 750)
+    text = pdf.beginText(240, 750)
+    text.setFont('Times-Bold',size=14)
     text.textLine(subTitle)
 
     pdf.drawText(text)
     # text = pdf.beginText(40, 680)
     text = pdf.beginText(40, 700)
-    # text.setFont("Courier", 11)
+    text.setFont('Times-Bold',size=11)
     # text.setFillColor(colors.red)
     for line in text_head1:
         text.textLine(line)
@@ -975,11 +978,11 @@ def print_pdf(request,docnumber):
     ################tableB
     dataB = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr,cardiacset[0].B_1_brand,cardiacset[0].A_1_qty,0,0],
-        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr,cardiacset[0].B_2A_brand,cardiacset[0].A_2A_qty,0,0],
-        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr,cardiacset[0].B_2B_brand,cardiacset[0].A_2B_qty,0,0],
-        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr,cardiacset[0].B_3A_brand,cardiacset[0].A_3A_qty,0,0],
-        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr,cardiacset[0].B_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr,cardiacset[0].B_1_brand,cardiacset[0].A_1_qty,"",""],
+        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr,cardiacset[0].B_2A_brand,cardiacset[0].A_2A_qty,"",""],
+        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr,cardiacset[0].B_2B_brand,cardiacset[0].A_2B_qty,"",""],
+        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr,cardiacset[0].B_3A_brand,cardiacset[0].A_3A_qty,"",""],
+        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr,cardiacset[0].B_3B_brand,cardiacset[0].A_3B_qty,"",""]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
     ]
     width = 100
@@ -995,12 +998,14 @@ def print_pdf(request,docnumber):
     ###footer
     text = pdf.beginText(40, 110)
     # for line in ti:
+    text.setFont('Times-Bold',size=11)
     text.textLine("Checked by:")
 
     pdf.drawText(text)
 
 
     text = pdf.beginText(40, 70)
+    text.setFont('Times-Bold',size=11)
     # for line in ti:
     text.textLine("Resident in charge             Perfusionist              OT technician           OT Nursing officer")
 
