@@ -576,7 +576,6 @@ useEffect(()=>{
                     mode:"view_only",
                     stage:"SentToPharma",
                     user:props.user
-                    
                   }}
                 >
                 {row.ViewRequest}

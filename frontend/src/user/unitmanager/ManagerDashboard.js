@@ -225,14 +225,7 @@ export default function ManagerDashboard() {
         {/* <List>{callmain}</List> */}
 
                   <div>
-                      {/* <ListItem button onClick={lischoose = 1}>  */}
-                      {/* <ListItem button onClick={()=>{ setChoose(0) }}>
-                        <ListItemIcon>
-                        <AssignmentIcon />
-                         
-                        </ListItemIcon>
-                        <ListItemText primary="Pending Requests" />
-                      </ListItem> */}
+                      
                       <ListItem button onClick={()=>{ setChoose(0) }} selected={choose==0}>
                         <ListItemIcon>
                         <AssignmentIcon />
@@ -283,26 +276,8 @@ export default function ManagerDashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {/* <Grid container spacing={3}> */}
-            {/* <Chart/> */}
-            {/* <Grid item xs={12} md={8} lg={9}> */}
-              {/* <Paper className={fixedHeightPaper}> */}
-                {/* <Chart /> */}
-              {/* </Paper> */}
-            {/* </Grid> */}
-            {/* Recent Deposits */}
-            {/* <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid> */}
-            {/* Recent Orders */}
-            {/* <div > */}
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  {/* {conditional_render(choose)} */}
-
-              
                   {choose==0?
                   <div>
                     <Title>Approved Requests</Title>
@@ -333,8 +308,6 @@ export default function ManagerDashboard() {
                   :""}
                 </Paper>
               </Grid>
-            {/* </div> */}
-          {/* </Grid> */}
           <Box pt={4}>
             <Copyright />
           </Box>

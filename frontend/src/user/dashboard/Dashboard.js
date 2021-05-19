@@ -35,40 +35,33 @@ import Approved from './Approved';
 import Pending from './Pending';
 import InProgress from './inprogress';
 import Completed from './Completed';
+import ReceivedByNurseCons from './ReceivedByNurseRequests';
 // import Orders from './Pending';
 import Switch from "react-switch";
 import ReceivedFromPharma from '../unitmanager/received_from_pharma';
 import SentToPharma from '../unitmanager/Sent_to_pharma';
+import ReadyCons from './ReadyRequests';
+import OperationDoneCons from './OperationDoneRequests';
 const history = createBrowserHistory({forceRefresh:true});
-// class SwitchExample extends Component {
-//   constructor() {
-//     super();
-//     this.state = { checked: false };
-//     this.handleChange = this.handleChange.bind(this);
-//   }
 
-//   handleChange(checked) {
-//     this.setState({ checked });
-//   }
-
-//   render() {
-//     return (
-//       <label>
-//         <span>Switch with default style</span>
-//         <Switch onChange={this.handleChange} checked={this.state.checked} />
-//       </label>
-//     );
-//   }
-// }
-
-//////
+const readable = {
+  "Filling":"In Progress",
+  "Pending":"Pending Approval",
+  "Approved":"Approved by Consultant",
+  "SentToPharma":"Inventory Ordered and Waiting for delivery",
+  "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
+  "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
+  "Ready":"Ready for Surgery/Operation",
+  "OperationDone":"Post Operation Consumption Updation",
+  "Completed":"Completed",
+};
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        PGI 
+        IIT Ropar
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -186,8 +179,6 @@ export default function Dashboard() {
     // render() {
       return (
         <label>
-          {/* <span>Switch with default style</span> */}
-          {/* <Switch onChange={handleChange} checked={checked} /> */}
           <Switch button onChange={()=>{ setChecked(checked^1) }} checked={checked}/>
         </label>
       );
@@ -198,10 +189,6 @@ export default function Dashboard() {
   return (
 
     <div className={classes.root} style={{ background:"linear-gradient(45deg, lightblue , transparent)"}}>
-
-
-
-      {/*  */}
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -246,35 +233,29 @@ export default function Dashboard() {
         {/* <List>{callmain}</List> */}
 
                   <div>
-                      {/* <ListItem button onClick={lischoose = 1}>  */}
                       <ListItem button onClick={()=>{ setChoose(0) }} selected= {choose==0}>
                         <ListItemIcon>
                         <AssignmentIcon />
-                          {/* <DashboardIcon /> */}
                         </ListItemIcon>
-                        <ListItemText primary="In Progress Requests" />
+                        <ListItemText primary={readable['Filling']} />
                       </ListItem>
                       
                       <ListItem button onClick={()=>{ setChoose(1) }} selected= {choose==1}>
                         <ListItemIcon>
                         <AssignmentIcon />
-                          {/* <DashboardIcon /> */}
                         </ListItemIcon>
-                        <ListItemText primary="Pending Requests" />
+                        <ListItemText primary={readable['Pending']} />
                       </ListItem>
                       <ListItem button onClick={()=>{ setChoose(2) }} selected= {choose==2}>
                         <ListItemIcon>
                         <AssignmentIcon />
-                          {/* <ShoppingCartIcon /> */}
                         </ListItemIcon>
-                        <ListItemText primary="Approved" />
+                        <ListItemText primary='Approved' />
                       </ListItem>
 
-                      {/* <SwitchExample /> */}
                       <ListItem button onClick={()=>{ setChoose(3) }} selected= {choose==3}>
                         <ListItemIcon>
                         <AssignmentIcon />
-                          {/* <ShoppingCartIcon /> */}
                         </ListItemIcon>
                         <ListItemText primary="Sent to Pharmacy" />
                       </ListItem>
@@ -282,7 +263,6 @@ export default function Dashboard() {
                       <ListItem button onClick={()=>{ setChoose(4) }} selected= {choose==4}>
                         <ListItemIcon>
                         <AssignmentIcon />
-                          {/* <ShoppingCartIcon /> */}
                         </ListItemIcon>
                         <ListItemText primary="Received from Pharmacy" />
                       </ListItem>
@@ -290,23 +270,28 @@ export default function Dashboard() {
                       <ListItem button onClick={()=>{ setChoose(5) }} selected= {choose==5}>
                         <ListItemIcon>
                           <AssignmentIcon />
-                          {/* <PeopleIcon /> */}
+                        </ListItemIcon>
+                        <ListItemText primary="Received By Nurse" />
+                      </ListItem>
+
+                      <ListItem button onClick={()=>{ setChoose(6) }} selected= {choose==6}>
+                        <ListItemIcon>
+                          <AssignmentIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Ready for Surgery" />
+                      </ListItem>
+                      <ListItem button onClick={()=>{ setChoose(7) }} selected= {choose==7}>
+                        <ListItemIcon>
+                          <AssignmentIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Operation Done" />
+                      </ListItem>
+                      <ListItem button onClick={()=>{ setChoose(8) }} selected= {choose==8}>
+                        <ListItemIcon>
+                          <AssignmentIcon />
                         </ListItemIcon>
                         <ListItemText primary="Completed" />
                       </ListItem>
-                      {/*<ListItem button>
-                        <ListItemIcon>
-                          <BarChartIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Reports" />
-                      </ListItem>
-                      <ListItem button>
-                        <ListItemIcon>
-                          <LayersIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Integrations" />
-                      </ListItem> */}
-
                     </div>
   {/* {end here pasted one} */}
         <Divider />
@@ -355,17 +340,35 @@ export default function Dashboard() {
                   :""}
                   {choose===3?
                       <div>
-                        <Title>Requests sent to pharmacy</Title>
+                        <Title>{readable['SentToPharma']}</Title>
                         <SentToPharma user="consultant"/>
                       </div>
                   :""}
                   {choose===4?
                       <div>
-                        <Title>Received from Pharmacy (Audit Pending)</Title>
+                        <Title>{readable['ReceivedFromPharma']}</Title>
                         <ReceivedFromPharma user="consultant"/>
                       </div>
                   :""}
                   {choose===5?
+                      <div>
+                        <Title>{readable['ReceivedByNurse']}</Title>
+                        <ReceivedByNurseCons user="consultant"/>
+                      </div>
+                  :""}
+                  {choose===6?
+                      <div>
+                        <Title>{readable['Ready']}</Title>
+                        <ReadyCons user="consultant"/>
+                      </div>
+                  :""}
+                  {choose===7?
+                      <div>
+                        <Title>{readable['OperationDone']}</Title>
+                        <OperationDoneCons user="consultant"/>
+                      </div>
+                  :""}
+                  {choose===8?
                       <div>
                         <Title>Completed Requests</Title>
                         <Completed user="consultant"/>

@@ -1,194 +1,3 @@
-// import React, { useState , useEffect} from 'react';
-// // import Link from '@material-ui/core/Link';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
-// import {TextField} from '@material-ui/core';
-// import Title from './Title';
-// import Switch from "react-switch";
-// import axios from 'axios';
-// import Button from '@material-ui/core/Button';
-// import { createBrowserHistory } from 'history';
-// import { Link} from "react-router-dom";
-// const history = createBrowserHistory({forceRefresh:true});
-
-// // var myvar;
-
-// function createData(doc,wardadhaar,name , ViewRequest, Toggle) {
-//   return {doc,wardadhaar,name ,ViewRequest, Toggle};
-// }
-// var i;
-// // var rows = [
-// //   createData(0, 'Approved: 867', '1100', <a href="http://localhost:8000/addrequest">click here</a>,<SwitchExample />),
-// // ];
-// // for(i=0;i<20;i++){
-// //   rows.push(createData(0, 'Approved: '+i, 47*i+9, <a href="http://localhost:8000/addrequest">click here</a>,<SwitchExample />));
-// // }
-
-
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-// const useStyles = makeStyles((theme) => ({
-//   seeMore: {
-//     marginTop: theme.spacing(3),
-//   },
-// }));
-
-
-
-// export default function ReceivedFromPharma(props) {
-//   const classes = useStyles();
-//   const [checked,setChecked]= React.useState(false);
-//   const [patientSearch,setPatientSearch] = React.useState("");
-
-//   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
-//   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
-
-  
-//   // update(e) {
-//   //   // update entity - PUT
-//   //   e.preventDefault();
-//   // }
-//   const SwitchExample = () => {
-//       return (
-//         <label>
-//           <button onClick={()=>{ setChecked(checked^1) }} >
-//             Move to Pending
-//           </button>
-//         </label>
-//       );
-//   }
-// //   const SwitchExample = (docnumber) => {
-// //     return (
-// //       <label>
-// //         <Switch button onChange={()=>{ dotoggle(docnumber) }} />
-// //       </label>
-// //     );
-// // }
-
-//   const [books, setBooks] = React. useState(null);
-//   const [rows, setRows] = React. useState(createData(123323427897,11,"atul","yo","sfsdf"));
-//   // const dobutton = async (docnumber,i,books) => {
-//   //   books[i].state = "Pending";
-//   //   axios.patch(updateURL+docnumber,books[i]);
-//   // }
-//   const fetchData = async () => {
-//       console.log("in fetch");
-//       const response = await axios.get(apiURL)
-//       // const response = await fetch(apiURL);
-//       const books = await response.data;
-//       // console.log("see here bruh : "+books[0].createdby);
-//       // books[0].createdby = "atul op";
-//       // axios.patch(updateURL+"199/",books[0]);
-//       console.log("response\n");
-//       console.log(response);
-
-//       var temp = [];
-//       for(i=0;i<books.length;i++){
-//         if(books[i].state != "ReceivedFromPharma")continue;
-//         var naam = books[i].patientname;
-//         var ward = books[i].wardadhaar;
-//         var link = "see details";
-//         var doc = books[i].docnumber;
-//         var booktemp = books[i];
-//         var tog = booktemp;
-//         var stage = books[i].state;
-//         temp.push({doc,ward,naam,link,tog,stage});
-//       } 
-//       setRows(temp);
-//       // console.log("temp==>\n",temp);
-//       // console.log("rows===>\n",rows);
-//       // books[0].name = "Thischangedname";
-//       // axios.put(updateURL,books);
-//   }
-
-//   console.log("globe");
-//   useEffect(()=>{
-//     console.log("in use effect");  
-//     fetchData()
-    
-//       // getPatientList()
-//     },[])   
-// // const rows;
-
-//   return (
-//     <React.Fragment>
-//       <TextField id="filled-basic" label="Patient Name" variant="filled"
-//       onChange={(event) => (setPatientSearch(event.target.value))}
-//       />
-      
-//       {/* <Title>Requests</Title> */}
-//       <Table size="small">
-//         <TableHead>
-//           <TableRow>
-//           <TableCell>DOCUMENT NUMBER</TableCell>
-//             <TableCell>PATIENT NAME</TableCell>
-//             <TableCell>WARD-ADHAAR</TableCell>
-//             <TableCell>VIEW COMPLETE REQUEST</TableCell>
-//             {props.user == "unitman"?
-//             <TableCell>ACTION</TableCell>
-//             :""}
-//             {/* <TableCell align="right">Sale Amount</TableCell> */}
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-
-//           {rows.length>0 ? 
-//           rows.map((row) => (
-//               row.naam.toLowerCase().includes(patientSearch.toLowerCase()) || row.doc.includes(patientSearch.toLowerCase()) || row.ward.toString().includes(patientSearch.toLowerCase())?
-
-//             <TableRow key={row.doc}>
-//               <TableCell>{row.doc}</TableCell>
-//               <TableCell>{row.naam}</TableCell>
-//               <TableCell>{row.ward}</TableCell>
-//               <TableCell>
-//                 <Link 
-//                   to={{
-//                     pathname:"/cardiacform_um/"+row.doc,
-//                     mode:"read-write-both",
-//                     stage:"receivedFromPharma",
-//                     user:props.user
-//                   }}
-//                 >
-//                   {/* {row.stage} */}
-//                   {row.link}
-//                 </Link>
-//               </TableCell>   
-//               {props.user=="unitman"?
-//               <TableCell>
-//                 {/* var booktemp = {row.tog}; */}
-//               <Button color="primary" variant = "contained"onClick={()=>{ row.tog.state = "Completed";
-//       axios.patch(updateURL+row.doc,row.tog); 
-//       }} >
-//       Move to Completed
-//       </Button>
-//           </TableCell>
-//           :""}
-//               {/* <TableCell>{row.doc}</TableCell>    */}
-//               {/* <TableCell align="right">{row.amount}</TableCell> */}
-//             </TableRow>
-//             :
-//             ""
-//           ))
-//           : ""}
-//         </TableBody>
-//       </Table>
-//       <div className={classes.seeMore}>
-//         <Link color="primary" href="#" onClick={preventDefault}>
-//           See more orders
-//         </Link>
-//       </div>
-//     </React.Fragment>
-//   );
-// }
- 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------
-
 import React,{useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -218,8 +27,8 @@ import {TextField} from '@material-ui/core';
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
-function createData(docnumber,wardadhaar,name , ViewRequest, Toggle,stage) {
-    return {docnumber,wardadhaar,name ,ViewRequest, Toggle,stage};
+function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
+    return {docnumber,wardadhaar,name ,ViewRequest, Toggle};
   }
   var i;
 // const rows = [
@@ -410,7 +219,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReceivedFromPharma(props) {
+export default function ReadyCons(props) {
   const classes = useStyles();
   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
@@ -444,15 +253,15 @@ export default function ReceivedFromPharma(props) {
          }
     var temp = [];
     for(i=0;i<books.length;i++){
-      if(books[i].state != "ReceivedFromPharma")continue;
+      if(books[i].state != "Ready")continue;
       var naam = books[i].patientname;
       var ward = books[i].wardadhaar;
       var link = "see details";
       var doc = books[i].docnumber;
       var booktemp = books[i];
       var tog = booktemp;
-      var stage = books[i].state;
-      temp.push(createData(doc,ward,naam,link,tog,stage));
+      //var stage = books[i].state;
+      temp.push(createData(doc,ward,naam,link,tog));
     }
     temp.push(createData('201','100000000001','samreet','see details','kljl')); 
     setRows(temp);
@@ -576,19 +385,20 @@ useEffect(()=>{
                       <Link 
                   to={{
                     pathname:"/cardiacform_um/"+row.docnumber,
-                    mode:"read_write_both",
-                    stage:"ReceivedFromPharma",
+                    mode:"view_only",
+                    stage:"Ready",
                     user:props.user
+                    
                   }}
                 >
                 {row.ViewRequest}
                 </Link>
                         </TableCell>
                         {props.user=="unitman"?
-                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "Completed";
+                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
       axios.patch(updateURL+row.docnumber,row.tog); 
       }} >
-      Move to Completed
+      Received
       </Button></TableCell>:""}
                     </TableRow>:""
                   );
