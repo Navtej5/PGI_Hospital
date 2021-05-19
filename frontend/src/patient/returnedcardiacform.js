@@ -251,7 +251,7 @@ export default function ReturnedCardiacForm(props) {
           <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
             Download Form
           </Button>
-        <Link to="/user">
+        <Link to="/user_new">
           <Button variant="contained" color="secondary">
             Go Back
           </Button>

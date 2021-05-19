@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 //import Typography from '@material-ui/core/Typography';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Paper from '@material-ui/core/Paper';
-import {Button,Table,TableBody,TableCell,Grid,Typography} from '@material-ui/core';
+import {Button,Table,TableBody,TableCell,Grid,Typography,TextField} from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -23,28 +23,33 @@ const readable = {
     "Filling":"In Progress",
     "Pending":"Pending Approval",
     "Approved":"Approved by Consultant",
-    "ReceivedFromPharma":"Requested Inventory Received",
     "SentToPharma":"Inventory Ordered and Waiting for delivery",
+    "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
+    "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
+    "Ready":"Ready for Surgery/Operation",
+    "OperationDone":"Post Operation Consumption Updation",
     "Completed":"Completed",
   };
-  
   const redirect_url = {
     "Filling":"/form/",
     "Pending":"/returned/",
     "Approved":"/returned/",
     "SentToPharma":"/returned/",
     "ReceivedFromPharma":"/returned/",
+    "ReceivedByNurse":"/returned/",
+    "Ready":"/returned/",
+    "OperationDone":"/returned/",
     "Completed":"/returned/",
   };
   
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-});
+ const useRowStyles = makeStyles({
+   root: {
+     '& > *': {
+       borderBottom: 'unset',
+     },
+   },
+ });
 const StyledTableCell = withStyles((theme) => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -62,8 +67,8 @@ const StyledTableCell = withStyles((theme) => ({
       },
     },
   }))(TableRow);
-function createData(name,wardadhaar,docnumber,department,dateofprocedure,state,remark,notificationbit){
-    return {name,wardadhaar,docnumber,department,dateofprocedure,state,remark,notificationbit}
+function createData(name,wardadhaar,docnumber,department,dateofprocedure,state,remark,notificationbit,crnumber,height,weight,bsa,consultantname){
+    return {name,wardadhaar,docnumber,department,dateofprocedure,state,remark,notificationbit,crnumber,height,weight,bsa,consultantname}
 }
 // function createData(name, calories, fat, carbs, protein, price) {
 //   return {
@@ -84,43 +89,31 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
-
+  
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
         <TableCell>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            {row.notificationbit && row.state=="Filling"?
+             {row.notificationbit && row.state=="Filling"?
               <IconButton color="primary">
                 {/* <Badge badgeContent={1} color="secondary"> */}
                   <NotificationsIcon color="secondary" /> 
                 {/* </Badge> */}
               </IconButton>
-              :""}
+              :""} 
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+        <Typography variant="body1">{row.name}</Typography>
         </TableCell>
+        <TableCell align="right">{row.crnumber}</TableCell>
         <TableCell align="right">{row.docnumber}</TableCell>
         <TableCell align="right">{row.wardadhaar}</TableCell>
         <TableCell align="right">{readable[row.state]}</TableCell>
         <TableCell align="right">{row.dateofprocedure}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="body1" gutterBottom gutterBottom component="div">
-                Status: {readable[row.state]}
-              </Typography>
-              <Typography variant="body1" gutterBottom gutterBottom component="div">
-                Remarks: {row.remark}
-              </Typography>
-              <Grid item xs={6}>
-              
-              <Link to={{
+        <TableCell align="right"><Link to={{
                 pathname:
                 redirect_url[row.state]+row.docnumber,
                 docnumber: row.docnumber,
@@ -129,17 +122,47 @@ function Row(props) {
               }
               }>
               <Button color="primary" variant="contained">
-                View Details
+                Details
               </Button>
-              {row.notificationbit && row.state=="Filling"?
-              <IconButton color="primary">
-                {/* <Badge badgeContent={1} color="secondary"> */}
-                  <NotificationsIcon color="secondary" /> 
-                {/* </Badge> */}
-              </IconButton>
-              :""}
-              </Link>
-            </Grid>
+              </Link></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Typography variant="body1" gutterBottom gutterBottom component="div">
+                Status: {readable[row.state]}
+              </Typography>
+              {/* <Typography variant="body1" gutterBottom gutterBottom component="div">
+                Remarks: {row.remark}
+              </Typography> */}
+              <Grid container spacing={1}>
+              <Grid item xs={6}>
+              
+                Department: {row.department}
+              
+               </Grid>
+               <Grid item xs={6}>
+              
+                Consultant Name: {row.consultantname}
+              
+               </Grid>
+               <Grid item xs={4}>
+              
+                Height: {row.height} cm
+              
+               </Grid>
+               <Grid item xs={4}>
+              
+                Weight: {row.weight}  kg
+              
+               </Grid>
+               <Grid item xs={4}>
+              
+                BSA: {row.bsa}
+              
+               </Grid>
+               </Grid>
               {/* <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
@@ -205,12 +228,13 @@ const useStyles = makeStyles({
 export default function CollapsibleTable() {
     const classes = useStyles();
     const [rows, setRows] = React. useState([createData(123323427897,11,"atul","yo","sfsdf")]);
+    const [patientSearch,setPatientSearch] = React.useState("");
   let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table';
   const fetchData = async () => {
     const response = await axios.get(REQUEST_TABLE_API)
     // const response = await fetch(apiURL);
     const books = await response.data;
-   //console.log("data",);
+   console.log("data",books);
    
     var temp = [];
     for(var i=0;i<books.length;i++){
@@ -224,7 +248,12 @@ export default function CollapsibleTable() {
       var notificationbit = books[i].notificationbit;
       var remark = books[i].remarksfromconsultant;
       var stage = books[i].state;
-      temp.push(createData(name,ward,doc,dept,dateop,stage,remark,notificationbit));
+      var crnumber=books[i].crnumber;
+      var height=books[i].height;
+      var weight=books[i].weight;
+      var bsa=books[i].bsa;
+      var consultantname=books[i].consultantuname;
+      temp.push(createData(name,ward,doc,dept,dateop,stage,remark,notificationbit,crnumber,height,weight,bsa,consultantname));
     }
     //temp.push(createData('201','100000000001','samreet','see details','kljl')); 
     setRows(temp);
@@ -235,6 +264,10 @@ export default function CollapsibleTable() {
     fetchData()
     },[]) 
   return (
+      <div>
+    <TextField id="filled-basic" label="Search Patient" variant="outlined"
+    onChange={(event) => (setPatientSearch(event.target.value))}
+    />
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="collapsible table">
         <TableHead>
@@ -242,17 +275,24 @@ export default function CollapsibleTable() {
             <TableCell />
             <TableCell>Name</TableCell>
             <TableCell align="right">Docnumber</TableCell>
-            <TableCell align="right">Ward Adhaar&nbsp;(g)</TableCell>
-            <TableCell align="right">Status&nbsp;(g)</TableCell>
-            <TableCell align="right">Date&nbsp;(g)</TableCell>
+            <TableCell align="right">CR Number</TableCell>
+            <TableCell align="right">Ward Adhaar&nbsp;</TableCell>
+            <TableCell align="right">Status&nbsp;</TableCell>
+            <TableCell align="right">Date of Surgery/Operation&nbsp;</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row) => {
+               return(
+                 row.name.toString().toLowerCase().includes(patientSearch.toLowerCase()) || row.docnumber.includes(patientSearch.toLowerCase()) || row.wardadhaar.toString().includes(patientSearch.toLowerCase()) || readable[row.state].toLowerCase().includes(patientSearch.toLowerCase()) || row.crnumber.toString().includes(patientSearch.toLowerCase())?
             <Row key={row.name} row={row} />
-          ))}
+            :""
+          );
+               })}
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 }

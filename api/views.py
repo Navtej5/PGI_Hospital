@@ -878,6 +878,7 @@ def print_pdf(request,docnumber):
     serializer_class2 = PatientSerializer
     lookup_url_kwarg = 'docnumber'
     cardiacset = CardiacRequested.objects.filter(docnumber=docnumber)
+    suppcard =  CardiacSupplied.objects.filter(docnumber=docnumber)
     requestset = Requests.objects.filter(docnumber=docnumber)
     wardadhaar = requestset[0].wardadhaar
     patientset = Patient.objects.filter(wardadhaar=wardadhaar)
@@ -915,22 +916,24 @@ def print_pdf(request,docnumber):
         'Name:   '+str(requestset[0].patientname),
         'Dob/Sex:   '+str(patientset[0].dob)[:10]+" "+str(patientset[0].gender),
         'Wt/BSA:   '+str(requestset[0].weight)+", "+str(requestset[0].bsa),
-        'Date:   '+str(requestset[0].createdat)[:10],
-        'Cr no:   '+str(requestset[0].crnumber),
-        'Consultant:   '+str(requestset[0].consultantuname),
+        'Date of Procedure:    '+str(requestset[0].dateofprocedure),
         "",
         "",
         'ANESTHETICS'
     ]
-
+    text_head2 = [
+        'Date:   '+str(requestset[0].createdat)[:10],
+        'Cr no:   '+str(requestset[0].crnumber),
+        'Consultant:   '+str(requestset[0].consultantuname)
+    ]
     elements = []
     data = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_descr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty,0,0],
-        ['2A',cardiacset[0].A_2A_name,cardiacset[0].A_2A_descr,cardiacset[0].A_2A_brand,cardiacset[0].A_2A_qty,0,0],
-        ['2B',cardiacset[0].A_2B_name,cardiacset[0].A_2B_descr,cardiacset[0].A_2B_brand,cardiacset[0].A_2B_qty,0,0],
-        ['3A',cardiacset[0].A_3A_name,cardiacset[0].A_3A_descr,cardiacset[0].A_3A_brand,cardiacset[0].A_3A_qty,0,0],
-        ['3B',cardiacset[0].A_3B_name,cardiacset[0].A_3B_descr,cardiacset[0].A_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        ['1', cardiacset[0].A_1_name.replace(';','\n'),cardiacset[0].A_1_descr.replace(';','\n'),cardiacset[0].A_1_brand.replace(';','\n'),cardiacset[0].A_1_qty,suppcard[0].A_1_consumed,suppcard[0].A_1_qty-suppcard[0].A_1_consumed],
+        ['2A',cardiacset[0].A_2A_name.replace(';','\n'),cardiacset[0].A_2A_descr.replace(';','\n'),cardiacset[0].A_2A_brand.replace(';','\n'),cardiacset[0].A_2A_qty,suppcard[0].A_2A_consumed,suppcard[0].A_2A_qty-suppcard[0].A_2A_consumed],
+        ['2B',cardiacset[0].A_2B_name.replace(';','\n'),cardiacset[0].A_2B_descr.replace(';','\n'),cardiacset[0].A_2B_brand.replace(';','\n'),cardiacset[0].A_2B_qty,suppcard[0].A_2B_consumed,suppcard[0].A_2B_qty-suppcard[0].A_2B_consumed],
+        ['3A',cardiacset[0].A_3A_name.replace(';','\n'),cardiacset[0].A_3A_descr.replace(';','\n'),cardiacset[0].A_3A_brand.replace(';','\n'),cardiacset[0].A_3A_qty,suppcard[0].A_3A_consumed,suppcard[0].A_3A_qty-suppcard[0].A_3A_consumed],
+        ['3B',cardiacset[0].A_3B_name.replace(';','\n'),cardiacset[0].A_3B_descr.replace(';','\n'),cardiacset[0].A_3B_brand.replace(';','\n'),cardiacset[0].A_3B_qty,suppcard[0].A_3B_consumed,suppcard[0].A_3B_qty-suppcard[0].A_3B_consumed]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
 
     ]
@@ -962,20 +965,30 @@ def print_pdf(request,docnumber):
     # drawMyRuler(pdf)
     #######text head 1
     from reportlab.lib import colors
-    text = pdf.beginText(250, 800)
+    text = pdf.beginText(240, 800)
     # for line in ti:
+    text.setFont('Times-Bold',size=15)
     text.textLine(title)
 
     pdf.drawText(text)
-    text = pdf.beginText(250, 750)
+    text = pdf.beginText(240, 750)
+    text.setFont('Times-Bold',size=14)
     text.textLine(subTitle)
 
     pdf.drawText(text)
     # text = pdf.beginText(40, 680)
     text = pdf.beginText(40, 700)
-    # text.setFont("Courier", 11)
+    text.setFont('Times-Bold',size=11)
     # text.setFillColor(colors.red)
     for line in text_head1:
+        text.textLine(line)
+
+    pdf.drawText(text)
+    #########t2
+    text = pdf.beginText(440, 700)
+    text.setFont('Times-Bold',size=11)
+    # text.setFillColor(colors.red)
+    for line in text_head2:
         text.textLine(line)
 
     pdf.drawText(text)
@@ -983,7 +996,7 @@ def print_pdf(request,docnumber):
     width = 700
     height = 600
     x = 38
-    y = 430
+    y = 370
     f = Table(data, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
                                3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
     f.setStyle(TableStyle([
@@ -991,7 +1004,7 @@ def print_pdf(request,docnumber):
     f.wrapOn(pdf, width, height)
     f.drawOn(pdf, x, y)
     ################textb
-    text = pdf.beginText(40, 360)
+    text = pdf.beginText(40, 320)
     # for line in ti:
     text.textLine("B table")
 
@@ -999,17 +1012,17 @@ def print_pdf(request,docnumber):
     ################tableB
     dataB = [
         ['Srno', 'Name of item', 'Size', "Brand", "Quantity\nrequired","Quantity\nused", "Balance\nif any"],
-        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr,cardiacset[0].B_1_brand,cardiacset[0].A_1_qty,0,0],
-        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr,cardiacset[0].B_2A_brand,cardiacset[0].A_2A_qty,0,0],
-        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr,cardiacset[0].B_2B_brand,cardiacset[0].A_2B_qty,0,0],
-        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr,cardiacset[0].B_3A_brand,cardiacset[0].A_3A_qty,0,0],
-        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr,cardiacset[0].B_3B_brand,cardiacset[0].A_3B_qty,0,0]
+        ['1',cardiacset[0].B_1_name,cardiacset[0].B_1_descr.replace(';','\n'),cardiacset[0].B_1_brand.replace(';','\n'),cardiacset[0].B_1_qty,suppcard[0].B_1_consumed,suppcard[0].B_1_qty-suppcard[0].B_1_consumed],
+        ['2A',cardiacset[0].B_2A_name,cardiacset[0].B_2A_descr.replace(';','\n'),cardiacset[0].B_2A_brand.replace(';','\n'),cardiacset[0].B_2A_qty,suppcard[0].B_2A_consumed,suppcard[0].B_2A_qty-suppcard[0].B_2A_consumed],
+        ['2B',cardiacset[0].B_2B_name,cardiacset[0].B_2B_descr.replace(';','\n'),cardiacset[0].B_2B_brand.replace(';','\n'),cardiacset[0].B_2B_qty,suppcard[0].B_2B_consumed,suppcard[0].B_2B_qty-suppcard[0].B_2B_consumed],
+        ['3A',cardiacset[0].B_3A_name,cardiacset[0].B_3A_descr.replace(';','\n'),cardiacset[0].B_3A_brand.replace(';','\n'),cardiacset[0].B_3A_qty,suppcard[0].B_3A_consumed,suppcard[0].B_3A_qty-suppcard[0].B_3A_consumed],
+        ['3B',cardiacset[0].B_3B_name,cardiacset[0].B_3B_descr.replace(';','\n'),cardiacset[0].B_3B_brand.replace(';','\n'),cardiacset[0].B_3B_qty,suppcard[0].B_3B_consumed,suppcard[0].B_3B_qty-suppcard[0].B_3B_consumed]
         # ['1',cardiacset[0].A_1_name,cardiacset[0].A_1_desr,cardiacset[0].A_1_brand,cardiacset[0].A_1_qty],
     ]
     width = 100
     height = 600
     x = 38
-    y = 200
+    y = 100
     f = Table(dataB, colWidths=[1.1 * cm, 5.5 * cm, 4.6 * cm,
                                3.0* cm, 1.57 * cm,1.57 * cm,1.53 * cm])
     f.setStyle(TableStyle([
@@ -1017,14 +1030,16 @@ def print_pdf(request,docnumber):
     f.wrapOn(pdf, width, height)
     f.drawOn(pdf, x, y)
     ###footer
-    text = pdf.beginText(40, 110)
+    text = pdf.beginText(40, 60)
     # for line in ti:
+    text.setFont('Times-Bold',size=11)
     text.textLine("Checked by:")
 
     pdf.drawText(text)
 
 
-    text = pdf.beginText(40, 70)
+    text = pdf.beginText(40, 20)
+    text.setFont('Times-Bold',size=11)
     # for line in ti:
     text.textLine("Resident in charge             Perfusionist              OT technician           OT Nursing officer")
 
