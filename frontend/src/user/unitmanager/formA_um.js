@@ -152,7 +152,7 @@ export default function FormA_um(props) {
     return(
         <div>
         {
-        props.stage=="Completed"?
+        props.stage == "Completed"?
         
         <div>
         <Table>
@@ -392,6 +392,7 @@ export default function FormA_um(props) {
         :
         
         props.mode == "read_write_both"?
+
         <div>
                         
         <Table>
@@ -648,6 +649,10 @@ export default function FormA_um(props) {
         </div>
         
         :
-        ""}
+        <div>
+        Something went wrong please try again!!
+        {props.mode},{props.stage},{props.user}
+        </div>
+        }
     </div>)
 }

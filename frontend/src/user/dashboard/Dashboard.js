@@ -52,7 +52,7 @@ const readable = {
   "ReceivedFromPharma":"Inventory Received by Unit Manager (Audit Pending)",
   "ReceivedByNurse":"Inventory Received by Nurse (Verification Pending)",
   "Ready":"Ready for Surgery/Operation",
-  "OperationDone":"Post Operation Consumption Updation",
+  "OperationDone":"Post Operation Consumption Audit",
   "Completed":"Completed",
 };
 
@@ -284,7 +284,7 @@ export default function Dashboard() {
                         <ListItemIcon>
                           <AssignmentIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Operation Done" />
+                        <ListItemText primary="Post Operation Audit" />
                       </ListItem>
                       <ListItem button onClick={()=>{ setChoose(8) }} selected= {choose==8}>
                         <ListItemIcon>
