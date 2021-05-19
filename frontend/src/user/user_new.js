@@ -342,16 +342,16 @@ export default function UserNew(props) {
     </ListItem>
     <Divider />
     <Card className={classes.root}>
-      <CardActionArea>
+      {/* <CardActionArea> */}
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="IIT ROPAR"
           height="300"
           width="100"
           image="https://img.collegedekhocdn.com/media/img/institute/logo/IIT_Ropar.jpg"
           title="Contemplative Reptile"
         />
-        </CardActionArea>
+        {/* </CardActionArea> */}
         </Card>
     {/* <ListItem button onClick={()=>{
                     setForm(3)

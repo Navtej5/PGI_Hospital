@@ -46,7 +46,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        PGIMER 
+        IIT Ropar 
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -285,8 +285,6 @@ export default function ManagerDashboard() {
                   </div>
                       
                   :""}
-                  
-
                   {choose==1?
                     <div>
                     <Title>Requests sent to pharmacy</Title>

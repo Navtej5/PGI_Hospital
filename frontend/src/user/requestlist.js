@@ -159,7 +159,7 @@ function Row(props) {
                </Grid>
                <Grid item xs={4}>
               
-                BSA: {row.bsa.toString().substring(0,4)}
+                BSA: {row.bsa}
               
                </Grid>
                </Grid>
@@ -229,12 +229,12 @@ export default function CollapsibleTable() {
     const classes = useStyles();
     const [rows, setRows] = React. useState([createData(123323427897,11,"atul","yo","sfsdf")]);
     const [patientSearch,setPatientSearch] = React.useState("");
-  let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table';
-  const fetchData = async () => {
+    let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table';
+    const fetchData = async () => {
     const response = await axios.get(REQUEST_TABLE_API)
     // const response = await fetch(apiURL);
     const books = await response.data;
-   console.log("data",books);
+    // console.log("data",books);
    
     var temp = [];
     for(var i=0;i<books.length;i++){
@@ -262,7 +262,8 @@ export default function CollapsibleTable() {
   useEffect(()=>{
     console.log("in use effect");  
     fetchData()
-    },[]) 
+    },)
+
   return (
       <div>
     <TextField id="filled-basic" label="Search Request" variant="outlined"
