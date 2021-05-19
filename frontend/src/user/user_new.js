@@ -16,6 +16,13 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+//import ImageList from '@material-ui/core/ImageList';
+//import ImageListItem from '@material-ui/core/ImageListItem';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 //import Deposits from "./details";
 //import Link from '@material-ui/core/Link';
 import Filter1Icon from '@material-ui/icons/Filter1';
@@ -49,6 +56,7 @@ import axios from 'axios';
 import AddPatient from './addPatient';
 import AddRequest from './addRequest';
 import CollapsibleTable from './requestlist.js';
+//import { CardActionArea } from '@material-ui/core';
 const history = createBrowserHistory({forceRefresh:true});
 
 const readable = {
@@ -332,6 +340,19 @@ export default function UserNew(props) {
       </ListItemIcon>
       <ListItemText primary="Add Request" />
     </ListItem>
+    <Divider />
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          alt="Contemplative Reptile"
+          height="300"
+          width="100"
+          image="https://img.collegedekhocdn.com/media/img/institute/logo/IIT_Ropar.jpg"
+          title="Contemplative Reptile"
+        />
+        </CardActionArea>
+        </Card>
     {/* <ListItem button onClick={()=>{
                     setForm(3)
                 }}>

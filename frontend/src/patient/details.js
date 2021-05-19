@@ -26,8 +26,10 @@ export default function Deposits(props) {
   const [name,setName] = useState("");
   const [height,setHeight] = useState("");
   const [weight,setWeight] = useState("");
+  const [date,setDate] = useState("");
   //const [name,setName] = useState("");
   const [wardadhaar,setWardadhaar] = useState("");
+  const [bsa,setBsa]=useState("");
   const [cr,setCr]= useState("");
   const fetchData = async () => {
     //console.log("***\n",props.mode)
@@ -41,6 +43,8 @@ export default function Deposits(props) {
     setWeight(form2.weight);
     setWardadhaar(form2.wardadhaar);
     setCr(form2.crnumber);
+    setDate(form2.dateofprocedure)
+    setBsa(form2.bsa)
     console.log("response",form2);
   }
   useEffect(()=>{
@@ -74,32 +78,37 @@ export default function Deposits(props) {
         </Link>
       </div> */}
       <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-        <Typography component="p" variant="h4">
-        Name: { name}
+      <Grid container spacing={0}>
+        <Grid item xs={6}>
+        <Typography  color="textSecondary" component="p" variant="subtitle1">
+         Name:{ name}
+      </Typography>
+        </Grid>
+        <Grid item xs={6}>
+        <Typography color="textSecondary" component="p" variant="subtitle1">
+        Date of Surgery/Operation: { date}
       </Typography>
         </Grid>
         <Grid item xs={3}>
-        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        <Typography color="textSecondary" className={classes.depositContext} variant="subtitle1">
+        CR number: {cr}
+      </Typography>
+        </Grid>
+        <Grid item xs={3}>
+        <Typography color="textSecondary" className={classes.depositContext} variant="subtitle1">
         Weight: {weight} kg
       </Typography>
         </Grid>
         <Grid item xs={3}>
-        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
+        <Typography color="textSecondary" className={classes.depositContext} variant="subtitle1">
         Height: {height} cm
       </Typography>
-        </Grid>
+        </Grid>      
         <Grid item xs={3}>
-        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
-        Gender: Male
-      </Typography> 
-        </Grid>
-        <Grid item xs={3}>
-        <Typography color="textSecondary" className={classes.depositContext} variant="h5">
-        CR number: {cr}
+        <Typography color="textSecondary" className={classes.depositContext} variant="subtitle1">
+        BSA: {bsa.toString().substring(0,4)}
       </Typography>
-        </Grid>
+        </Grid>      
       </Grid>
     </div>
     </React.Fragment>

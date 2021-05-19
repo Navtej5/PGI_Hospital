@@ -159,7 +159,7 @@ function Row(props) {
                </Grid>
                <Grid item xs={4}>
               
-                BSA: {row.bsa}
+                BSA: {row.bsa.toString().substring(0,4)}
               
                </Grid>
                </Grid>
@@ -265,7 +265,7 @@ export default function CollapsibleTable() {
     },[]) 
   return (
       <div>
-    <TextField id="filled-basic" label="Search Patient" variant="outlined"
+    <TextField id="filled-basic" label="Search Request" variant="outlined"
     onChange={(event) => (setPatientSearch(event.target.value))}
     />
     <TableContainer component={Paper}>
