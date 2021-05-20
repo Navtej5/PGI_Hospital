@@ -207,8 +207,8 @@ import {TextField} from '@material-ui/core';
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
-function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
-    return {docnumber,wardadhaar,name ,ViewRequest, Toggle};
+function createData(docnumber,wardadhaar,name , ViewRequest, tog) {
+    return {docnumber,wardadhaar,name ,ViewRequest, tog};
   }
   var i;
 // const rows = [

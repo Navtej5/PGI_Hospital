@@ -42,6 +42,8 @@ import ReceivedFromPharma from '../unitmanager/received_from_pharma';
 import SentToPharma from '../unitmanager/Sent_to_pharma';
 import ReadyCons from './ReadyRequests';
 import OperationDoneCons from './OperationDoneRequests';
+
+
 const history = createBrowserHistory({forceRefresh:true});
 
 const readable = {
@@ -116,6 +118,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    // backgroundImage: 'url(https://img.collegedekhocdn.com/media/img/institute/logo/IIT_Ropar.jpg)',
+    // backgroundRepeat: "True",
+    // opacity:0.2,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,

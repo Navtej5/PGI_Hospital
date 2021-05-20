@@ -80,8 +80,10 @@ class RequestView(APIView):
 
             requestrow = CardiacRequested(docnumber=docnumber)
             requestrow.save()
+            
             suppliedrow = CardiacSupplied(docnumber=docnumber)
             suppliedrow.save()
+            
             return Response({'GOOD':'entered new Request'},status=status.HTTP_201_CREATED)
         
         msg = serializer.errors
@@ -296,6 +298,11 @@ class UpdateCardiacFormAView(RetrieveUpdateDestroyAPIView):
 
                 newSuppliedRow = CardiacSupplied(
                     docnumber=docnumber,
+                    A_1_qty=A_1_qty,
+                    A_2A_qty=A_2A_qty,
+                    A_2B_qty=A_2B_qty,
+                    A_3A_qty=A_3A_qty,
+                    A_3B_qty=A_3B_qty,
                     A_1_qty_rcd=A_1_qty,
                     A_2A_qty_rcd=A_2A_qty,
                     A_2B_qty_rcd=A_2B_qty,
