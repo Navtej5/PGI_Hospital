@@ -73,7 +73,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'NAME' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'NAME' },
   { id: 'docnumber', numeric: true, disablePadding: false, label: 'DOCNUMBER' },
   { id: 'wardadhaar', numeric: true, disablePadding: false, label: 'WARDAADHAR' },
   { id: 'carbs', numeric: true, disablePadding: false, label: 'LINK' },
@@ -89,14 +89,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -328,20 +328,20 @@ useEffect(()=>{
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      // onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                      </TableCell> */}
+                      <TableCell component="th" id={labelId} scope="row" padding="1%">
                         {row.name}
                       </TableCell>
                       <TableCell align="right">{row.docnumber}</TableCell>

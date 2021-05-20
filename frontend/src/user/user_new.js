@@ -315,26 +315,20 @@ export default function UserNew(props) {
           </IconButton>
         </div>
         <Divider />
-        <List><div>
-    <ListItem button onClick={()=>{
-                    setForm(0)
-                }}>
+    <List><div>
+    <ListItem button onClick={()=>{setForm(0)}}  selected= {form==0}>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Request" />
     </ListItem>
-    <ListItem button onClick={()=>{
-                    setForm(1)
-                }}>
+    <ListItem button onClick={()=>{setForm(1)}} selected= {form==1}>
       <ListItemIcon>
         <AddCircleOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Add Patient" />
     </ListItem>
-    <ListItem button onClick={()=>{
-                    setForm(2)
-                }}>
+    <ListItem button onClick={()=>{setForm(2)}} selected= {form==2}>
       <ListItemIcon>
         <AddBoxIcon />
       </ListItemIcon>
