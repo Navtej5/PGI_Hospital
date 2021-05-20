@@ -513,7 +513,7 @@ useEffect(()=>{
                       <TableCell align="right">
                       <Link 
                   to={{
-                      pathname:"/cardiacform_um/"+row.doc,
+                      pathname:"/cardiacform_um/"+row.docnumber,
                       mode:"view_only",
                       stage:"Filling",
                       user:"consultant",

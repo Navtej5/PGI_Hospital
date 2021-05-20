@@ -343,7 +343,7 @@ export default function UserNew(props) {
           height="300"
           width="100"
           image="https://img.collegedekhocdn.com/media/img/institute/logo/IIT_Ropar.jpg"
-          title="Contemplative Reptile"
+          title="IIT Ropar"
         />
         {/* </CardActionArea> */}
         </Card>

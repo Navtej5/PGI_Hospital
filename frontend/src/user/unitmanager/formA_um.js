@@ -42,6 +42,8 @@ export default function FormA_um(props) {
     const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-forma/'+props.docnumber;
     const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
+    const [rows1, setRows1] = React.useState([]);
+    const [rows2, setRows2] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyConsumed, setQtyConsumed] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
@@ -67,7 +69,9 @@ export default function FormA_um(props) {
         
         var x;
         var temp = [];
-        var ids = ['1','2A','2B','3A','3B']
+        var ids = ['1','2A','2B','3A','3B'];
+        var temp1 = [];
+        var temp2 = [];
         for (x = 0; x < ids.length; x++){    
             var col1 = "A_"+ids[x]+"_name";
             var col2 = "A_"+ids[x]+"_descr";
@@ -110,10 +114,19 @@ export default function FormA_um(props) {
             setQtyConsumed(qtyConsumed => (
                 {...qtyConsumed, [id]: qty_consumed}
             ));
+
+            if(form["**Supplied**"][0][col6]=='T'){
+                temp1.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
+            }
+            else{
+                temp2.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
+            }
             temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
             console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_received=",qty_received,"qty_consumed",qtyConsumed[id])
         }
         setRows(temp);
+        setRows1(temp1);
+        setRows2(temp2);
         // console.log("temp==>\n",temp);
         // console.log("rows===>\n",rows);
     }
@@ -150,8 +163,11 @@ export default function FormA_um(props) {
 
 
     return(
+        
         <div>
+            
         {
+        
         props.stage == "Completed"?
         
         <div>
@@ -232,6 +248,7 @@ export default function FormA_um(props) {
                     </TableBody>
                 </Table>    
             </div>
+        
         :
 
         props.mode == "view_only" && (props.stage=="ReceivedByNurse" || props.stage=="Ready" || props.stage=="OperationDone") ?
@@ -316,6 +333,7 @@ export default function FormA_um(props) {
         props.mode == "view_only" ?
         
         <div> 
+            
             <Table>
                 <TableHead>
                     <TableRow>
@@ -394,7 +412,6 @@ export default function FormA_um(props) {
         props.mode == "read_write_both"?
 
         <div>
-                        
         <Table>
             <TableHead>
                 <TableRow> 
@@ -432,22 +449,22 @@ export default function FormA_um(props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-
-            {rows.length>0 ? 
-                rows.map((row,index) => ( 
+            
+            {rows2.length>0 ? 
+                rows2.map((row2,index) => ( 
                     <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.descr}</TableCell>
-                    <TableCell>{row.brand}</TableCell>
-                    <TableCell>{row.qty_requested}</TableCell>
+                    <TableCell>{row2.id}</TableCell>
+                    <TableCell>{row2.name}</TableCell>
+                    <TableCell>{row2.descr}</TableCell>
+                    <TableCell>{row2.brand}</TableCell>
+                    <TableCell>{row2.qty_requested}</TableCell>
                     
                     {props.user=="unitman" && props.stage!="completed"?
                         <TableCell>
                             <input 
-                            type="number" name={row.id} min="0"
+                            type="number" name={row2.id} min="0"
                             value={
-                                qtyRcdPharma[row.id]
+                                qtyRcdPharma[row2.id]
                             }
                             default={9}
                             onChange={(event)=>{
@@ -462,9 +479,9 @@ export default function FormA_um(props) {
                     :
                         <TableCell>
                             <input disabled
-                            type="number" name={row.id} min="0"
+                            type="number" name={row2.id} min="0"
                             value={
-                                qtyRcdPharma[row.id]
+                                qtyRcdPharma[row2.id]
                             }
                             default={9}
                             onChange={(event)=>{
@@ -480,9 +497,9 @@ export default function FormA_um(props) {
                     {props.user=="unitman"  && props.stage!="completed"?
                         <TableCell>
                             <input 
-                            type="number" name={row.id} min="0"
+                            type="number" name={row2.id} min="0"
                             value={
-                                qtySupplied[row.id]
+                                qtySupplied[row2.id]
                             }
                             default={9}
                             onChange={(event)=>{
@@ -497,9 +514,9 @@ export default function FormA_um(props) {
                     :
                         <TableCell>
                             <input disabled
-                            type="number" name={row.id} min="0"
+                            type="number" name={row2.id} min="0"
                             value={
-                                qtySupplied[row.id]
+                                qtySupplied[row2.id]
                             }
                             default={9}
                             onChange={(event)=>{
@@ -515,13 +532,110 @@ export default function FormA_um(props) {
                     {props.user=="unitman" && props.stage!="completed"?
                         <TableCell>
                             <Checkbox 
-                                checked={verified[row.id]}
-                                // value={row.tallyunitman}
+                                checked={verified[row2.id]}
+                                // value={row2.tallyunitman}
                                 onChange={(event)=>{
                                     setVerified(verified => (
-                                        {...verified,[row.id]:event.target.checked}
+                                        {...verified,[row2.id]:event.target.checked}
                                     ));
-                                    console.log("row.id",row.id,event.target.checked,row.tallyunitman);
+                                    console.log("row2.id",row2.id,event.target.checked,row2.tallyunitman);
+                                }}
+                            />
+                        </TableCell>
+                    :""}
+                </TableRow>
+                ))
+            : ""}
+
+            {rows1.length>0 ? 
+                rows1.map((row1,index) => ( 
+                    <TableRow key={index}>
+                    <TableCell>{row1.id}</TableCell>
+                    <TableCell>{row1.name}</TableCell>
+                    <TableCell>{row1.descr}</TableCell>
+                    <TableCell>{row1.brand}</TableCell>
+                    <TableCell>{row1.qty_requested}</TableCell>
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtyRcdPharma[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                                Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtyRcdPharma[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+
+                    {props.user=="unitman"  && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtySupplied[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                               Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtySupplied[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <Checkbox 
+                                checked={verified[row1.id]}
+                                // value={row1.tallyunitman}
+                                onChange={(event)=>{
+                                    setVerified(verified => (
+                                        {...verified,[row1.id]:event.target.checked}
+                                    ));
+                                    console.log("row1.id",row1.id,event.target.checked,row1.tallyunitman);
                                 }}
                             />
                         </TableCell>
@@ -532,6 +646,7 @@ export default function FormA_um(props) {
                 ))
             : ""}
 
+            
                 
             </TableBody>
         </Table>
@@ -657,10 +772,12 @@ export default function FormA_um(props) {
         </div>
         
         :
+        
         <div>
-        Something went wrong please try again!!
-        {props.mode},{props.stage},{props.user}
+            Something went wrong please try again!!
+            {props.mode},{props.stage},{props.user}
         </div>
+        
         }
     </div>)
 }

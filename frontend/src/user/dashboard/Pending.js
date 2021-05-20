@@ -186,8 +186,8 @@ import { Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import {TextField} from '@material-ui/core';
 
-function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
-    return {docnumber,wardadhaar,name ,ViewRequest, Toggle};
+function createData(docnumber,wardadhaar,name , ViewRequest,tog) {
+    return {docnumber,wardadhaar,name ,ViewRequest, tog};
   }
   var i;
 
@@ -510,7 +510,7 @@ useEffect(()=>{
                       <TableCell align="right">
                       <Link 
                   to={{
-                        pathname:"/cardiacform_um/"+row.doc,
+                        pathname:"/cardiacform_um/"+row.docnumber,
                         mode:"view_only",
                         stage:"Pending",
                         user:"consultant",
@@ -519,6 +519,10 @@ useEffect(()=>{
                 {row.ViewRequest}
                 </Link>
               </TableCell>
+              <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "Approved";
+                          axios.patch(updateURL+row.docnumber,row.tog); 
+                      }}>Approve</Button>
+                      </TableCell>
                 {/* {props.user=="unitman"?
                   <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
                           axios.patch(updateURL+row.docnumber,row.tog); 

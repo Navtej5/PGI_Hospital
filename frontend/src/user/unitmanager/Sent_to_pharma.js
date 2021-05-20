@@ -27,8 +27,8 @@ import {TextField} from '@material-ui/core';
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
-function createData(docnumber,wardadhaar,name , ViewRequest, Toggle) {
-    return {docnumber,wardadhaar,name ,ViewRequest, Toggle};
+function createData(docnumber,wardadhaar,name , ViewRequest, tog) {
+    return {docnumber,wardadhaar,name ,ViewRequest, tog};
   }
   var i;
 // const rows = [
@@ -258,6 +258,7 @@ useEffect(()=>{
   console.log("in use effect");  
   fetchData()
   },[])     
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -287,7 +288,7 @@ useEffect(()=>{
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
-      );
+      );  
     }
 
     setSelected(newSelected);
@@ -315,7 +316,7 @@ useEffect(()=>{
       <Paper className={classes.paper}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TextField id="filled-basic" label="Patient Name" variant="filled"
-      onChange={(event) => (setPatientSearch(event.target.value))}
+      onChange={(event) => (setPatientSearch(event.target.value))}  
       />
         <TableContainer>
           <Table
@@ -376,7 +377,7 @@ useEffect(()=>{
                 </Link>
                         </TableCell>
                         {props.user=="unitman"?
-                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "SentToPharma";
+                      <TableCell align="right"><Button color="primary" variant = "contained" onClick={()=>{ row.tog.state = "ReceivedFromPharma";
       axios.patch(updateURL+row.docnumber,row.tog); 
       }} >
       Received
