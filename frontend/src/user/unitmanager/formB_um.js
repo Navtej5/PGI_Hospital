@@ -41,8 +41,8 @@ import axios from 'axios';
 
 
 export default function FormB_um(props) {
-    const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-formb/'+props.docnumber;
-    const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
+    const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-supplied-formb/'+props.docnumber;
+    const GET_COMBINED_API = "https://pgi-backend.herokuapp.com/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
@@ -126,7 +126,7 @@ export default function FormB_um(props) {
       // getPatientList()
     },[])
 
-    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    const SUBMIT_REQUEST_API = 'https://pgi-backend.herokuapp.com/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
         temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);

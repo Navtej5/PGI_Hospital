@@ -42,10 +42,10 @@ export default function Approved(props) {
   const classes = useStyles();
   const [checked,setChecked]= React.useState(false);
 
-  const apiURL = "http://127.0.0.1:8000/api/view-request-table";
-  // const apiURL = "http://127.0.0.1:8000/api/view-request-table/";
-  const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
-  const REMARKS_API = "http://127.0.0.1:8000/api/update-request-remarks/";
+  const apiURL = "https://pgi-backend.herokuapp.com/api/view-request-table";
+  // const apiURL = "https://pgi-backend.herokuapp.com/api/view-request-table/";
+  const updateURL = "https://pgi-backend.herokuapp.com/api/get-request-table/" ;
+  const REMARKS_API = "https://pgi-backend.herokuapp.com/api/update-request-remarks/";
   
   // update(e) {
   //   // update entity - PUT

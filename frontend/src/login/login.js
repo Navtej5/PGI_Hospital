@@ -80,7 +80,7 @@ export default class Login extends Component{
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: this.state.username,password:this.state.password })
   };
-    let USER_TABLE_API='http://127.0.0.1:8000/api/login'
+    let USER_TABLE_API='https://pgi-backend.herokuapp.com/api/login'
     const response=await fetch(USER_TABLE_API,requestOptions);
     const _data=await response.json();
     if(_data.hasOwnProperty("non_field_errors")){
@@ -97,7 +97,7 @@ export default class Login extends Component{
       if(_data["user"]["category"]=="Nurse"){
         // (<Redirect to="/user" />)
            history.push({
-             pathname: '/user',
+             pathname: '/user_new',
              state: { detail: _data['token'] }
          });
         console.log("yoo");

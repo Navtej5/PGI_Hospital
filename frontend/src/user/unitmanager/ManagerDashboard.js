@@ -27,7 +27,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Title from './Title';
 
 // import Chart from './Chart';
@@ -271,6 +275,17 @@ export default function ManagerDashboard() {
                     </div>
   {/* {end here pasted one} */}
         <Divider />
+        <Card className={classes.root}>
+      {/* <CardActionArea> */}
+        <CardMedia
+          component="img"
+          alt="IIT ROPAR"
+          height="300"
+          width="100"
+          image="https://img.collegedekhocdn.com/media/img/institute/logo/IIT_Ropar.jpg"
+          title="IIT Ropar"
+        />
+        </Card>
         {/* <List>{secondaryListItems}</List> */}
       </Drawer>
       <main className={classes.content}>

@@ -44,9 +44,9 @@ function BooltoCharfunction(var1){
 
 export default function ReturnedFormA(props) {
     let history2 = useHistory();
-    const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-forma/'+props.docnumber;
-    const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
-    const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.docnumber;
+    const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-supplied-forma/'+props.docnumber;
+    const GET_COMBINED_API = "https://pgi-backend.herokuapp.com/api/combined-form/"+props.docnumber;
+    const GET_REQUEST_DATA_API = 'https://pgi-backend.herokuapp.com/api/get-request-table/'+props.docnumber;
     const pink = {
         backgroundColor: 'pink'
     }

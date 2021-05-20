@@ -39,8 +39,10 @@ const Input = styled.input`
 
 
 export default function FormA_um(props) {
-    const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-forma/'+props.docnumber;
-    const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
+    const [rows1, setRows1] = React.useState([]);
+    const [rows2, setRows2] = React.useState([]);
+    const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-supplied-forma/'+props.docnumber;
+    const GET_COMBINED_API = "https://pgi-backend.herokuapp.com/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
@@ -58,6 +60,65 @@ export default function FormA_um(props) {
         }
     }
 
+    // const fetchData = async () => {
+    //     console.log("in formA_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
+    //     console.log("in fetch");
+    //     const response = await axios.get(GET_COMBINED_API)
+    //     const form = await response.data;
+    //     console.log("response\n",form);
+        
+    //     var x;
+    //     var temp = [];
+    //     var ids = ['1','2A','2B','3A','3B']
+    //     for (x = 0; x < ids.length; x++){    
+    //         var col1 = "A_"+ids[x]+"_name";
+    //         var col2 = "A_"+ids[x]+"_descr";
+    //         var col3 = "A_"+ids[x]+"_brand";
+    //         var col4 = "A_"+ids[x]+"_qty";
+    //         var col5 = "A_"+ids[x]+"_qty_rcd";
+    //         var col6 = "A_"+ids[x]+"_tally_unitman";
+    //         var col7 = "A_"+ids[x]+"_consumed";
+    //         var id = ids[x];
+    //         var name = form["**Requested**"][0][col1];
+    //         var descr = form["**Requested**"][0][col2];
+    //         var brand = form["**Requested**"][0][col3];
+    //         var qty_requested= form["**Requested**"][0][col4];
+    //         var qty_received = form["**Supplied**"][0][col4];
+    //         var qty_consumed = form["**Supplied**"][0][col7];
+    //         var tallyunitman=false;
+    //         if(form["**Supplied**"][0][col6]=='T'){
+    //             tallyunitman=true;
+    //             setVerified(verified => (
+    //                 {...verified,[id]:true}
+    //             ));
+    //         }
+    //         else{
+    //             tallyunitman=false;
+    //         }
+    //         if(form["**Supplied**"].length>0){
+    //             var qty_supplied = form["**Supplied**"][0][col4];
+    //             var qty_from_pharma = form["**Supplied**"][0][col5];
+    //         }
+    //         else{
+    //             var qty_supplied = 0;
+    //             var qty_from_pharma = 0;
+    //         }
+    //         setQtySupplied(qtySupplied => (
+    //             {...qtySupplied, [id]: qty_supplied}
+    //         ));
+    //         setQtyRcdPharma(qtyRcdPharma => (
+    //             {...qtyRcdPharma,[id]:qty_from_pharma}
+    //         ));
+    //         setQtyConsumed(qtyConsumed => (
+    //             {...qtyConsumed, [id]: qty_consumed}
+    //         ));
+    //         temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
+    //         console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_received=",qty_received,"qty_consumed",qtyConsumed[id])
+    //     }
+    //     setRows(temp);
+    //     // console.log("temp==>\n",temp);
+    //     // console.log("rows===>\n",rows);
+    // }
     const fetchData = async () => {
         console.log("in formA_um\nmode=",props.mode,"\nstage:",props.stage,"\nuser=",props.user)
         console.log("in fetch");
@@ -67,7 +128,9 @@ export default function FormA_um(props) {
         
         var x;
         var temp = [];
-        var ids = ['1','2A','2B','3A','3B']
+        var ids = ['1','2A','2B','3A','3B'];
+        var temp1 = [];
+        var temp2 = [];
         for (x = 0; x < ids.length; x++){    
             var col1 = "A_"+ids[x]+"_name";
             var col2 = "A_"+ids[x]+"_descr";
@@ -110,10 +173,19 @@ export default function FormA_um(props) {
             setQtyConsumed(qtyConsumed => (
                 {...qtyConsumed, [id]: qty_consumed}
             ));
+
+            if(form["**Supplied**"][0][col6]=='T'){
+                temp1.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
+            }
+            else{
+                temp2.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
+            }
             temp.push({id,name,descr,brand,qty_requested,qty_supplied,qty_from_pharma,qty_received,tallyunitman});
             console.log("id = ",id,"  qty_requested = ",qty_requested, "qty_received=",qty_received,"qty_consumed",qtyConsumed[id])
         }
         setRows(temp);
+        setRows1(temp1);
+        setRows2(temp2);
         // console.log("temp==>\n",temp);
         // console.log("rows===>\n",rows);
     }
@@ -126,7 +198,7 @@ export default function FormA_um(props) {
 
 
     
-    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
+    const SUBMIT_REQUEST_API = 'https://pgi-backend.herokuapp.com/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
         temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
@@ -433,7 +505,202 @@ export default function FormA_um(props) {
             </TableHead>
             <TableBody>
 
-            {rows.length>0 ? 
+            {rows2.length>0 ? 
+                rows2.map((row2,index) => ( 
+                    <TableRow key={index}>
+                    <TableCell>{row2.id}</TableCell>
+                    <TableCell>{row2.name}</TableCell>
+                    <TableCell>{row2.descr}</TableCell>
+                    <TableCell>{row2.brand}</TableCell>
+                    <TableCell>{row2.qty_requested}</TableCell>
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row2.id} min="0"
+                            value={
+                                qtyRcdPharma[row2.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                                Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row2.id} min="0"
+                            value={
+                                qtyRcdPharma[row2.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+
+                    {props.user=="unitman"  && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row2.id} min="0"
+                            value={
+                                qtySupplied[row2.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                               Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row2.id} min="0"
+                            value={
+                                qtySupplied[row2.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <Checkbox 
+                                checked={verified[row2.id]}
+                                // value={row2.tallyunitman}
+                                onChange={(event)=>{
+                                    setVerified(verified => (
+                                        {...verified,[row2.id]:event.target.checked}
+                                    ));
+                                    console.log("row2.id",row2.id,event.target.checked,row2.tallyunitman);
+                                }}
+                            />
+                        </TableCell>
+                    :""}
+                </TableRow>
+                ))
+            : ""}
+
+            {rows1.length>0 ? 
+                rows1.map((row1,index) => ( 
+                    <TableRow key={index}>
+                    <TableCell>{row1.id}</TableCell>
+                    <TableCell>{row1.name}</TableCell>
+                    <TableCell>{row1.descr}</TableCell>
+                    <TableCell>{row1.brand}</TableCell>
+                    <TableCell>{row1.qty_requested}</TableCell>
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtyRcdPharma[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                                Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtyRcdPharma[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtyRcdPharma(qtyRcdPharma => (
+                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+
+                    {props.user=="unitman"  && props.stage!="completed"?
+                        <TableCell>
+                            <input 
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtySupplied[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                               Input.backgroundColor = 'blue';
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    :
+                        <TableCell>
+                            <input disabled
+                            type="number" name={row1.id} min="0"
+                            value={
+                                qtySupplied[row1.id]
+                            }
+                            default={9}
+                            onChange={(event)=>{
+                                setQtySupplied(qtySupplied => (
+                                    {...qtySupplied, [event.target.name]: event.target.value}
+                                ));
+                            }}
+                            >
+                            </input>
+                        </TableCell>
+                    }
+                    
+                    {props.user=="unitman" && props.stage!="completed"?
+                        <TableCell>
+                            <Checkbox 
+                                checked={verified[row1.id]}
+                                // value={row1.tallyunitman}
+                                onChange={(event)=>{
+                                    setVerified(verified => (
+                                        {...verified,[row1.id]:event.target.checked}
+                                    ));
+                                    console.log("row1.id",row1.id,event.target.checked,row1.tallyunitman);
+                                }}
+                            />
+                        </TableCell>
+                    :""}
+
+
+                    </TableRow>
+                ))
+            : ""}
+            {/* {rows.length>0 ? 
                 rows.map((row,index) => ( 
                     <TableRow key={index}>
                     <TableCell>{row.id}</TableCell>
@@ -530,7 +797,7 @@ export default function FormA_um(props) {
 
                     </TableRow>
                 ))
-            : ""}
+            : ""} */}
 
                 
             </TableBody>

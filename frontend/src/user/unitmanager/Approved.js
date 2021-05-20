@@ -45,8 +45,8 @@
 //   const classes = useStyles();
 //   const [checked,setChecked]= React.useState(false);
 
-//   const apiURL = "http://127.0.0.1:8000/api/view-request-table";
-//   const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
+//   const apiURL = "https://pgi-backend.herokuapp.com/api/view-request-table";
+//   const updateURL = "https://pgi-backend.herokuapp.com/api/get-request-table/" ;
 
   
 //   // update(e) {
@@ -383,8 +383,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Approved() {
   const classes = useStyles();
-  const apiURL = "http://127.0.0.1:8000/api/view-request-table";
-  const updateURL = "http://127.0.0.1:8000/api/get-request-table/" ;
+  const apiURL = "https://pgi-backend.herokuapp.com/api/view-request-table";
+  const updateURL = "https://pgi-backend.herokuapp.com/api/get-request-table/" ;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('docnumber');
   const [rows, setRows] = React. useState([createData(123323427897,11,"atul","yo","sfsdf")]);

@@ -229,7 +229,7 @@ export default function CollapsibleTable() {
     const classes = useStyles();
     const [rows, setRows] = React. useState([createData(123323427897,11,"atul","yo","sfsdf")]);
     const [patientSearch,setPatientSearch] = React.useState("");
-    let REQUEST_TABLE_API='http://127.0.0.1:8000/api/view-request-table';
+    let REQUEST_TABLE_API='https://pgi-backend.herokuapp.com/api/view-request-table';
     const fetchData = async () => {
     const response = await axios.get(REQUEST_TABLE_API)
     // const response = await fetch(apiURL);

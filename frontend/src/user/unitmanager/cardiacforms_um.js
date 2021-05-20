@@ -243,7 +243,7 @@ export default function CardiacForm_um(props) {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            PGIMER-Cardiac Form
+            PGIMER-Cardiac Form 
           </Typography>
           {/* <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -251,13 +251,19 @@ export default function CardiacForm_um(props) {
             </Badge>
           </IconButton> */}
           {/* <Link to="/unitmandash"> */}
-          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
-            Download Form
+          
+          <Button variant="contained" color="white" href={"https://pgi-backend.herokuapp.com/api/get-form-xls/"+props.match.params.docnumber}>
+            Download Xlsx Form
           </Button>
+          | |
+          <Button variant="contained" color='white' href={"https://pgi-backend.herokuapp.com/api/print-pdf/"+props.match.params.docnumber}>
+            Download PDF Form
+          </Button>
+          | |
           <Button variant="contained" color="secondary" onClick={()=>history.goBack()}>
             Go Back
           </Button>
-        
+          
         {/* </Link> */}
         </Toolbar>
       </AppBar>

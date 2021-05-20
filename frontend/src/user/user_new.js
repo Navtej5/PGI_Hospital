@@ -240,8 +240,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserNew(props) {
-  //const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'+props.match.params.docnumber;
-  //const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.match.params.docnumber;
+  //const SUBMIT_REQUEST_API = 'https://pgi-backend.herokuapp.com/api/update-request-remarks/'+props.match.params.docnumber;
+  //const GET_REQUEST_DATA_API = 'https://pgi-backend.herokuapp.com/api/get-request-table/'+props.match.params.docnumber;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [form,setForm]=React.useState(0);
