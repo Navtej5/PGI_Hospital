@@ -10,7 +10,7 @@ $ git clone -b navtej https://github.com/Navtej5/PGI_Hospital.git
 - After extracting the file, Open terminal write the following command in the git bash/terminal: $ cd PGI_Hospital
 
 - Write the following commands in the terminal:
-    - create virtual environment (recommended).
+    - create virtual environment (recommended but not necessary).
     - $ pip install -r requirements.txt
     - $ cd frontend
     - $ npm install
