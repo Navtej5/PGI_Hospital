@@ -18,8 +18,8 @@ const useStyles = makeStyles({
 });
 
 export default function Deposits(props) {
-  //const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/get-patient-table';
-  const REQUEST_TABLE_API='https://pgi-backend.herokuapp.com/api/get-request-table/'+props.docnumber;
+  //const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/get-patient-table';
+  const REQUEST_TABLE_API='http://127.0.0.1:8000/api/get-request-table/'+props.docnumber;
   const classes = useStyles();
   var form1=[];
   var form2=[];

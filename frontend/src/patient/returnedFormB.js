@@ -18,8 +18,8 @@ import {myvar} from '../user/user.js';
 import axios from 'axios';
 
 // const myvar2 = 200;
-const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-supplied-formb/'+myvar;
-// const GET_FORM_API = "https://pgi-backend.herokuapp.com/api/get-cardiac-request-table/"+myvar;
+const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-formb/'+myvar;
+// const GET_FORM_API = "http://127.0.0.1:8000/api/get-cardiac-request-table/"+myvar;
 
 
 // const Input = styled.input`
@@ -42,7 +42,7 @@ const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-su
 
 export default function ReturnedFormB(props) {
 
-    const GET_COMBINED_API = "https://pgi-backend.herokuapp.com/api/combined-form/"+props.docnumber;
+    const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     

@@ -33,12 +33,12 @@ const Input = styled.input`
 
 export default function FormB(props) {
     let history2 = useHistory();
-    const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-formb/'+props.docnumber;
-    const GET_REQUEST_DATA_API = 'https://pgi-backend.herokuapp.com/api/get-request-table/'+props.docnumber;
+    const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-formb/'+props.docnumber;
+    const GET_REQUEST_DATA_API = 'http://127.0.0.1:8000/api/get-request-table/'+props.docnumber;
 
     var form = []
     const fetchData = async () => {
-        const PREVIOUSLY_FILLED = "https://pgi-backend.herokuapp.com/api/get-cardiac-request-table/"+props.docnumber
+        const PREVIOUSLY_FILLED = "http://127.0.0.1:8000/api/get-cardiac-request-table/"+props.docnumber
         const response = await axios.get(PREVIOUSLY_FILLED)
         form = await response.data;
         console.log("response",form);
@@ -69,7 +69,7 @@ export default function FormB(props) {
         await axios.put(GET_REQUEST_DATA_API,temp2.data);
     }
 
-    const SUBMIT_REQUEST_API = 'https://pgi-backend.herokuapp.com/api/update-request-remarks/'
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
         temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);

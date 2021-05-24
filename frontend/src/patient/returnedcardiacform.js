@@ -248,11 +248,11 @@ export default function ReturnedCardiacForm(props) {
             </Badge>
           </IconButton> */}
           
-          <Button variant="contained" color="white" href={"https://pgi-backend.herokuapp.com/api/get-form-xls/"+props.match.params.docnumber}>
+          <Button variant="contained" color="white" href={"http://127.0.0.1:8000/api/get-form-xls/"+props.match.params.docnumber}>
             Download Xlsx Form
           </Button>
           | |
-          <Button variant="contained" color='white' href={"https://pgi-backend.herokuapp.com/api/print-pdf/"+props.match.params.docnumber}>
+          <Button variant="contained" color='white' href={"http://127.0.0.1:8000/api/print-pdf/"+props.match.params.docnumber}>
             Download PDF Form
           </Button>
           | |

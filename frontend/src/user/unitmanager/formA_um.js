@@ -41,11 +41,11 @@ const Input = styled.input`
 export default function FormA_um(props) {
     const [rows1, setRows1] = React.useState([]);
     const [rows2, setRows2] = React.useState([]);
-    const SUBMIT_FORM_API = 'https://pgi-backend.herokuapp.com/api/update-cardiac-supplied-forma/'+props.docnumber;
-    const GET_COMBINED_API = "https://pgi-backend.herokuapp.com/api/combined-form/"+props.docnumber;
+    const SUBMIT_FORM_API = 'http://127.0.0.1:8000/api/update-cardiac-supplied-forma/'+props.docnumber;
+    const GET_COMBINED_API = "http://127.0.0.1:8000/api/combined-form/"+props.docnumber;
     const [rows, setRows] = React.useState([]);
-    const [rows1, setRows1] = React.useState([]);
-    const [rows2, setRows2] = React.useState([]);
+    // const [rows1, setRows1] = React.useState([]);
+    // const [rows2, setRows2] = React.useState([]);
     const [qtySupplied, setQtySupplied] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyRcdPharma,setQtyRcdPharma] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
     const [qtyConsumed, setQtyConsumed] = useState({'1':0,'2A':0,'2B':0,'3A':0,'3B':0,'3C':0,'3D':0});
@@ -200,7 +200,7 @@ export default function FormA_um(props) {
 
 
     
-    const SUBMIT_REQUEST_API = 'https://pgi-backend.herokuapp.com/api/update-request-remarks/'
+    const SUBMIT_REQUEST_API = 'http://127.0.0.1:8000/api/update-request-remarks/'
     var temp;
     const fetchreq = async () => {
         temp = await axios.get(SUBMIT_REQUEST_API+props.docnumber);
@@ -608,102 +608,7 @@ export default function FormA_um(props) {
                 ))
             : ""}
 
-            {rows2.length>0 ? 
-                rows2.map((row2,index) => ( 
-                    <TableRow key={index}>
-                    <TableCell>{row2.id}</TableCell>
-                    <TableCell>{row2.name}</TableCell>
-                    <TableCell>{row2.descr}</TableCell>
-                    <TableCell>{row2.brand}</TableCell>
-                    <TableCell>{row2.qty_requested}</TableCell>
-                    
-                    {props.user=="unitman" && props.stage!="completed"?
-                        <TableCell>
-                            <input 
-                            type="number" name={row2.id} min="0"
-                            value={
-                                qtyRcdPharma[row2.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtyRcdPharma(qtyRcdPharma => (
-                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
-                                ));
-                                Input.backgroundColor = 'blue';
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                    :
-                        <TableCell>
-                            <input disabled
-                            type="number" name={row2.id} min="0"
-                            value={
-                                qtyRcdPharma[row2.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtyRcdPharma(qtyRcdPharma => (
-                                    {...qtyRcdPharma, [event.target.name]: event.target.value}
-                                ));
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                    }
-
-                    {props.user=="unitman"  && props.stage!="completed"?
-                        <TableCell>
-                            <input 
-                            type="number" name={row2.id} min="0"
-                            value={
-                                qtySupplied[row2.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtySupplied(qtySupplied => (
-                                    {...qtySupplied, [event.target.name]: event.target.value}
-                                ));
-                               Input.backgroundColor = 'blue';
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                    :
-                        <TableCell>
-                            <input disabled
-                            type="number" name={row2.id} min="0"
-                            value={
-                                qtySupplied[row2.id]
-                            }
-                            default={9}
-                            onChange={(event)=>{
-                                setQtySupplied(qtySupplied => (
-                                    {...qtySupplied, [event.target.name]: event.target.value}
-                                ));
-                            }}
-                            >
-                            </input>
-                        </TableCell>
-                    }
-                    
-                    {props.user=="unitman" && props.stage!="completed"?
-                        <TableCell>
-                            <Checkbox 
-                                checked={verified[row2.id]}
-                                // value={row2.tallyunitman}
-                                onChange={(event)=>{
-                                    setVerified(verified => (
-                                        {...verified,[row2.id]:event.target.checked}
-                                    ));
-                                    console.log("row2.id",row2.id,event.target.checked,row2.tallyunitman);
-                                }}
-                            />
-                        </TableCell>
-                    :""}
-                </TableRow>
-                ))
-            : ""}
+            
 
             {rows1.length>0 ? 
                 rows1.map((row1,index) => ( 

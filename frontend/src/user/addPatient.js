@@ -126,7 +126,7 @@ const Input = styled.input`
   `;
 
 
-const PATIENT_TABLE_API='https://pgi-backend.herokuapp.com/api/patients'
+const PATIENT_TABLE_API='http://127.0.0.1:8000/api/patients'
 
 
 class AddPatient extends Component{

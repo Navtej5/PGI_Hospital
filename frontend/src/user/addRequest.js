@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const REQUEST_TABLE_API='https://pgi-backend.herokuapp.com/api/requests'
+const REQUEST_TABLE_API='http://127.0.0.1:8000/api/requests'
 
 const headerleft = {
     flexGrow: "1",

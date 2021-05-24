@@ -308,11 +308,6 @@ class UpdateCardiacFormAView(RetrieveUpdateDestroyAPIView):
                     A_2B_qty_rcd=A_2B_qty,
                     A_3A_qty_rcd=A_3A_qty,
                     A_3B_qty_rcd=A_3B_qty,
-                    A_1_qty=A_1_qty,
-                    A_2A_qty=A_2A_qty,
-                    A_2B_qty=A_2B_qty,
-                    A_3A_qty=A_3A_qty,
-                    A_3B_qty=A_3B_qty,
                 )
                 newSuppliedRow.save()
                 
